@@ -1,19 +1,23 @@
 <template>
-  <MainForm/>
+  <div>
+    <webhook-settings/>
+  </div>
 </template>
 
 <script>
-import MainForm from "@/components/MainForm";
+import WebhookSettings from "@/components/WebhookSettings";
 
 export default {
   name: 'App',
   components: {
-    MainForm
+    WebhookSettings
   },
 }
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -23,9 +27,13 @@ html, body {
   height: 100%;
 }
 #app {
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
   width: 100%;
+  font-family: 'Roboto', sans-serif;
   height: 100%;
   background-color: #030318FF;
-  color: #f2f8ff;
+  color: white;
 }
 </style>

@@ -25,11 +25,15 @@ export default {
 
 <style scoped>
   .input {
-    color: #f2f8ff;
-    padding: 5px;
+    outline: none;
+    color: white;
+    padding: 7px;
     font-size: 15px;
     border: 3px solid #494962;
     background-color: #13132a;
     border-radius: 5px;
+  }
+  .input:focus {
+    background-color: #252549;
   }
 </style>
