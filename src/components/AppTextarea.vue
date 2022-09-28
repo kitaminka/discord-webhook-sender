@@ -35,6 +35,7 @@ export default {
     border: 3px solid #494962;
     background-color: #13132a;
     border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
   }
   .textarea:focus {
     background-color: #252549;
