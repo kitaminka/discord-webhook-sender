@@ -3,15 +3,18 @@
     <h3 class="message-settings__header">Message settings</h3>
     <p>Content</p>
     <app-textarea class="message-settings__textarea" placeholder="Some text" maxlength="2000" v-model="content"/>
+    <app-button class="message-settings__send-button">Send</app-button>
   </div>
 </template>
 
 <script>
 import AppTextarea from '@/components/AppTextarea';
+import AppButton from '@/components/AppButton';
 
 export default {
   name: 'MessageSettings',
   components: {
+    AppButton,
     AppTextarea
   },
   data() {
@@ -38,5 +41,8 @@ export default {
   margin: 5px 0;
   width: 100%;
   height: 100px;
+}
+.message-settings__send-button {
+  margin-top: 10px;
 }
 </style>
