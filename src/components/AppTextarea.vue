@@ -1,22 +1,24 @@
 <template>
-  <input
-      type="text"
+  <textarea
       :value="modelValue"
       :placeholder="placeholder"
-      @input="updateInput"
-      class="input"
+      @input="updateTextarea"
+      class="textarea"
+      :maxlength="maxlength"
   >
+  </textarea>
 </template>
 
 <script>
 export default {
-  name: 'AppInput',
+  name: 'AppTextarea',
   props: [
-      'placeholder',
-      'modelValue'
+    'placeholder',
+    'maxlength',
+    'modelValue'
   ],
   methods: {
-    updateInput(event) {
+    updateTextarea(event) {
       this.$emit('update:modelValue', event.target.value);
     }
   }
@@ -24,7 +26,8 @@ export default {
 </script>
 
 <style scoped>
-  .input {
+  .textarea {
+    resize: none;
     outline: none;
     color: white;
     padding: 7px;
@@ -33,7 +36,7 @@ export default {
     background-color: #13132a;
     border-radius: 5px;
   }
-  .input:focus {
+  .textarea:focus {
     background-color: #252549;
   }
 </style>

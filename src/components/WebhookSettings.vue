@@ -1,9 +1,10 @@
 <template>
-  <div class="form">
-    <p>Webhook URL</p>
-    <app-input class="form__input" placeholder="https://discord.com/api/webhooks/xxx/xxx..." v-model="webhookUrl"/>
-    <p>Content</p>
-    <app-input class="form__input" placeholder="Some text" v-model="content"/>
+  <div class="webhook-settings">
+    <h3 class="webhook-settings__header">Webhook settings</h3>
+    <p>Webhook URL*</p>
+    <app-input class="webhook-settings__input" placeholder="https://discord.com/api/webhooks/xxx/xxx..." v-model="webhookUrl"/>
+    <p>Username</p>
+    <app-input class="webhook-settings__input" placeholder="Captain Hook" v-model="username"/>
   </div>
 </template>
 
@@ -11,28 +12,33 @@
 import AppInput from '@/components/AppInput';
 
 export default {
-  name: "MainForm",
+  name: 'MainForm',
+  components: {
+    AppInput
+  },
   data() {
     return {
       webhookUrl: '',
-      content: '',
+      username: ''
     }
-  },
-  components: {
-    AppInput
   }
 }
 </script>
 
 <style scoped>
-.form {
+.webhook-settings {
+  grid-column-start: 2;
+  grid-row-start: 2;
   padding: 30px;
-  width: 50%;
-  height: 300px;
+  border-radius: 5px;
   background-color: #121225;
 }
-.form__input {
+.webhook-settings__header {
+  margin-bottom: 15px;
+}
+.webhook-settings__input {
   margin: 5px 0;
-  width: 300px;
+  box-sizing: border-box;
+  width: 100%;
 }
 </style>

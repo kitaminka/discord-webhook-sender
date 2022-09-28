@@ -1,15 +1,16 @@
 <template>
-  <div>
-    <webhook-settings/>
-  </div>
+  <webhook-settings/>
+  <message-settings/>
 </template>
 
 <script>
-import WebhookSettings from "@/components/WebhookSettings";
+import WebhookSettings from '@/components/WebhookSettings';
+import MessageSettings from '@/components/MessageSettings';
 
 export default {
   name: 'App',
   components: {
+    MessageSettings,
     WebhookSettings
   },
 }
@@ -27,12 +28,13 @@ html, body {
   height: 100%;
 }
 #app {
-  display: flex;
-  justify-content: center;
-  padding-top: 50px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-gap: 20px;
   width: 100%;
-  font-family: 'Roboto', sans-serif;
   height: 100%;
+  font-family: 'Roboto', sans-serif;
   background-color: #030318FF;
   color: white;
 }
