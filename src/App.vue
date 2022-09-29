@@ -1,5 +1,5 @@
 <template>
-  <webhook-settings v-model:username="username" v-model:webhook-url="webhookUrl"/>
+  <webhook-settings/>
   <message-settings @sendMessage="sendMessage" v-model:content="content"/>
 </template>
 
@@ -15,8 +15,6 @@ export default {
   },
   data() {
     return {
-      webhookUrl: '',
-      username: '',
       content: ''
     }
   },

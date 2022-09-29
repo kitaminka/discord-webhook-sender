@@ -2,13 +2,14 @@
   <div class="webhook-settings">
     <h3 class="webhook-settings__header">Webhook settings</h3>
     <p>Webhook URL*</p>
-    <app-input class="webhook-settings__input" @input="updateWebhookUrl" placeholder="https://discord.com/api/webhooks/xxx/xxx..." v-model="webhookUrlValue"/>
+    <app-input class="webhook-settings__input" placeholder="https://discord.com/api/webhooks/xxx/xxx..." v-model="webhookUrl"/>
     <p>Username</p>
-    <app-input class="webhook-settings__input" @input="updateUsername" placeholder="Captain Hook" v-model="usernameValue"/>
+    <app-input class="webhook-settings__input" placeholder="Captain Hook" v-model="username"/>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import AppInput from '@/components/AppInput';
 
 export default {
@@ -18,20 +19,27 @@ export default {
   },
   data() {
     return {
-      webhookUrlValue: '',
-      usernameValue: ''
+      webhookUrl: '',
+      username: ''
     }
   },
-  props: [
-    'webhookUrl',
-    'username'
-  ],
   methods: {
-    updateWebhookUrl() {
-      this.$emit('update:webhookUrl', this.webhookUrlValue)
+    ...mapActions([
+      'editWebhookSettings'
+    ]),
+    updateWebhookSettings() {
+      this.editWebhookSettings({
+        webhookUrl: this.webhookUrl,
+        username: this.username
+      });
+    }
+  },
+  watch: {
+    webhookUrl() {
+      this.updateWebhookSettings();
     },
-    updateUsername() {
-      this.$emit('update:username', this.usernameValue)
+    username() {
+      this.updateWebhookSettings();
     }
   }
 }

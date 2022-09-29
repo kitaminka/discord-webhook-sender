@@ -1596,6 +1596,11 @@
   optionalDependencies:
     prettier "^1.18.2 || ^2.0.0"
 
+"@vue/devtools-api@^6.0.0-beta.11":
+  version "6.4.2"
+  resolved "https://registry.yarnpkg.com/@vue/devtools-api/-/devtools-api-6.4.2.tgz#faf303a70cd9f8662896d663a195df41a8af1e53"
+  integrity sha512-6hNZ23h1M2Llky+SIAmVhL7s6BjLtZBCzjIz9iRSBUsysjE7kC39ulW0dH4o/eZtycmSt4qEr6RDVGTIuWu+ow==
+
 "@vue/reactivity-transform@3.2.39":
   version "3.2.39"
   resolved "https://registry.npmmirror.com/@vue/reactivity-transform/-/reactivity-transform-3.2.39.tgz#da6ae6c8fd77791b9ae21976720d116591e1c4aa"
@@ -5817,6 +5822,13 @@ vue@^3.2.13:
     "@vue/runtime-dom" "3.2.39"
     "@vue/server-renderer" "3.2.39"
     "@vue/shared" "3.2.39"
+
+vuex@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/vuex/-/vuex-4.0.2.tgz#f896dbd5bf2a0e963f00c67e9b610de749ccacc9"
+  integrity sha512-M6r8uxELjZIK8kTKDGgZTYX/ahzblnzC4isU1tpmEuOIIKmV+TRdc+H4s8ds2NuZ7wpUTdGRzJRtoj+lI+pc0Q==
+  dependencies:
+    "@vue/devtools-api" "^6.0.0-beta.11"
 
 watchpack@^2.4.0:
   version "2.4.0"
