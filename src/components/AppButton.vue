@@ -24,4 +24,7 @@ export default {
 .button:hover {
   background-color: #246738;
 }
+.button:active {
+  background-color: #1c4f28;
+}
 </style>

@@ -2,8 +2,8 @@
   <div class="message-settings">
     <h3 class="message-settings__header">Message settings</h3>
     <p>Content</p>
-    <app-textarea class="message-settings__textarea" placeholder="Some text" maxlength="2000" v-model="content"/>
-    <app-button class="message-settings__send-button">Send</app-button>
+    <app-textarea @input="updateContent"  class="message-settings__textarea" placeholder="Some text" maxlength="2000" v-model="contentValue"/>
+    <app-button @click="$emit('sendMessage')" class="message-settings__send-button">Send</app-button>
   </div>
 </template>
 
@@ -19,7 +19,15 @@ export default {
   },
   data() {
     return {
-      content: ''
+      contentValue:'',
+    }
+  },
+  props: [
+      'content'
+  ],
+  methods: {
+    updateContent() {
+      this.$emit('update:content', this.contentValue);
     }
   }
 }

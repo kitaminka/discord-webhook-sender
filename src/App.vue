@@ -1,6 +1,6 @@
 <template>
-  <webhook-settings/>
-  <message-settings/>
+  <webhook-settings v-model:username="username" v-model:webhook-url="webhookUrl"/>
+  <message-settings @sendMessage="sendMessage" v-model:content="content"/>
 </template>
 
 <script>
@@ -13,6 +13,28 @@ export default {
     MessageSettings,
     WebhookSettings
   },
+  data() {
+    return {
+      webhookUrl: '',
+      username: '',
+      content: ''
+    }
+  },
+  methods: {
+    sendMessage() {
+      fetch(this.webhookUrl, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: this.username,
+          content: this.content
+        })
+      })
+    }
+  }
 }
 </script>
 
@@ -29,7 +51,7 @@ html, body {
 }
 #app {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 3fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr;
   grid-gap: 20px;
   width: 100%;
