@@ -1,6 +1,6 @@
 <template>
   <webhook-settings/>
-  <message-settings @sendMessage="sendMessage" v-model:content="content"/>
+  <message-settings/>
 </template>
 
 <script>
@@ -12,26 +12,6 @@ export default {
   components: {
     MessageSettings,
     WebhookSettings
-  },
-  data() {
-    return {
-      content: ''
-    }
-  },
-  methods: {
-    sendMessage() {
-      fetch(this.webhookUrl, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: this.username,
-          content: this.content
-        })
-      })
-    }
   }
 }
 </script>

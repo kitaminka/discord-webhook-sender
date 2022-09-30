@@ -2,12 +2,13 @@
   <div class="message-settings">
     <h3 class="message-settings__header">Message settings</h3>
     <p>Content</p>
-    <app-textarea @input="updateContent"  class="message-settings__textarea" placeholder="Some text" maxlength="2000" v-model="contentValue"/>
-    <app-button @click="$emit('sendMessage')" class="message-settings__send-button">Send</app-button>
+    <app-textarea @input="updateContent"  class="message-settings__textarea" placeholder="Some text" maxlength="2000" v-model="content"/>
+    <app-button @click="sendMessage" class="message-settings__send-button">Send</app-button>
   </div>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
 import AppTextarea from '@/components/AppTextarea';
 import AppButton from '@/components/AppButton';
 
@@ -19,16 +20,37 @@ export default {
   },
   data() {
     return {
-      contentValue:'',
+      content:'',
     }
   },
-  props: [
-      'content'
-  ],
   methods: {
+    ...mapActions([
+      'editMessageSettings'
+    ]),
     updateContent() {
-      this.$emit('update:content', this.contentValue);
+      this.editMessageSettings({
+        content: this.content
+      });
+    },
+    sendMessage() {
+      fetch(this.webhookSettings.webhookUrl, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: this.webhookSettings.username,
+          content: this.messageSettings.content
+        })
+      })
     }
+  },
+  computed: {
+    ...mapState([
+      'webhookSettings',
+      'messageSettings'
+    ])
   }
 }
 </script>
