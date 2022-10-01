@@ -33,6 +33,7 @@ export default {
     background-color: #13132a;
     border-radius: 5px;
     font-family: 'Roboto', sans-serif;
+    transition: background-color ease 0.2s;
   }
   .input:focus {
     background-color: #252549;
