@@ -24,13 +24,6 @@ export default {
     AppButton,
     AppInput
   },
-  data() {
-    return {
-      webhookUrl: '',
-      username: '',
-      validWebhook: false
-    }
-  },
   methods: {
     async sendMessage() {
       await fetch(this.webhookUrl + '?wait=true', {
@@ -44,31 +37,21 @@ export default {
           content: this.messageSettings.content
         })
       });
-      // if (response.ok) {
-      //   this.sendButtonText = 'Message sent!';
-      // } else {
-      //   this.sendButtonText = 'Failed to send message!';
-      // }
-
-      // setTimeout(() => {
-      //   this.sendButtonText = 'Send';
-      // }, 1000)
-      // const message = response.json();
     }
   },
   computed: {
     ...mapState([
-      'messageSettings'
-    ])
-  },
-  watch: {
-    async webhookUrl() {
-      if (this.webhookUrl.match(/https:\/\/discord.com\/api\/webhooks\/[0-9]+\/.+/)) {
-        this.validWebhook = (await fetch(this.webhookUrl)).ok;
-      } else {
-        this.validWebhook = false;
+      'messageSettings',
+      'validWebhook'
+    ]),
+    webhookUrl: {
+      get() {
+        return this.$store.messageSettings.webhookUrl;
+      },
+      set(value) {
+        this.$store.dispatch('updateWebhookUrl', value)
       }
-    },
+    }
   }
 }
 </script>
