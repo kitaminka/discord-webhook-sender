@@ -8,7 +8,7 @@
     </transition>
     <p>Username</p>
     <app-input class="webhook-settings__input" placeholder="Captain Hook" v-model="username"/>
-    <app-button :disabled="!validWebhook" @click="sendMessage" class="webhook-settings__send-button">Send</app-button>
+    <app-button :disabled="!validWebhook" @click="sendMessage" class="webhook-settings__send-button">{{sendButtonText}}</app-button>
   </div>
 </template>
 
@@ -31,7 +31,8 @@ export default {
   },
   computed: {
     ...mapState([
-      'validWebhook'
+      'validWebhook',
+      'sendButtonText'
     ]),
     webhookUrl: {
       get() {

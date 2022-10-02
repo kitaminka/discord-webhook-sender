@@ -3,6 +3,7 @@ import { createStore } from 'vuex';
 export default createStore({
     state: {
         validWebhook: false,
+        sendButtonText: 'Send',
         webhookSettings: {
             webhookUrl: '',
             username: ''
@@ -23,6 +24,9 @@ export default createStore({
         },
         setUsername(state, username) {
             state.webhookSettings.username = username;
+        },
+        setSendButtonText(state, sendButtonText) {
+            state.sendButtonText = sendButtonText;
         }
     },
     actions: {
@@ -34,8 +38,8 @@ export default createStore({
             }
             commit('setWebhookUrl', webhookUrl);
         },
-        async sendMessage({ state }) {
-            await fetch(state.webhookSettings.webhookUrl + '?wait=true', {
+        async sendMessage({ state, commit }) {
+            const response  = await fetch(state.webhookSettings.webhookUrl + '?wait=true', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -46,6 +50,14 @@ export default createStore({
                     content: state.messageSettings.content
                 })
             });
+            if (response.ok) {
+                commit('setSendButtonText', 'Message sent!');
+            } else {
+                commit('setSendButtonText', 'Failed to send message!');
+            }
+            setTimeout(() => {
+                commit('setSendButtonText', 'Send');
+            }, 1000);
         }
     }
 })
