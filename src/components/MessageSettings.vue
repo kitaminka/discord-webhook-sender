@@ -2,13 +2,11 @@
   <div class="message-settings">
     <h3 class="message-settings__header">Message settings</h3>
     <p>Content</p>
-    <app-textarea @input="updateContent"  class="message-settings__textarea" placeholder="Some text" maxlength="2000" v-model="content"/>
+    <app-textarea class="message-settings__textarea" placeholder="Some text" maxlength="2000" v-model="content"/>
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
-
 import AppTextarea from '@/components/AppTextarea';
 
 export default {
@@ -16,25 +14,15 @@ export default {
   components: {
     AppTextarea
   },
-  data() {
-    return {
-      content: ''
-    }
-  },
-  methods: {
-    ...mapActions([
-      'editMessageSettings'
-    ]),
-    updateContent() {
-      this.editMessageSettings({
-        content: this.content
-      });
-    }
-  },
   computed: {
-    ...mapState([
-      'messageSettings'
-    ])
+    content: {
+      get() {
+        return this.$store.state.messageSettings.content;
+      },
+      set(content) {
+        this.$store.commit('setContent', content);
+      }
+    }
   }
 }
 </script>

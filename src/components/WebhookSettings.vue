@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 import AppButton from '@/components/AppButton';
 import AppInput from '@/components/AppInput';
@@ -25,31 +25,28 @@ export default {
     AppInput
   },
   methods: {
-    async sendMessage() {
-      await fetch(this.webhookUrl + '?wait=true', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: this.username,
-          content: this.messageSettings.content
-        })
-      });
-    }
+    ...mapActions([
+      'sendMessage'
+    ])
   },
   computed: {
     ...mapState([
-      'messageSettings',
       'validWebhook'
     ]),
     webhookUrl: {
       get() {
-        return this.$store.messageSettings.webhookUrl;
+        return this.$store.state.webhookSettings.webhookUrl;
       },
-      set(value) {
-        this.$store.dispatch('updateWebhookUrl', value)
+      set(webhookUrl) {
+        this.$store.dispatch('updateWebhookUrl', webhookUrl)
+      }
+    },
+    username: {
+      get() {
+        return this.$store.state.webhookSettings.username;
+      },
+      set(username) {
+        this.$store.commit('setUsername', username);
       }
     }
   }

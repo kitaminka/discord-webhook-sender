@@ -12,27 +12,40 @@ export default createStore({
         }
     },
     mutations: {
-        editMessageSettings(state, messageSettings) {
-            state.messageSettings = messageSettings;
+        setContent(state, content) {
+            state.messageSettings.content = content;
         },
         setWebhookUrl(state, webhookUrl) {
             state.webhookSettings.webhookUrl = webhookUrl;
         },
         setWebhookValid(state, isValid) {
             state.validWebhook = isValid;
+        },
+        setUsername(state, username) {
+            state.webhookSettings.username = username;
         }
     },
     actions: {
-        editMessageSettings({ commit }, messageSettings) {
-            commit('editMessageSettings', messageSettings);
-        },
         async updateWebhookUrl({ commit }, webhookUrl) {
             if (webhookUrl.match(/https:\/\/discord.com\/api\/webhooks\/[0-9]+\/.+/)) {
-                commit('setWebhookValid', (await fetch(this.webhookUrl)).ok);
+                commit('setWebhookValid', (await fetch(webhookUrl)).ok);
             } else {
                 commit('setWebhookValid', false);
             }
             commit('setWebhookUrl', webhookUrl);
+        },
+        async sendMessage({ state }) {
+            await fetch(state.webhookSettings.webhookUrl + '?wait=true', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: state.webhookSettings.username,
+                    content: state.messageSettings.content
+                })
+            });
         }
     }
 })
