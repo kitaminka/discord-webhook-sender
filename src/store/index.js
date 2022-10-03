@@ -12,6 +12,14 @@ export default createStore({
             content: ''
         }
     },
+    getters: {
+        disableSendButton(state) {
+            return !state.validWebhook || state.messageSettings.content.length === 0;
+        },
+        showWebhookError(state) {
+            return !state.validWebhook && state.webhookSettings.webhookUrl.length !== 0;
+        }
+    },
     mutations: {
         setContent(state, content) {
             state.messageSettings.content = content;

@@ -3,15 +3,18 @@
     <h3 class="message-settings__header">Message settings</h3>
     <p>Content</p>
     <app-textarea class="message-settings__textarea" placeholder="Some text" maxlength="2000" v-model="content"/>
+    <error-message :show="content.length === 0">Message cannot be empty.</error-message>
   </div>
 </template>
 
 <script>
 import AppTextarea from '@/components/AppTextarea';
+import ErrorMessage from '@/components/ErrorMessage';
 
 export default {
   name: 'MessageSettings',
   components: {
+    ErrorMessage,
     AppTextarea
   },
   computed: {

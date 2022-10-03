@@ -3,15 +3,15 @@
     <h3 class="webhook-settings__header">Webhook settings</h3>
     <p>Webhook URL*</p>
     <app-input class="webhook-settings__input" placeholder="https://discord.com/api/webhooks/xxx/xxx..." v-model="webhookUrl"/>
-    <error-message :show="!validWebhook && webhookUrl !== ''">Invalid Webhook URL</error-message>
+    <error-message :show="showWebhookError">Invalid Webhook URL</error-message>
     <p>Username</p>
     <app-input class="webhook-settings__input" placeholder="Captain Hook" v-model="username"/>
-    <app-button :disabled="!validWebhook" @click="sendMessage" class="webhook-settings__send-button">{{sendButtonText}}</app-button>
+    <app-button :disabled="disableSendButton" @click="sendMessage" class="webhook-settings__send-button">{{sendButtonText}}</app-button>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 
 import AppButton from '@/components/AppButton';
 import AppInput from '@/components/AppInput';
@@ -31,8 +31,11 @@ export default {
   },
   computed: {
     ...mapState([
-      'validWebhook',
       'sendButtonText'
+    ]),
+    ...mapGetters([
+      'disableSendButton',
+      'showWebhookError'
     ]),
     webhookUrl: {
       get() {
