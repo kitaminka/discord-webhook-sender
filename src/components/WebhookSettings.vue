@@ -5,7 +5,7 @@
     <app-input class="webhook-settings__input" placeholder="https://discord.com/api/webhooks/xxx/xxx..." v-model="webhookUrl"/>
     <error-message :show="showWebhookError">Invalid Webhook URL</error-message>
     <p>Username</p>
-    <app-input class="webhook-settings__input" placeholder="Captain Hook" v-model="username"/>
+    <app-input maxlength="80" class="webhook-settings__input" placeholder="Captain Hook" v-model="username"/>
     <app-button :disabled="disableSendButton" @click="sendMessage" class="webhook-settings__send-button">{{sendButtonText}}</app-button>
   </div>
 </template>
