@@ -30,6 +30,7 @@ html, body {
 #app {
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows: min-content min-content;
   padding: 20px;
   grid-gap: 20px;
   box-sizing: border-box;

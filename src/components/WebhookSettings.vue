@@ -7,7 +7,7 @@
     <p>Username</p>
     <app-input maxlength="80" class="webhook-settings__input" placeholder="Captain Hook" v-model="username"/>
     <app-button :disabled="disableSendButton" @click="sendMessage" class="webhook-settings__button">{{sendButtonText}}</app-button>
-    <app-button class="webhook-settings__button">Edit</app-button>
+    <app-button :disabled="disableEditButton" class="webhook-settings__button" @click="editMessage">{{editButtonText}}</app-button>
   </div>
 </template>
 
@@ -27,15 +27,18 @@ export default {
   },
   methods: {
     ...mapActions([
-      'sendMessage'
+      'sendMessage',
+      'editMessage'
     ])
   },
   computed: {
     ...mapState([
-      'sendButtonText'
+      'sendButtonText',
+      'editButtonText'
     ]),
     ...mapGetters([
       'disableSendButton',
+      'disableEditButton',
       'showWebhookError'
     ]),
     webhookUrl: {

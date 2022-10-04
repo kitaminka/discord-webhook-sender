@@ -4,6 +4,7 @@ export default createStore({
     state: {
         validWebhookUrl: false,
         sendButtonText: 'Send',
+        editButtonText: 'Edit',
         webhookSettings: {
             webhookUrl: '',
             username: ''
@@ -16,6 +17,9 @@ export default createStore({
     getters: {
         disableSendButton(state) {
             return !state.validWebhookUrl || state.messageSettings.content.length === 0;
+        },
+        disableEditButton(state) {
+            return !state.validWebhookUrl || state.messageSettings.content.length === 0 || state.messageSettings.messageId.length === 0;
         },
         showWebhookError(state) {
             return !state.validWebhookUrl && state.webhookSettings.webhookUrl.length !== 0;
@@ -43,6 +47,9 @@ export default createStore({
         },
         setSendButtonText(state, sendButtonText) {
             state.sendButtonText = sendButtonText;
+        },
+        setEditButtonText(state, editButtonText) {
+            state.editButtonText = editButtonText;
         }
     },
     actions: {
@@ -73,6 +80,27 @@ export default createStore({
             }
             setTimeout(() => {
                 commit('setSendButtonText', 'Send');
+            }, 1000);
+        },
+        async editMessage({ state, commit }) {
+            const response  = await fetch(`${state.webhookSettings.webhookUrl}/messages/${state.messageSettings.messageId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: state.webhookSettings.username,
+                    content: state.messageSettings.content
+                })
+            });
+            if (response.ok) {
+                commit('setEditButtonText', 'Message edited!');
+            } else {
+                commit('setEditButtonText', 'Failed to edit message!');
+            }
+            setTimeout(() => {
+                commit('setEditButtonText', 'Edit');
             }, 1000);
         }
     }
