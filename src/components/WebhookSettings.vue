@@ -40,7 +40,7 @@ export default {
     ]),
     webhookUrl: {
       get() {
-        return this.$store.state.webhookSettings.webhookUrl;
+        return this.$store.state.webhookUrl;
       },
       set(webhookUrl) {
         this.$store.dispatch('updateWebhookUrl', webhookUrl)
@@ -48,7 +48,7 @@ export default {
     },
     username: {
       get() {
-        return this.$store.state.webhookSettings.username;
+        return this.$store.state.username;
       },
       set(username) {
         this.$store.commit('setUsername', username);

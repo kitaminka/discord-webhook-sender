@@ -2,7 +2,7 @@
   <div class="message-settings">
     <h3 class="message-settings__header">Message settings</h3>
     <p>Message ID or URL</p>
-    <app-input class="message-settings__input" placeholder="https://discord.com/channels/..." :value="messageSettings.messageId"/>
+    <app-input class="message-settings__input" placeholder="https://discord.com/channels/..." @focusout="extractMessageId" v-model="messageId"/>
     <p>Content</p>
     <app-textarea class="message-settings__textarea" placeholder="Some text" maxlength="2000" v-model="content"/>
     <error-message :show="content.length === 0">Message cannot be empty.</error-message>
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapMutations } from 'vuex';
 
 import AppTextarea from '@/components/AppTextarea';
 import ErrorMessage from '@/components/ErrorMessage';
@@ -24,22 +24,19 @@ export default {
     AppTextarea
   },
   methods: {
-    ...mapActions([
-      'updateMessageId'
+    ...mapMutations([
+      'extractMessageId'
     ])
   },
   computed: {
-    ...mapState([
-      'messageSettings'
-    ]),
-    // messageId: {
-    //   get() {
-    //     return this.$store.state.messageSettings.messageId;
-    //   },
-    //   set(messageId) {
-    //     this.$store.dispatch('updateMessageId', messageId)
-    //   }
-    // },
+    messageId: {
+      get() {
+        return this.$store.state.messageSettings.messageId;
+      },
+      set(messageId) {
+        this.$store.commit('setMessageId', messageId)
+      }
+    },
     content: {
       get() {
         return this.$store.state.messageSettings.content;

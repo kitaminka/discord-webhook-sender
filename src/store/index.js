@@ -3,7 +3,6 @@ import { createStore } from 'vuex';
 export default createStore({
     state: {
         validWebhookUrl: false,
-        validMessageId: false,
         sendButtonText: 'Send',
         webhookSettings: {
             webhookUrl: '',
@@ -26,6 +25,10 @@ export default createStore({
         setMessageId(state, messageId) {
             state.messageSettings.messageId = messageId;
         },
+        extractMessageId(state) {
+            const matchMessageUrl = state.messageSettings.messageId.match(/https:\/\/discord.com\/channels\/[0-9]+\/[0-9]+\/([0-9]+)/);
+            if (matchMessageUrl) state.messageSettings.messageId = matchMessageUrl[1];
+        },
         setContent(state, content) {
             state.messageSettings.content = content;
         },
@@ -34,9 +37,6 @@ export default createStore({
         },
         setValidWebhookUrl(state, valid) {
             state.validWebhookUrl = valid;
-        },
-        setValidMessageId(state, valid) {
-            state.validMessageId = valid;
         },
         setUsername(state, username) {
             state.webhookSettings.username = username;
@@ -53,24 +53,6 @@ export default createStore({
                 commit('setValidWebhookUrl', false);
             }
             commit('setWebhookUrl', webhookUrl);
-        },
-        async updateMessageId({ state, commit }, messageData) {
-            if (!state.validWebhookUrl) return;
-
-            let messageId = messageData;
-            const matchMessageUrl = messageData.match(/https:\/\/discord.com\/channels\/[0-9]+\/[0-9]+\/([0-9]+)/);
-
-            if (matchMessageUrl) {
-                messageId = matchMessageUrl[1];
-            }
-
-            if (messageId.match(/([0-9]+)/)) {
-                const response = await fetch(`${state.webhookSettings.webhookUrl}/messages/${messageId}`);
-                commit('setValidMessageId', response.ok);
-            } else {
-                commit('setValidMessageId', false);
-            }
-            commit('setMessageId', messageId);
         },
         async sendMessage({ state, commit }) {
             const response  = await fetch(state.webhookSettings.webhookUrl + '?wait=true', {

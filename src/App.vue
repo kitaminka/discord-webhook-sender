@@ -34,7 +34,7 @@ html, body {
   grid-gap: 20px;
   box-sizing: border-box;
   width: 100%;
-  /*height: 100%;*/
+  min-height: 100%;
   font-family: 'Roboto', sans-serif;
   background-color: #030318FF;
   color: white;
