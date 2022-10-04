@@ -30,10 +30,11 @@ html, body {
 #app {
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
+  padding: 20px;
   grid-gap: 20px;
+  box-sizing: border-box;
   width: 100%;
-  height: 100%;
+  /*height: 100%;*/
   font-family: 'Roboto', sans-serif;
   background-color: #030318FF;
   color: white;

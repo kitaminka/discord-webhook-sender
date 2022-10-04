@@ -2,11 +2,12 @@
   <div class="webhook-settings">
     <h3 class="webhook-settings__header">Webhook settings</h3>
     <p>Webhook URL*</p>
-    <app-input class="webhook-settings__input" placeholder="https://discord.com/api/webhooks/xxx/xxx..." v-model="webhookUrl"/>
+    <app-input class="webhook-settings__input" placeholder="https://discord.com/api/webhooks/..." v-model="webhookUrl"/>
     <error-message :show="showWebhookError">Invalid Webhook URL</error-message>
     <p>Username</p>
     <app-input maxlength="80" class="webhook-settings__input" placeholder="Captain Hook" v-model="username"/>
-    <app-button :disabled="disableSendButton" @click="sendMessage" class="webhook-settings__send-button">{{sendButtonText}}</app-button>
+    <app-button :disabled="disableSendButton" @click="sendMessage" class="webhook-settings__button">{{sendButtonText}}</app-button>
+    <app-button class="webhook-settings__button">Edit</app-button>
   </div>
 </template>
 
@@ -60,7 +61,6 @@ export default {
 <style scoped>
 .webhook-settings {
   grid-column-start: 2;
-  grid-row-start: 2;
   padding: 30px;
   border-radius: 5px;
   background-color: #121225;
@@ -73,9 +73,9 @@ export default {
   box-sizing: border-box;
   width: 100%;
 }
-.webhook-settings__send-button {
+.webhook-settings__button {
   margin-top: 10px;
-  margin-bottom: 5px;
+  margin-right: 10px;
   box-sizing: border-box;
 }
 </style>
