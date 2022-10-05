@@ -21,7 +21,7 @@ export default createStore({
         disableEditButton(state) {
             return !state.validWebhookUrl || state.messageSettings.content.length === 0 || state.messageSettings.messageId.length === 0;
         },
-        showWebhookError(state) {
+        webhookUrlError(state) {
             return !state.validWebhookUrl && state.webhookSettings.webhookUrl.length !== 0;
         }
     },
@@ -73,6 +73,8 @@ export default createStore({
                     content: state.messageSettings.content
                 })
             });
+            const message = await response.json();
+            commit('setMessageId', message.id);
             if (response.ok) {
                 commit('setSendButtonText', 'Message sent!');
             } else {

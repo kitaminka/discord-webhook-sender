@@ -3,7 +3,7 @@
     <h3 class="webhook-settings__header">Webhook settings</h3>
     <p>Webhook URL*</p>
     <app-input class="webhook-settings__input" placeholder="https://discord.com/api/webhooks/..." v-model="webhookUrl"/>
-    <error-message :show="showWebhookError">Invalid Webhook URL</error-message>
+    <error-message :show="webhookUrlError">Invalid Webhook URL</error-message>
     <p>Username</p>
     <app-input maxlength="80" class="webhook-settings__input" placeholder="Captain Hook" v-model="username"/>
     <app-button :disabled="disableSendButton" @click="sendMessage" class="webhook-settings__button">{{sendButtonText}}</app-button>
@@ -39,7 +39,7 @@ export default {
     ...mapGetters([
       'disableSendButton',
       'disableEditButton',
-      'showWebhookError'
+      'webhookUrlError'
     ]),
     webhookUrl: {
       get() {
