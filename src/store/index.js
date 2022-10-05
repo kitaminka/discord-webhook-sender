@@ -7,7 +7,8 @@ export default createStore({
         editButtonText: 'Edit',
         webhookSettings: {
             webhookUrl: '',
-            username: ''
+            username: '',
+            avatarUrl: ''
         },
         messageSettings: {
             messageId: '',
@@ -45,6 +46,9 @@ export default createStore({
         setUsername(state, username) {
             state.webhookSettings.username = username;
         },
+        setAvatarUrl(state, avatarUrl) {
+            state.webhookSettings.avatarUrl = avatarUrl;
+        },
         setSendButtonText(state, sendButtonText) {
             state.sendButtonText = sendButtonText;
         },
@@ -70,6 +74,7 @@ export default createStore({
                 },
                 body: JSON.stringify({
                     username: state.webhookSettings.username,
+                    avatar_url: state.webhookSettings.avatarUrl,
                     content: state.messageSettings.content
                 })
             });

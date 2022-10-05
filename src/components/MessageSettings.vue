@@ -1,11 +1,15 @@
 <template>
   <div class="message-settings">
     <h3 class="message-settings__header">Message settings</h3>
-    <p>Message ID or URL</p>
-    <app-input class="message-settings__input" placeholder="https://discord.com/channels/..." @focusout="extractMessageId" v-model="messageId"/>
-    <p>Content</p>
-    <app-textarea class="message-settings__textarea" placeholder="Some text" maxlength="2000" v-model="content"/>
-    <error-message :show="content.length === 0">Message cannot be empty.</error-message>
+    <div class="message-settings__message-id">
+      <p>Message ID or URL</p>
+      <app-input class="message-settings__input" placeholder="https://discord.com/channels/..." @focusout="extractMessageId" v-model="messageId"/>
+    </div>
+    <div class="message-settings__content">
+      <p>Content</p>
+      <app-textarea class="message-settings__textarea" placeholder="Some text" maxlength="2000" v-model="content"/>
+      <error-message :show="content.length === 0">Message cannot be empty.</error-message>
+    </div>
   </div>
 </template>
 
