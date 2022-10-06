@@ -15,8 +15,9 @@
       <app-input class="webhook-settings__input" placeholder="https://example.com/avatar.png" v-model="avatarUrl"/>
     </div>
     <div class="webhook-settings__buttons">
-      <app-button :disabled="disableSendButton" @click="sendMessage" class="webhook-settings__button">{{sendButtonText}}</app-button>
+      <app-button :disabled="disableSendButton" class="webhook-settings__button" @click="sendMessage">{{sendButtonText}}</app-button>
       <app-button :disabled="disableEditButton" class="webhook-settings__button" @click="editMessage">{{editButtonText}}</app-button>
+      <app-button :disabled="disableLoadButton" class="webhook-settings__button" @click="loadMessage">{{loadButtonText}}</app-button>
     </div>
   </div>
 </template>
@@ -38,22 +39,25 @@ export default {
   methods: {
     ...mapActions([
       'sendMessage',
-      'editMessage'
+      'editMessage',
+      'loadMessage'
     ])
   },
   computed: {
     ...mapState([
       'sendButtonText',
-      'editButtonText'
+      'editButtonText',
+      'loadButtonText'
     ]),
     ...mapGetters([
       'disableSendButton',
       'disableEditButton',
+      'disableLoadButton',
       'webhookUrlError'
     ]),
     webhookUrl: {
       get() {
-        return this.$store.state.webhookUrl;
+        return this.$store.state.webhook.url;
       },
       set(webhookUrl) {
         this.$store.dispatch('updateWebhookUrl', webhookUrl)
@@ -61,7 +65,7 @@ export default {
     },
     username: {
       get() {
-        return this.$store.state.username;
+        return this.$store.state.webhook.username;
       },
       set(username) {
         this.$store.commit('setUsername', username);
@@ -69,7 +73,7 @@ export default {
     },
     avatarUrl: {
       get() {
-        return this.$store.state.avatarUrl;
+        return this.$store.state.webhook.avatarUrl;
       },
       set(avatarUrl) {
         this.$store.commit('setAvatarUrl', avatarUrl);

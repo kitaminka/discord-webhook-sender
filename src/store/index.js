@@ -5,55 +5,62 @@ export default createStore({
         validWebhookUrl: false,
         sendButtonText: 'Send',
         editButtonText: 'Edit',
-        webhookSettings: {
-            webhookUrl: '',
+        loadButtonText: 'Load',
+        webhook: {
+            url: '',
             username: '',
             avatarUrl: ''
         },
-        messageSettings: {
-            messageId: '',
+        message: {
+            id: '',
             content: ''
         }
     },
     getters: {
         disableSendButton(state) {
-            return !state.validWebhookUrl || state.messageSettings.content.length === 0;
+            return !state.validWebhookUrl || state.message.content.length === 0;
         },
         disableEditButton(state) {
-            return !state.validWebhookUrl || state.messageSettings.content.length === 0 || state.messageSettings.messageId.length === 0;
+            return !state.validWebhookUrl || state.message.content.length === 0 || state.message.id.length === 0;
+        },
+        disableLoadButton(state) {
+            return !state.validWebhookUrl || state.message.id.length === 0;
         },
         webhookUrlError(state) {
-            return !state.validWebhookUrl && state.webhookSettings.webhookUrl.length !== 0;
+            return !state.validWebhookUrl && state.webhook.url.length !== 0;
         }
     },
     mutations: {
         setMessageId(state, messageId) {
-            state.messageSettings.messageId = messageId;
+            state.message.id = messageId;
         },
         extractMessageId(state) {
-            const matchMessageUrl = state.messageSettings.messageId.match(/https:\/\/discord.com\/channels\/[0-9]+\/[0-9]+\/([0-9]+)/);
-            if (matchMessageUrl) state.messageSettings.messageId = matchMessageUrl[1];
+            const matchMessageUrl = state.message.id.match(/https:\/\/discord.com\/channels\/[0-9]+\/[0-9]+\/([0-9]+)/);
+            if (matchMessageUrl) state.message.id = matchMessageUrl[1];
         },
         setContent(state, content) {
-            state.messageSettings.content = content;
+            state.message.content = content;
         },
         setWebhookUrl(state, webhookUrl) {
-            state.webhookSettings.webhookUrl = webhookUrl;
+            state.webhook.url = webhookUrl;
         },
         setValidWebhookUrl(state, valid) {
             state.validWebhookUrl = valid;
         },
         setUsername(state, username) {
-            state.webhookSettings.username = username;
+            state.webhook.username = username;
         },
         setAvatarUrl(state, avatarUrl) {
-            state.webhookSettings.avatarUrl = avatarUrl;
+            state.webhook.avatarUrl = avatarUrl;
         },
         setSendButtonText(state, sendButtonText) {
             state.sendButtonText = sendButtonText;
         },
         setEditButtonText(state, editButtonText) {
             state.editButtonText = editButtonText;
+        },
+        setLoadButtonText(state, loadButtonText) {
+            state.loadButtonText = loadButtonText;
         }
     },
     actions: {
@@ -66,16 +73,16 @@ export default createStore({
             commit('setWebhookUrl', webhookUrl);
         },
         async sendMessage({ state, commit }) {
-            const response  = await fetch(state.webhookSettings.webhookUrl + '?wait=true', {
+            const response  = await fetch(state.webhook.url + '?wait=true', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    username: state.webhookSettings.username,
-                    avatar_url: state.webhookSettings.avatarUrl,
-                    content: state.messageSettings.content
+                    username: state.webhook.username,
+                    avatar_url: state.webhook.avatarUrl,
+                    content: state.message.content
                 })
             });
             const message = await response.json();
@@ -90,15 +97,15 @@ export default createStore({
             }, 1000);
         },
         async editMessage({ state, commit }) {
-            const response  = await fetch(`${state.webhookSettings.webhookUrl}/messages/${state.messageSettings.messageId}`, {
+            const response  = await fetch(`${state.webhook.url}/messages/${state.message.id}`, {
                 method: 'PATCH',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    username: state.webhookSettings.username,
-                    content: state.messageSettings.content
+                    username: state.webhook.username,
+                    content: state.message.content
                 })
             });
             if (response.ok) {
@@ -108,6 +115,19 @@ export default createStore({
             }
             setTimeout(() => {
                 commit('setEditButtonText', 'Edit');
+            }, 1000);
+        },
+        async loadMessage({ state, commit }) {
+            const response = await fetch(`${state.webhook.url}/messages/${state.message.id}`);
+            if (response.ok) {
+                const message = await response.json();
+                commit('setContent', message.content);
+                commit('setLoadButtonText', 'Message loaded!');
+            } else {
+                commit('setLoadButtonText', 'Failed to load message!');
+            }
+            setTimeout(() => {
+                commit('setLoadButtonText', 'Load');
             }, 1000);
         }
     }

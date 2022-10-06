@@ -35,7 +35,7 @@ export default {
   computed: {
     messageId: {
       get() {
-        return this.$store.state.messageSettings.messageId;
+        return this.$store.state.message.id;
       },
       set(messageId) {
         this.$store.commit('setMessageId', messageId)
@@ -43,7 +43,7 @@ export default {
     },
     content: {
       get() {
-        return this.$store.state.messageSettings.content;
+        return this.$store.state.message.content;
       },
       set(content) {
         this.$store.commit('setContent', content);
