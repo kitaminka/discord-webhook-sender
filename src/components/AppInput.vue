@@ -1,6 +1,5 @@
 <template>
   <input
-      type="text"
       :value="modelValue"
       :placeholder="placeholder"
       @input="updateInput"
@@ -12,8 +11,8 @@
 export default {
   name: 'AppInput',
   props: [
-      'placeholder',
-      'modelValue'
+    'placeholder',
+    'modelValue'
   ],
   methods: {
     updateInput(event) {
