@@ -1,15 +1,26 @@
 <template>
   <webhook-settings/>
   <message-settings/>
+  <app-accordion header="Test header">
+    <p>Test content</p>
+    <p>Test content</p>
+    <p>Test content</p>
+    <p>Test content</p>
+    <p>Test content</p>
+    <p>Test content</p>
+    <p>Test content</p>
+  </app-accordion>
 </template>
 
 <script>
 import WebhookSettings from '@/components/WebhookSettings';
 import MessageSettings from '@/components/MessageSettings';
+import AppAccordion from '@/components/AppAccordion';
 
 export default {
   name: 'App',
   components: {
+    AppAccordion,
     MessageSettings,
     WebhookSettings
   }
@@ -30,7 +41,7 @@ html, body {
 #app {
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
-  grid-template-rows: min-content min-content;
+  grid-template-rows: min-content min-content min-content;
   padding: 20px;
   grid-gap: 20px;
   box-sizing: border-box;
