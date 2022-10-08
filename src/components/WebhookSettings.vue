@@ -84,36 +84,36 @@ export default {
 </script>
 
 <style scoped>
-  .webhook-settings {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-column-start: 2;
-    padding: 30px;
-    border-radius: 5px;
-    background-color: #121225;
-  }
-  .webhook-settings__header {
-    margin-bottom: 15px;
-    grid-column-start: 1;
-    grid-column-end: 3;
-  }
-  .webhook-settings__input {
-    margin: 5px 0;
-    box-sizing: border-box;
-    width: 100%;
-  }
-  .webhook-settings__webhook-url {
-    grid-column-start: 1;
-    grid-column-end: 3;
-  }
-  .webhook-settings__username {
-    margin-right: 10px;
-  }
-  .webhook-settings__buttons {
-    margin-top: 10px;
-    box-sizing: border-box;
-  }
-  .webhook-settings__button {
-    margin-right: 10px;
-  }
+.webhook-settings {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-start: 2;
+  padding: 30px;
+  border-radius: 5px;
+  background-color: #121225;
+}
+.webhook-settings__header {
+  margin-bottom: 15px;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+.webhook-settings__input {
+  margin: 5px 0;
+  box-sizing: border-box;
+  width: 100%;
+}
+.webhook-settings__webhook-url {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+.webhook-settings__username {
+  margin-right: 10px;
+}
+.webhook-settings__buttons {
+  margin-top: 10px;
+  box-sizing: border-box;
+}
+.webhook-settings__button {
+  margin-right: 10px;
+}
 </style>

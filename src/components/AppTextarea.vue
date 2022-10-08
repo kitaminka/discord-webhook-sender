@@ -26,19 +26,19 @@ export default {
 </script>
 
 <style scoped>
-  .textarea {
-    resize: none;
-    outline: none;
-    color: white;
-    padding: 7px;
-    font-size: 15px;
-    border: 3px solid #494962;
-    background-color: #13132a;
-    border-radius: 5px;
-    font-family: 'Roboto', sans-serif;
-    transition: background-color ease 0.2s;
-  }
-  .textarea:focus {
-    background-color: #252549;
-  }
+.textarea {
+  resize: none;
+  outline: none;
+  color: white;
+  padding: 7px;
+  font-size: 15px;
+  border: 3px solid #494962;
+  background-color: #13132a;
+  border-radius: 5px;
+  font-family: 'Roboto', sans-serif;
+  transition: background-color ease 0.2s;
+}
+.textarea:focus {
+  background-color: #252549;
+}
 </style>

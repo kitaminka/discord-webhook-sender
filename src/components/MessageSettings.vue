@@ -54,24 +54,24 @@ export default {
 </script>
 
 <style scoped>
-  .message-settings {
-    grid-column-start: 2;
-    padding: 30px;
-    border-radius: 5px;
-    background-color: #121225;
-  }
-  .message-settings__header {
-    margin-bottom: 15px;
-  }
-  .message-settings__input {
-    margin: 5px 0;
-    box-sizing: border-box;
-    width: 100%;
-  }
-  .message-settings__textarea {
-    box-sizing: border-box;
-    margin: 5px 0;
-    width: 100%;
-    height: 100px;
-  }
+.message-settings {
+  grid-column-start: 2;
+  padding: 30px;
+  border-radius: 5px;
+  background-color: #121225;
+}
+.message-settings__header {
+  margin-bottom: 15px;
+}
+.message-settings__input {
+  margin: 5px 0;
+  box-sizing: border-box;
+  width: 100%;
+}
+.message-settings__textarea {
+  box-sizing: border-box;
+  margin: 5px 0;
+  width: 100%;
+  height: 100px;
+}
 </style>
