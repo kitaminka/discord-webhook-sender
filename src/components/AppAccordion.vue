@@ -30,25 +30,25 @@ export default {
 
 <style scoped>
 .accordion {
-  padding: 15px;
   border-radius: 5px;
   background-color: #121225;
   grid-column-start: 2;
+  overflow: hidden;
+}
+.accordion__header {
+  padding: 15px;
 }
 .accordion__content {
-  height: 100px;
+  max-height: 100px;
+  padding: 0 15px 15px 15px;
 }
 
-.v-enter-active {
-  transition: opacity 0.4s ease, height 0.2s ease, margin 0.2s ease;
+.v-enter-active, .v-leave-active {
+  transition: max-height 0.4s linear;
 }
-.v-leave-active {
-  transition: opacity 0.2s ease, height 0.4s ease, margin 0.4s ease;
-}
+
 .v-enter-from,
 .v-leave-to {
-  height: 0;
-  opacity: 0;
-  margin: 0;
+  max-height: 0;
 }
 </style>
