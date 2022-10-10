@@ -1,13 +1,7 @@
 <template>
   <webhook-settings/>
   <message-settings/>
-  <app-accordion header="Test header">
-    <p>Test content</p>
-    <p>Test content</p>
-    <p>Test content</p>
-    <p>Test content</p>
-    <p>Test content</p>
-    <p>Test content</p>
+  <app-accordion header="Message settings" show-default="true">
     <p>Test content</p>
   </app-accordion>
 </template>
