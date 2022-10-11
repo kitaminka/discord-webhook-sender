@@ -55,9 +55,6 @@ export default {
 </script>
 
 <style scoped>
-.message-settings {
-  grid-column-start: 2;
-}
 .message-settings__input {
   margin: 5px 0;
   box-sizing: border-box;

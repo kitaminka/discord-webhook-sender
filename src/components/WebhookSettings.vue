@@ -85,9 +85,6 @@ export default {
 </script>
 
 <style scoped>
-.webhook-settings {
-  grid-column-start: 2;
-}
 .webhook-settings__input {
   margin: 5px 0;
   box-sizing: border-box;

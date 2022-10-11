@@ -1,6 +1,6 @@
 <template>
-  <webhook-settings/>
-  <message-settings/>
+  <webhook-settings class="webhook-settings"/>
+  <message-settings class="message-settings"/>
 </template>
 
 <script>
@@ -38,6 +38,11 @@ html, body {
   min-height: 100%;
   font-family: 'Roboto', sans-serif;
   background-color: #030318ff;
+  /*background-color: #16163f;*/
   color: white;
+}
+
+.webhook-settings, .message-settings {
+  grid-column-start: 2;
 }
 </style>
