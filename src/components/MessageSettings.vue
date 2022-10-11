@@ -1,6 +1,5 @@
 <template>
-  <div class="message-settings">
-    <h3 class="message-settings__header">Message settings</h3>
+  <app-accordion header="Message settings" show-default="true" class="message-settings">
     <div class="message-settings__message-id">
       <p>Message ID or URL</p>
       <app-input type="text" class="message-settings__input" placeholder="https://discord.com/channels/..." @focusout="extractMessageId" v-model="messageId"/>
@@ -10,7 +9,7 @@
       <app-textarea class="message-settings__textarea" placeholder="Some text" maxlength="2000" v-model="content"/>
       <error-message :show="content.length === 0">Message cannot be empty.</error-message>
     </div>
-  </div>
+  </app-accordion>
 </template>
 
 <script>
@@ -19,10 +18,12 @@ import { mapMutations } from 'vuex';
 import AppTextarea from '@/components/AppTextarea';
 import ErrorMessage from '@/components/ErrorMessage';
 import AppInput from '@/components/AppInput';
+import AppAccordion from '@/components/AppAccordion';
 
 export default {
   name: 'MessageSettings',
   components: {
+    AppAccordion,
     AppInput,
     ErrorMessage,
     AppTextarea
@@ -56,12 +57,6 @@ export default {
 <style scoped>
 .message-settings {
   grid-column-start: 2;
-  padding: 30px;
-  border-radius: 5px;
-  background-color: #121225;
-}
-.message-settings__header {
-  margin-bottom: 15px;
 }
 .message-settings__input {
   margin: 5px 0;

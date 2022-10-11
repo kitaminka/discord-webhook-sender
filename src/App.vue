@@ -1,20 +1,15 @@
 <template>
   <webhook-settings/>
   <message-settings/>
-  <app-accordion header="Message settings" show-default="true">
-    <p>Test content</p>
-  </app-accordion>
 </template>
 
 <script>
 import WebhookSettings from '@/components/WebhookSettings';
 import MessageSettings from '@/components/MessageSettings';
-import AppAccordion from '@/components/AppAccordion';
 
 export default {
   name: 'App',
   components: {
-    AppAccordion,
     MessageSettings,
     WebhookSettings
   }

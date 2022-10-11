@@ -41,7 +41,6 @@ export default {
 .accordion {
   border-radius: 5px;
   background-color: #121225;
-  grid-column-start: 2;
   overflow: hidden;
 }
 .accordion__header {
