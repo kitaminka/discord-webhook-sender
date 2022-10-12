@@ -1,15 +1,18 @@
 <template>
   <webhook-settings class="webhook-settings"/>
   <message-settings class="message-settings"/>
+  <embed-settings class="embed-settings"/>
 </template>
 
 <script>
 import WebhookSettings from '@/components/WebhookSettings';
 import MessageSettings from '@/components/MessageSettings';
+import EmbedSettings from '@/components/EmbedSettings';
 
 export default {
   name: 'App',
   components: {
+    EmbedSettings,
     MessageSettings,
     WebhookSettings
   }
@@ -42,7 +45,16 @@ html, body {
   color: white;
 }
 
-.webhook-settings, .message-settings {
+.webhook-settings, .message-settings, .embed-settings {
   grid-column-start: 2;
+}
+
+@media only screen and (max-width: 800px) {
+  #app {
+    grid-template-columns: 1fr;
+  }
+  .webhook-settings, .message-settings, .embed-settings {
+    grid-column-start: 1;
+  }
 }
 </style>
