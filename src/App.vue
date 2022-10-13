@@ -1,7 +1,12 @@
 <template>
-  <webhook-settings class="webhook-settings"/>
-  <message-settings class="message-settings"/>
-  <embed-settings class="embed-settings"/>
+  <header class="header">
+    <h2>discord-webhook-sender</h2>
+  </header>
+  <main class="main">
+    <webhook-settings class="webhook-settings"/>
+    <message-settings class="message-settings"/>
+    <embed-settings class="embed-settings"/>
+  </main>
 </template>
 
 <script>
@@ -31,6 +36,19 @@ html, body {
   height: 100%;
 }
 #app {
+  font-family: 'Roboto', sans-serif;
+  color: white;
+  background-color: #030318ff;
+  /*background-color: #16163f;*/
+  display: grid;
+  width: 100%;
+  min-height: 100%;
+}
+.header {
+  justify-self: center;
+  align-self: center;
+}
+.main {
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
   grid-template-rows: min-content min-content min-content;
@@ -39,12 +57,7 @@ html, body {
   box-sizing: border-box;
   width: 100%;
   min-height: 100%;
-  font-family: 'Roboto', sans-serif;
-  background-color: #030318ff;
-  /*background-color: #16163f;*/
-  color: white;
 }
-
 .webhook-settings, .message-settings, .embed-settings {
   grid-column-start: 2;
 }
