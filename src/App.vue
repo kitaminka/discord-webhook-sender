@@ -32,42 +32,29 @@ export default {
   padding: 0;
 }
 html, body {
-  width: 100%;
-  height: 100%;
-}
-#app {
   font-family: 'Roboto', sans-serif;
   color: white;
   background-color: #030318ff;
-  /*background-color: #16163f;*/
-  display: grid;
   width: 100%;
   min-height: 100%;
 }
 .header {
-  justify-self: center;
-  align-self: center;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
 }
 .main {
-  display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
-  grid-template-rows: min-content min-content min-content;
-  padding: 20px;
-  grid-gap: 20px;
+  padding: 0 20%;
   box-sizing: border-box;
-  width: 100%;
-  min-height: 100%;
 }
 .webhook-settings, .message-settings, .embed-settings {
-  grid-column-start: 2;
+  margin-bottom: 20px;
 }
 
 @media only screen and (max-width: 800px) {
-  #app {
-    grid-template-columns: 1fr;
-  }
-  .webhook-settings, .message-settings, .embed-settings {
-    grid-column-start: 1;
+  .main {
+    padding: 0 20px;
   }
 }
 </style>
