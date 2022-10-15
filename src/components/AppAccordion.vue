@@ -62,7 +62,6 @@ export default {
   transform: rotate(180deg);
 }
 .accordion__content {
-  max-height: min-content;
   padding: 0 15px 15px 15px;
 }
 </style>

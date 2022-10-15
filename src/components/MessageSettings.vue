@@ -1,13 +1,15 @@
 <template>
-  <app-accordion header="Message settings" show-default="true" class="message-settings">
-    <div class="message-settings__message-id">
-      <p>Message ID or URL</p>
-      <app-input type="text" class="message-settings__input" placeholder="https://discord.com/channels/..." @focusout="extractMessageId" v-model="messageId"/>
-    </div>
-    <div class="message-settings__content">
-      <p>Content</p>
-      <app-textarea class="message-settings__textarea" placeholder="Some text" maxlength="2000" v-model="content"/>
-      <error-message :show="content.length === 0">Message cannot be empty.</error-message>
+  <app-accordion header="Message settings" show-default="true">
+    <div class="message-settings">
+      <div class="message-settings__message-id">
+        <p>Message ID or URL</p>
+        <app-input type="text" class="message-settings__input" placeholder="https://discord.com/channels/..." @focusout="extractMessageId" v-model="messageId"/>
+      </div>
+      <div class="message-settings__content">
+        <p>Content</p>
+        <app-textarea class="message-settings__textarea" placeholder="Some text" maxlength="2000" v-model="content"/>
+        <error-message :show="content.length === 0">Message cannot be empty.</error-message>
+      </div>
     </div>
   </app-accordion>
 </template>

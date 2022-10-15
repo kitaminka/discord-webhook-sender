@@ -3,9 +3,9 @@
     <h2>discord-webhook-sender</h2>
   </header>
   <main class="main">
-    <webhook-settings class="webhook-settings"/>
-    <message-settings class="message-settings"/>
-    <embed-settings class="embed-settings"/>
+    <webhook-settings/>
+    <message-settings/>
+    <embed-settings/>
   </main>
 </template>
 
@@ -42,14 +42,13 @@ html, body {
   display: grid;
   justify-content: center;
   align-items: center;
-  height: 50px;
+  padding: 20px;
 }
 .main {
+  display: grid;
+  grid-gap: 20px;
   padding: 0 20%;
   box-sizing: border-box;
-}
-.webhook-settings, .message-settings, .embed-settings {
-  margin-bottom: 20px;
 }
 
 @media only screen and (max-width: 800px) {
