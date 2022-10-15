@@ -1,5 +1,5 @@
 <template>
-  <app-accordion header="Webhook settings" show-default="true">
+  <app-accordion header="Webhook settings" :show-default="true">
     <div class="webhook-settings">
       <div class="webhook-settings__webhook-url">
         <p>Webhook URL*</p>
@@ -17,7 +17,7 @@
       <div class="webhook-settings__buttons">
         <app-button :disabled="disableSendButton" class="webhook-settings__button" @click="sendMessage">{{sendButtonText}}</app-button>
         <app-button :disabled="disableEditButton" class="webhook-settings__button" @click="editMessage">{{editButtonText}}</app-button>
-        <app-button :disabled="disableLoadButton" class="webhook-settings__button" @click="loadMessage">{{loadButtonText}}</app-button>
+        <app-button :disabled="disableLoadButton" class="webhook-settings__button" @click="loadMessage" variant="blue">{{loadButtonText}}</app-button>
       </div>
     </div>
   </app-accordion>

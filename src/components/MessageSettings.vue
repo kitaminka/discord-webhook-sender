@@ -1,5 +1,5 @@
 <template>
-  <app-accordion header="Message settings" show-default="true">
+  <app-accordion header="Message settings" :show-default="true">
     <div class="message-settings">
       <div class="message-settings__message-id">
         <p>Message ID or URL</p>

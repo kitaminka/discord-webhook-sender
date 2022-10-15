@@ -14,7 +14,8 @@ export default createStore({
         message: {
             id: '',
             content: ''
-        }
+        },
+        embeds: []
     },
     getters: {
         disableSendButton(state) {
@@ -61,6 +62,15 @@ export default createStore({
         },
         setLoadButtonText(state, loadButtonText) {
             state.loadButtonText = loadButtonText;
+        },
+        createEmbed(state) {
+            state.embeds.push({
+                id: Date.now(),
+                title: '',
+                description: '',
+                url: '',
+                color: '',
+            })
         }
     },
     actions: {

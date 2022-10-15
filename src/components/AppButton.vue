@@ -1,12 +1,15 @@
 <template>
-  <button class="button">
+  <button class="button" :class="variant">
     <slot/>
   </button>
 </template>
 
 <script>
 export default {
-  name: 'AppButton'
+  name: 'AppButton',
+  props: [
+    'variant'
+  ]
 };
 </script>
 
@@ -31,5 +34,14 @@ export default {
 .button:disabled {
   cursor: not-allowed;
   background-color: #706f6f;
+}
+.blue {
+  background-color: #1770a8;
+}
+.blue:hover {
+  background-color: #135c85;
+}
+.blue:active {
+  background-color: #0f4c75;
 }
 </style>
