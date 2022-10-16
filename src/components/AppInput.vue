@@ -4,7 +4,7 @@
       :placeholder="placeholder"
       @input="updateInput"
       class="input"
-  >
+  />
 </template>
 
 <script>

@@ -8,14 +8,14 @@
       <div class="message-settings__content">
         <p>Content</p>
         <app-textarea class="message-settings__textarea" placeholder="Some text" maxlength="2000" v-model="content"/>
-        <error-message :show="content.length === 0">Message cannot be empty.</error-message>
+        <error-message :show="messageEmptyError">Message cannot be empty.</error-message>
       </div>
     </div>
   </app-accordion>
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 
 import AppTextarea from '@/components/AppTextarea';
 import ErrorMessage from '@/components/ErrorMessage';
@@ -36,6 +36,9 @@ export default {
     ])
   },
   computed: {
+    ...mapGetters([
+      'messageEmptyError'
+    ]),
     messageId: {
       get() {
         return this.$store.state.message.id;

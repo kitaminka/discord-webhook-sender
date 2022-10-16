@@ -5,9 +5,14 @@
         <app-button @click="createEmbed">Create embed</app-button>
       </div>
       <div class="embed-settings__embeds">
-        <div class="embed-settings__embed" v-for="embed in embeds" :key="embed.id">
-          <p>Embed</p>
-        </div>
+        <message-embed
+          class="embed-settings__embed"
+          v-for="embed in embeds"
+          :key="embed.id"
+          :id="embed.id"
+          :title="embed.title"
+          :description="embed.description"
+        />
       </div>
     </div>
   </app-accordion>
@@ -18,10 +23,12 @@ import { mapState, mapMutations } from 'vuex';
 
 import AppAccordion from '@/components/AppAccordion';
 import AppButton from '@/components/AppButton';
+import MessageEmbed from '@/components/MessageEmbed';
 
 export default {
   name: 'EmbedSettings',
   components: {
+    MessageEmbed,
     AppButton,
     AppAccordion
   },

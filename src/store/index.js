@@ -29,6 +29,9 @@ export default createStore({
         },
         webhookUrlError(state) {
             return !state.validWebhookUrl && state.webhook.url.length !== 0;
+        },
+        messageEmptyError(state) {
+            return state.message.content.length === 0 && state.validWebhookUrl && state.webhook.url.length !== 0;
         }
     },
     mutations: {
@@ -71,6 +74,12 @@ export default createStore({
                 url: '',
                 color: '',
             })
+        },
+        setEmbedTitle(state, {id, title}) {
+            state.embeds.find((embed) => embed.id === id).title = title;
+        },
+        setEmbedDescription(state, {id, description}) {
+            state.embeds.find((embed) => embed.id === id).description = description;
         }
     },
     actions: {
