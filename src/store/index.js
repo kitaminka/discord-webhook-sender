@@ -32,7 +32,8 @@ export default createStore({
         },
         messageEmptyError(state) {
             return state.message.content.length === 0 && state.validWebhookUrl && state.webhook.url.length !== 0;
-        }
+        },
+
     },
     mutations: {
         setMessageId(state, messageId) {

@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 
 import AppInput from '@/components/AppInput';
 
@@ -31,25 +31,18 @@ export default {
     'id'
   ],
   watch: {
-    // title() {
-    //   this.editableTitle = this.title;
-    // },
-    // description() {
-    //   console.log(1 )
-    //   this.editableDescription = this.description;
-    // },
-    // editableTitle() {
-    //   this.setEmbedTitle({
-    //     id: this.id,
-    //     title: this.editableTitle
-    //   });
-    // },
-    // editableDescription() {
-    //   this.setEmbedDescription({
-    //     id: this.id,
-    //     title: this.editableDescription
-    //   });
-    // }
+    title() {
+      this.setEmbedTitle({
+        id: this.id,
+        title: this.title
+      });
+    },
+    description() {
+      this.setEmbedDescription({
+        id: this.id,
+        description: this.description
+      });
+    }
   },
   methods: {
     ...mapMutations([
@@ -57,6 +50,16 @@ export default {
       'setEmbedDescription'
     ])
   },
+  computed: {
+    ...mapState([
+      'embeds'
+    ])
+  },
+  created() {
+    const embed = this.embeds.find((embed) => embed.id === this.id);
+    this.title = embed.title;
+    this.description = embed.description;
+  }
 };
 </script>
 
