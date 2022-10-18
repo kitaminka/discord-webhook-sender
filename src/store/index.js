@@ -33,7 +33,9 @@ export default createStore({
         messageEmptyError(state) {
             return state.message.content.length === 0 && state.validWebhookUrl && state.webhook.url.length !== 0;
         },
-
+        embedById: (state) => (id) => {
+            return state.embeds.find((embed) => embed.id === id);
+        }
     },
     mutations: {
         setMessageId(state, messageId) {

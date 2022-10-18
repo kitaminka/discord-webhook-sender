@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex';
+import { mapMutations, mapGetters } from 'vuex';
 
 import AppInput from '@/components/AppInput';
 
@@ -51,12 +51,12 @@ export default {
     ])
   },
   computed: {
-    ...mapState([
-      'embeds'
+    ...mapGetters([
+      'embedById'
     ])
   },
   created() {
-    const embed = this.embeds.find((embed) => embed.id === this.id);
+    const embed = this.embedById(this.id);
     this.title = embed.title;
     this.description = embed.description;
   }
