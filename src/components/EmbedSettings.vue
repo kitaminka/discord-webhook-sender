@@ -10,8 +10,6 @@
           v-for="embed in embeds"
           :key="embed.id"
           :id="embed.id"
-          :title="embed.title"
-          :description="embed.description"
         />
       </div>
     </div>

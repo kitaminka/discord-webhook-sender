@@ -2,11 +2,11 @@
   <div class="embed-message">
     <div class="embed-message__title">
       <p>Embed title</p>
-      <app-input v-model="editableTitle"/>
+      <app-input v-model="title"/>
     </div>
     <div class="embed-message__description">
       <p>Embed description</p>
-      <app-input v-model="editableDescription"/>
+      <app-input v-model="description"/>
     </div>
   </div>
 </template>
@@ -23,14 +23,12 @@ export default {
   },
   data() {
     return {
-      editableTitle: this.title,
-      editableDescription: this.description
+      title: '',
+      description: ''
     }
   },
   props: [
-    'id',
-    'title',
-    'description'
+    'id'
   ],
   watch: {
     // title() {
