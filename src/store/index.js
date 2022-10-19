@@ -78,6 +78,9 @@ export default createStore({
                 color: '',
             })
         },
+        deleteAllEmbeds(state) {
+            state.embeds = [];
+        },
         setEmbedTitle(state, {id, title}) {
             state.embeds.find((embed) => embed.id === id).title = title;
         },

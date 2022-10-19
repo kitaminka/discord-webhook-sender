@@ -3,6 +3,7 @@
     <div class="embed-settings">
       <div class="embed-settings__buttons">
         <app-button @click="createEmbed">Create embed</app-button>
+        <app-button @click="deleteAllEmbeds">Delete all embeds</app-button>
       </div>
       <div class="embed-settings__embeds">
         <message-embed
@@ -32,7 +33,8 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'createEmbed'
+      'createEmbed',
+      'deleteAllEmbeds'
     ])
   },
   computed: {
@@ -44,5 +46,11 @@ export default {
 </script>
 
 <style scoped>
-
+.embed-settings__buttons {
+  justify-content: left;
+  grid-template-columns: auto auto;
+  display: grid;
+  grid-gap: 10px;
+  margin: 5px 0;
+}
 </style>
