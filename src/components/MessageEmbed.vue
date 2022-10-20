@@ -1,5 +1,6 @@
 <template>
   <div class="message-embed">
+    <h3>Embed {{id}}</h3>
     <div class="message-embed__title">
       <p>Embed title</p>
       <app-input class="message-embed__input" v-model="title" placeholder="Some title"/>
@@ -8,6 +9,7 @@
       <p>Embed description</p>
       <app-input class="message-embed__input" v-model="description" placeholder="Some description"/>
     </div>
+    <error-message :show="emptyEmbedError(id)">Embed cannot be empty.</error-message>
   </div>
 </template>
 
@@ -15,10 +17,12 @@
 import { mapMutations, mapGetters } from 'vuex';
 
 import AppInput from '@/components/AppInput';
+import ErrorMessage from '@/components/ErrorMessage';
 
 export default {
   name: 'MessageEmbed',
   components: {
+    ErrorMessage,
     AppInput
   },
   data() {
@@ -52,7 +56,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'embedById'
+      'embedById',
+      'emptyEmbedError'
     ])
   },
   created() {

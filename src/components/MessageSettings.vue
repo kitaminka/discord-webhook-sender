@@ -8,7 +8,7 @@
       <div class="message-settings__content">
         <p>Content</p>
         <app-textarea class="message-settings__textarea" placeholder="Some text" maxlength="2000" v-model="content"/>
-        <error-message :show="messageEmptyError">Message cannot be empty.</error-message>
+        <error-message :show="contentRequiredError">Content cannot be empty.</error-message>
       </div>
     </div>
   </app-accordion>
@@ -37,7 +37,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'messageEmptyError'
+      'contentRequiredError'
     ]),
     messageId: {
       get() {

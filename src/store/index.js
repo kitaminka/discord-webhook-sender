@@ -19,10 +19,22 @@ export default createStore({
     },
     getters: {
         disableSendButton(state) {
-            return !state.validWebhookUrl || state.message.content.length === 0;
+            let emptyEmbeds = false;
+            for (const embed of state.embeds) {
+                if (embed.title.length === 0 || embed.description.length === 0) {
+                    emptyEmbeds = true;
+                }
+            }
+            return !state.validWebhookUrl || emptyEmbeds || (state.message.content.length === 0 && state.embeds.length === 0);
         },
         disableEditButton(state) {
-            return !state.validWebhookUrl || state.message.content.length === 0 || state.message.id.length === 0;
+            let emptyEmbeds = false;
+            for (const embed of state.embeds) {
+                if (embed.title.length === 0 || embed.description.length === 0) {
+                    emptyEmbeds = true;
+                }
+            }
+            return !state.validWebhookUrl || state.message.id.length === 0 || emptyEmbeds || (state.message.content.length === 0 && state.embeds.length === 0);
         },
         disableLoadButton(state) {
             return !state.validWebhookUrl || state.message.id.length === 0;
@@ -30,11 +42,15 @@ export default createStore({
         webhookUrlError(state) {
             return !state.validWebhookUrl && state.webhook.url.length !== 0;
         },
-        messageEmptyError(state) {
-            return state.message.content.length === 0 && state.validWebhookUrl && state.webhook.url.length !== 0;
+        contentRequiredError(state) {
+            return state.message.content.length === 0 && state.validWebhookUrl && state.webhook.url.length !== 0 && state.embeds.length === 0;
         },
         embedById: (state) => (id) => {
             return state.embeds.find((embed) => embed.id === id);
+        },
+        emptyEmbedError: (state) => (id) => {
+            const embed = state.embeds.find((embed) => embed.id === id);
+            return (embed.title.length === 0 || embed.description.length === 0) && state.validWebhookUrl;
         }
     },
     mutations: {
@@ -70,16 +86,19 @@ export default createStore({
             state.loadButtonText = loadButtonText;
         },
         createEmbed(state) {
-            state.embeds.push({
-                id: Date.now(),
-                title: '',
-                description: '',
-                url: '',
-                color: '',
-            })
+            if (state.embeds.length < 10) {
+                state.embeds.push({
+                    id: state.embeds.length + 1,
+                    title: '',
+                    description: ''
+                });
+            }
         },
         deleteAllEmbeds(state) {
             state.embeds = [];
+        },
+        setEmbeds(state, embeds) {
+          state.embeds = embeds;
         },
         setEmbedTitle(state, {id, title}) {
             state.embeds.find((embed) => embed.id === id).title = title;
@@ -107,10 +126,12 @@ export default createStore({
                 body: JSON.stringify({
                     username: state.webhook.username,
                     avatar_url: state.webhook.avatarUrl,
-                    content: state.message.content
+                    content: state.message.content,
+                    embeds: state.embeds
                 })
             });
             const message = await response.json();
+            console.log(message)
             commit('setMessageId', message.id);
             if (response.ok) {
                 commit('setSendButtonText', 'Message sent!');
@@ -130,7 +151,8 @@ export default createStore({
                 },
                 body: JSON.stringify({
                     username: state.webhook.username,
-                    content: state.message.content
+                    content: state.message.content,
+                    embeds: state.embeds
                 })
             });
             if (response.ok) {
@@ -147,6 +169,7 @@ export default createStore({
             if (response.ok) {
                 const message = await response.json();
                 commit('setContent', message.content);
+                commit('setEmbeds', message.embeds);
                 commit('setLoadButtonText', 'Message loaded!');
             } else {
                 commit('setLoadButtonText', 'Failed to load message!');
