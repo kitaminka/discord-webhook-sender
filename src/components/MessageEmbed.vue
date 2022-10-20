@@ -1,12 +1,12 @@
 <template>
-  <div class="embed-message">
-    <div class="embed-message__title">
+  <div class="message-embed">
+    <div class="message-embed__title">
       <p>Embed title</p>
-      <app-input v-model="title"/>
+      <app-input class="message-embed__input" v-model="title" placeholder="Some title"/>
     </div>
-    <div class="embed-message__description">
+    <div class="message-embed__description">
       <p>Embed description</p>
-      <app-input v-model="description"/>
+      <app-input class="message-embed__input" v-model="description" placeholder="Some description"/>
     </div>
   </div>
 </template>
@@ -64,5 +64,10 @@ export default {
 </script>
 
 <style scoped>
-
+.message-embed__title {
+  margin: 5px 0;
+}
+.message-embed__input {
+  margin: 5px 0;
+}
 </style>
