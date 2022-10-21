@@ -44,4 +44,8 @@ export default {
 .blue:active {
   background-color: #0f4c75;
 }
+.blue:disabled {
+  cursor: not-allowed;
+  background-color: #706f6f;
+}
 </style>

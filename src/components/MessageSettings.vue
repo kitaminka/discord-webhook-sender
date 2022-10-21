@@ -8,14 +8,14 @@
       <div class="message-settings__content">
         <p>Content</p>
         <app-textarea class="message-settings__textarea" placeholder="Some text" maxlength="2000" v-model="content"/>
-        <error-message :show="contentRequiredError">Content cannot be empty.</error-message>
+        <error-message :show="emptyContentError">Content cannot be empty.</error-message>
       </div>
     </div>
   </app-accordion>
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 
 import AppTextarea from '@/components/AppTextarea';
 import ErrorMessage from '@/components/ErrorMessage';
@@ -36,9 +36,15 @@ export default {
     ])
   },
   computed: {
-    ...mapGetters([
-      'contentRequiredError'
+    ...mapState([
+      'webhook',
+      'message',
+      'embeds',
+      'validWebhookUrl'
     ]),
+    emptyContentError() {
+      return this.message.content.length === 0 && this.validWebhookUrl && this.webhook.url.length !== 0 && this.embeds.length === 0;
+    },
     messageId: {
       get() {
         return this.$store.state.message.id;

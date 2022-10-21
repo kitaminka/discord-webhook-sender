@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 import AppButton from '@/components/AppButton';
 import AppInput from '@/components/AppInput';
@@ -48,16 +48,31 @@ export default {
   },
   computed: {
     ...mapState([
+      'webhook',
+      'message',
+      'embeds',
+      'validWebhookUrl',
       'sendButtonText',
       'editButtonText',
       'loadButtonText'
     ]),
-    ...mapGetters([
-      'disableSendButton',
-      'disableEditButton',
-      'disableLoadButton',
-      'webhookUrlError'
-    ]),
+    webhookUrlError() {
+      return !this.validWebhookUrl && this.webhook.url.length !== 0;
+    },
+    disableSendButton() {
+      for (const embed of this.embeds) {
+        if (embed.title.length === 0 && embed.description.length === 0) {
+          return true;
+        }
+      }
+      return !this.validWebhookUrl || (this.message.content.length === 0 && this.embeds.length === 0);
+    },
+    disableEditButton() {
+      return this.disableSendButton || this.message.id.length === 0;
+    },
+    disableLoadButton() {
+      return !this.validWebhookUrl || this.message.id.length === 0;
+    },
     webhookUrl: {
       get() {
         return this.$store.state.webhook.url;

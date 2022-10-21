@@ -18,39 +18,8 @@ export default createStore({
         embeds: []
     },
     getters: {
-        disableSendButton(state) {
-            let emptyEmbeds = false;
-            for (const embed of state.embeds) {
-                if (embed.title.length === 0 || embed.description.length === 0) {
-                    emptyEmbeds = true;
-                }
-            }
-            return !state.validWebhookUrl || emptyEmbeds || (state.message.content.length === 0 && state.embeds.length === 0);
-        },
-        disableEditButton(state) {
-            let emptyEmbeds = false;
-            for (const embed of state.embeds) {
-                if (embed.title.length === 0 || embed.description.length === 0) {
-                    emptyEmbeds = true;
-                }
-            }
-            return !state.validWebhookUrl || state.message.id.length === 0 || emptyEmbeds || (state.message.content.length === 0 && state.embeds.length === 0);
-        },
-        disableLoadButton(state) {
-            return !state.validWebhookUrl || state.message.id.length === 0;
-        },
-        webhookUrlError(state) {
-            return !state.validWebhookUrl && state.webhook.url.length !== 0;
-        },
-        contentRequiredError(state) {
-            return state.message.content.length === 0 && state.validWebhookUrl && state.webhook.url.length !== 0 && state.embeds.length === 0;
-        },
         embedById: (state) => (id) => {
             return state.embeds.find((embed) => embed.id === id);
-        },
-        emptyEmbedError: (state) => (id) => {
-            const embed = state.embeds.find((embed) => embed.id === id);
-            return (embed.title.length === 0 || embed.description.length === 0) && state.validWebhookUrl;
         }
     },
     mutations: {

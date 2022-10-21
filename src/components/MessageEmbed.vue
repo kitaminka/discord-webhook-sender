@@ -9,12 +9,12 @@
       <p>Embed description</p>
       <app-input class="message-embed__input" v-model="description" placeholder="Some description"/>
     </div>
-    <error-message :show="emptyEmbedError(id)">Embed cannot be empty.</error-message>
+    <error-message :show="emptyEmbedError">Embed cannot be empty.</error-message>
   </div>
 </template>
 
 <script>
-import { mapMutations, mapGetters } from 'vuex';
+import {mapState, mapMutations, mapGetters} from 'vuex';
 
 import AppInput from '@/components/AppInput';
 import ErrorMessage from '@/components/ErrorMessage';
@@ -55,15 +55,16 @@ export default {
     ])
   },
   computed: {
+    ...mapState([
+      'validWebhookUrl'
+    ]),
     ...mapGetters([
-      'embedById',
-      'emptyEmbedError'
-    ])
-  },
-  created() {
-    const embed = this.embedById(this.id);
-    this.title = embed.title;
-    this.description = embed.description;
+      'embedById'
+    ]),
+    emptyEmbedError() {
+      const embed = this.embedById(this.id);
+      return (embed.title.length === 0 && embed.description.length === 0) && this.validWebhookUrl;
+    }
   }
 };
 </script>
