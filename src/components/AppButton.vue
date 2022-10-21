@@ -14,6 +14,8 @@ export default {
 </script>
 
 <style scoped>
+@import "@/styles/main.css";
+
 .button {
   color: white;
   padding: 7px 12px;
@@ -32,19 +34,6 @@ export default {
   background-color: #1c4f28;
 }
 .button:disabled {
-  cursor: not-allowed;
-  background-color: #706f6f;
-}
-.blue {
-  background-color: #1770a8;
-}
-.blue:hover {
-  background-color: #135c85;
-}
-.blue:active {
-  background-color: #0f4c75;
-}
-.blue:disabled {
   cursor: not-allowed;
   background-color: #706f6f;
 }
