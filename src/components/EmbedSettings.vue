@@ -2,8 +2,8 @@
   <app-accordion header="Embed settings" :show-default="true">
     <div class="embed-settings">
       <div class="embed-settings__buttons">
-        <app-button @click="createEmbed">Create embed</app-button>
-        <app-button @click="deleteAllEmbeds">Delete all embeds</app-button>
+        <app-button @click="createEmbed" :disabled="disableCreateEmbed">Create embed</app-button>
+        <app-button @click="deleteAllEmbeds" :disabled="disableDeleteEmbeds" variant="danger">Delete all embeds</app-button>
       </div>
       <div class="embed-settings__embeds">
         <message-embed
@@ -40,7 +40,13 @@ export default {
   computed: {
     ...mapState([
       'embeds'
-    ])
+    ]),
+    disableCreateEmbed() {
+      return this.embeds.length >= 10;
+    },
+    disableDeleteEmbeds() {
+      return this.embeds.length <= 0;
+    }
   }
 };
 </script>

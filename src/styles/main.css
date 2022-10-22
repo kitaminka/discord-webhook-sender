@@ -1,13 +1,49 @@
-.blue {
-    background-color: #1770a8;
+.primary {
+    /*--button-background-color: #399a58;*/
+    /*--button-background-color-hover: #246738;*/
+    /*--button-background-color-active: #246738;*/
+    background-color: #399a58;
 }
-.blue:hover {
-    background-color: #135c85;
+.primary:hover {
+    --button-background-color: #399a58;
+    background-color: #246738;
 }
-.blue:active {
-    background-color: #0f4c75;
+.primary:active {
+    background-color: #1c4f28;
 }
-.blue:disabled {
+.primary:disabled {
+    cursor: not-allowed;
+    background-color: #706f6f;
+}
+.secondary {
+    /*--button-background-color: #138fb6;*/
+    /*--button-background-color-hover: #107494;*/
+    /*--button-background-color-active: #0c5772;*/
+    background-color: #138fb6;
+}
+.secondary:hover {
+    background-color: #107494;
+}
+.secondary:active {
+    background-color: #0c5772;
+}
+.secondary:disabled {
+    cursor: not-allowed;
+    background-color: #706f6f;
+}
+.danger {
+    /*--button-background-color: #ec3232;*/
+    /*--button-background-color-hover: #107494;*/
+    /*--button-background-color-active: #0c5772;*/
+    background-color: #ec3232;
+}
+.danger:hover {
+    background-color: #b92525;
+}
+.danger:active {
+    background-color: #8f1919;
+}
+.danger:disabled {
     cursor: not-allowed;
     background-color: #706f6f;
 }
