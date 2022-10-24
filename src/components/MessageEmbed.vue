@@ -1,5 +1,5 @@
 <template>
-  <app-accordion :header="`Embed ${id}`" :show-default="true">
+  <app-accordion :header="`Embed ${id}`" :show-default="true" variant="secondary">
     <div class="message-embed">
       <div class="message-embed__title">
         <p>Embed title</p>
@@ -76,8 +76,7 @@ export default {
 .message-embed {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  background-color: #030318ff;
-  grid-gap: 5px;
+  grid-gap: 10px;
 }
 .message-embed__title {
   margin: 5px 0;

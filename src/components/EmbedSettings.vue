@@ -57,11 +57,11 @@ export default {
   grid-template-columns: auto auto;
   display: grid;
   grid-gap: 10px;
-  margin: 5px 0;
+  margin-bottom: 10px;
 }
 .embed-settings__embeds {
   display: grid;
-  grid-gap: 5px;
+  grid-gap: 10px;
   box-sizing: border-box;
 }
 </style>

@@ -2,11 +2,15 @@
     --button-background-color: #399a58;
     --button-background-color-hover: #246738;
     --button-background-color-active: #1c4f28;
+
+    --accordion-background-color: #121225;
 }
 .secondary {
     --button-background-color: #138fb6;
     --button-background-color-hover: #107494;
     --button-background-color-active: #0c5772;
+
+    --accordion-background-color: #030318;
 }
 .danger {
     --button-background-color: #ec3232;

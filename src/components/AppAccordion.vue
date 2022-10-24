@@ -1,5 +1,5 @@
 <template>
-  <div class="accordion">
+  <div class="accordion" :class="variant">
     <div class="accordion__header" @click="toggleShow">
       <div class="accordion__icon" :class="{active: show}">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -22,10 +22,14 @@ export default {
       show: false
     }
   },
-  props: [
-    'header',
-    'showDefault'
-  ],
+  props: {
+    header: String,
+    showDefault: Boolean,
+    variant: {
+      type: String,
+      default: 'primary'
+    }
+  },
   created() {
     this.show = this.$props.showDefault;
   },
@@ -38,9 +42,11 @@ export default {
 </script>
 
 <style scoped>
+@import "@/styles/main.css";
+
 .accordion {
   border-radius: 5px;
-  background-color: #121225;
+  background-color: var(--accordion-background-color);
   overflow: hidden;
 }
 .accordion__header {

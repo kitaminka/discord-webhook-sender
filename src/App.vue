@@ -34,7 +34,7 @@ export default {
 html, body {
   font-family: 'Roboto', sans-serif;
   color: white;
-  background-color: #030318ff;
+  background-color: #030318;
   width: 100%;
   min-height: 100%;
 }
