@@ -59,4 +59,9 @@ export default {
   grid-gap: 10px;
   margin: 5px 0;
 }
+.embed-settings__embeds {
+  display: grid;
+  grid-gap: 5px;
+  box-sizing: border-box;
+}
 </style>

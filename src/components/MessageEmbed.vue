@@ -1,14 +1,16 @@
 <template>
   <app-accordion :header="`Embed ${id}`" :show-default="true">
-    <div class="message-embed__title">
-      <p>Embed title</p>
-      <app-input class="message-embed__input" v-model="title" placeholder="Some title"/>
+    <div class="message-embed">
+      <div class="message-embed__title">
+        <p>Embed title</p>
+        <app-input class="message-embed__input" v-model="title" placeholder="Some title"/>
+      </div>
+      <div class="message-embed__description">
+        <p>Embed description</p>
+        <app-input class="message-embed__input" v-model="description" placeholder="Some description"/>
+      </div>
+      <error-message :show="emptyEmbedError">Embed cannot be empty.</error-message>
     </div>
-    <div class="message-embed__description">
-      <p>Embed description</p>
-      <app-input class="message-embed__input" v-model="description" placeholder="Some description"/>
-    </div>
-    <error-message :show="emptyEmbedError">Embed cannot be empty.</error-message>
   </app-accordion>
 </template>
 
@@ -71,10 +73,21 @@ export default {
 </script>
 
 <style scoped>
+.message-embed {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: #030318ff;
+  grid-gap: 5px;
+}
 .message-embed__title {
   margin: 5px 0;
 }
-.message-embed__input {
+.message-embed__description {
   margin: 5px 0;
+}
+.message-embed__input {
+  box-sizing: border-box;
+  margin: 5px 0;
+  width: 100%;
 }
 </style>
