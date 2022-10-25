@@ -4,12 +4,12 @@
       <div class="message-embed__title">
         <p>Embed title</p>
         <app-input class="message-embed__input" v-model="title" placeholder="Some title"/>
+        <error-message :show="emptyEmbedError">Embed cannot be empty.</error-message>
       </div>
       <div class="message-embed__description">
         <p>Embed description</p>
         <app-input class="message-embed__input" v-model="description" placeholder="Some description"/>
       </div>
-      <error-message :show="emptyEmbedError">Embed cannot be empty.</error-message>
     </div>
   </app-accordion>
 </template>
@@ -78,15 +78,15 @@ export default {
   grid-template-columns: 1fr 1fr;
   grid-gap: 10px;
 }
-.message-embed__title {
-  margin: 5px 0;
-}
-.message-embed__description {
-  margin: 5px 0;
-}
 .message-embed__input {
   box-sizing: border-box;
   margin: 5px 0;
   width: 100%;
+}
+
+@media only screen and (max-width: 800px) {
+  .message-embed {
+    grid-template-columns: auto;
+  }
 }
 </style>
