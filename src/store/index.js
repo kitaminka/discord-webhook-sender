@@ -19,7 +19,7 @@ export default createStore({
     },
     getters: {
         embedById: (state) => (id) => {
-            return state.embeds.find((embed) => embed.id === id);
+            return state.embeds.find((emb) => emb.id === id);
         }
     },
     mutations: {
@@ -80,11 +80,19 @@ export default createStore({
         setEmbeds(state, embeds) {
           state.embeds = embeds;
         },
-        setEmbedTitle(state, {id, title}) {
-            state.embeds.find((embed) => embed.id === id).title = title;
-        },
-        setEmbedDescription(state, {id, description}) {
-            state.embeds.find((embed) => embed.id === id).description = description;
+        updateEmbed(state, embed) {
+            const originalEmbed = state.embeds.find((emb) => emb.id === embed.id);
+            Object.assign(originalEmbed, {
+                ...embed,
+                footer: {
+                    ...originalEmbed.footer,
+                    ...embed.footer
+                },
+                author: {
+                    ...originalEmbed.author,
+                    ...embed.author
+                }
+            });
         }
     },
     actions: {
@@ -111,7 +119,6 @@ export default createStore({
                 })
             });
             const message = await response.json();
-            console.log(message)
             commit('setMessageId', message.id);
             if (response.ok) {
                 commit('setSendButtonText', 'Message sent!');

@@ -61,7 +61,7 @@ export default {
     },
     disableSendButton() {
       for (const embed of this.embeds) {
-        if (embed.title.length === 0 && embed.description.length === 0) {
+        if (embed.title.length === 0 && embed.description.length === 0 && embed.author.name.length === 0) {
           return true;
         }
       }

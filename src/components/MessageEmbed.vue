@@ -3,24 +3,24 @@
     <div class="message-embed">
       <div class="message-embed__author">
         <p>Author</p>
-        <app-input class="message-embed__input" v-model="description" placeholder="Unknown author"/>
+        <app-input class="message-embed__input" v-model="author" placeholder="Some author"/>
       </div>
       <div class="message-embed__author-url">
         <p>Author URL</p>
-        <app-input class="message-embed__input" v-model="description" placeholder="https://example.com/"/>
+        <app-input class="message-embed__input" v-model="authorUrl" placeholder="https://example.com/"/>
       </div>
       <div class="message-embed__author-icon-url">
         <p>Author Icon URL</p>
-        <app-input class="message-embed__input" v-model="description" placeholder="https://example.com/icon.png"/>
+        <app-input class="message-embed__input" v-model="authorIconUrl" placeholder="https://example.com/icon.png"/>
       </div>
       <div class="message-embed__title">
         <p>Title</p>
         <app-input class="message-embed__input" v-model="title" placeholder="Some title"/>
-        <error-message :show="emptyEmbedError">Embed cannot be empty.</error-message>
       </div>
       <div class="message-embed__description">
         <p>Description</p>
-        <app-input class="message-embed__input" v-model="description" placeholder="Some description"/>
+        <app-textarea class="message-settings__textarea" v-model="description" placeholder="Some description" maxlength="2048"/>
+        <error-message :show="emptyEmbedError">Embed cannot be empty.</error-message>
       </div>
     </div>
   </app-accordion>
@@ -32,41 +32,22 @@ import {mapState, mapMutations, mapGetters} from 'vuex';
 import AppInput from '@/components/AppInput';
 import ErrorMessage from '@/components/ErrorMessage';
 import AppAccordion from '@/components/AppAccordion';
+import AppTextarea from '@/components/AppTextarea';
 
 export default {
   name: 'MessageEmbed',
   components: {
+    AppTextarea,
     AppAccordion,
     ErrorMessage,
     AppInput
   },
-  data() {
-    return {
-      title: '',
-      description: ''
-    }
-  },
   props: [
     'id'
   ],
-  watch: {
-    title() {
-      this.setEmbedTitle({
-        id: this.id,
-        title: this.title
-      });
-    },
-    description() {
-      this.setEmbedDescription({
-        id: this.id,
-        description: this.description
-      });
-    }
-  },
   methods: {
     ...mapMutations([
-      'setEmbedTitle',
-      'setEmbedDescription'
+      'updateEmbed'
     ])
   },
   computed: {
@@ -78,8 +59,69 @@ export default {
     ]),
     emptyEmbedError() {
       const embed = this.embedById(this.id);
-      return (embed.title.length === 0 && embed.description.length === 0) && this.validWebhookUrl;
-    }
+      return (embed.title.length === 0 && embed.description.length === 0 && embed.author.name.length === 0) && this.validWebhookUrl;
+    },
+    title: {
+      get() {
+        return this.embedById(this.id).title;
+      },
+      set(title) {
+        this.updateEmbed({
+          id: this.id,
+          title
+        });
+      }
+    },
+    description: {
+      get() {
+        return this.embedById(this.id).description;
+      },
+      set(description) {
+        this.updateEmbed({
+          id: this.id,
+          description
+        });
+      }
+    },
+    author: {
+      get() {
+        return this.embedById(this.id).author.name;
+      },
+      set(author) {
+        this.updateEmbed({
+          id: this.id,
+          author: {
+            name: author
+          }
+        });
+      }
+    },
+    authorUrl: {
+      get() {
+        return this.embedById(this.id).author.url;
+      },
+      set(authorUrl) {
+        this.updateEmbed({
+          id: this.id,
+          author: {
+            url: authorUrl
+          }
+        });
+      }
+    },
+    authorIconUrl: {
+      get() {
+        return this.embedById(this.id).author.icon_url;
+      },
+      set(authorIconUrl) {
+        this.updateEmbed({
+          id: this.id,
+          author: {
+            icon_url: authorIconUrl
+          }
+        });
+      }
+    },
   }
 };
 </script>
@@ -94,6 +136,12 @@ export default {
   box-sizing: border-box;
   margin: 5px 0;
   width: 100%;
+}
+.message-settings__textarea {
+  box-sizing: border-box;
+  margin: 5px 0;
+  width: 100%;
+  height: 100px;
 }
 .message-embed__author {
   grid-column-start: 1;
