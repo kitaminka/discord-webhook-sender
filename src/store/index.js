@@ -59,7 +59,18 @@ export default createStore({
                 state.embeds.push({
                     id: state.embeds.length + 1,
                     title: '',
-                    description: ''
+                    description: '',
+                    url: '',
+                    footer: {
+                        text: '',
+                        icon_url: ''
+                    },
+                    author: {
+                        name: '',
+                        url: '',
+                        icon_url: ''
+                    },
+                    fields: []
                 });
             }
         },

@@ -105,7 +105,7 @@ export default {
 .webhook-settings {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 0 10px;
+  grid-column-gap: 10px;
 }
 .webhook-settings__webhook-url {
   grid-column-start: 1;
