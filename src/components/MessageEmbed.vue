@@ -19,8 +19,16 @@
       </div>
       <div class="message-embed__description">
         <p>Description</p>
-        <app-textarea class="message-settings__textarea" v-model="description" placeholder="Some description" maxlength="2048"/>
+        <app-textarea class="message-settings__textarea" v-model="description" placeholder="Some description" maxlength="4096"/>
         <error-message :show="emptyEmbedError">Embed cannot be empty.</error-message>
+      </div>
+      <div class="message-embed__url">
+        <p>URL</p>
+        <app-input class="message-embed__input" v-model="url" placeholder="https://example.com/"/>
+      </div>
+      <div class="message-embed__color">
+        <p>Color</p>
+        <color-picker class="message-embed__color-picker" v-model="color"/>
       </div>
     </div>
   </app-accordion>
@@ -33,10 +41,12 @@ import AppInput from '@/components/AppInput';
 import ErrorMessage from '@/components/ErrorMessage';
 import AppAccordion from '@/components/AppAccordion';
 import AppTextarea from '@/components/AppTextarea';
+import ColorPicker from '@/components/ColorPicker';
 
 export default {
   name: 'MessageEmbed',
   components: {
+    ColorPicker,
     AppTextarea,
     AppAccordion,
     ErrorMessage,
@@ -122,6 +132,28 @@ export default {
         });
       }
     },
+    url: {
+      get() {
+        return this.embedById(this.id).url;
+      },
+      set(url) {
+        this.updateEmbed({
+          id: this.id,
+          url
+        });
+      }
+    },
+    color: {
+      get() {
+        return '#' + this.embedById(this.id).color.toString(16);
+      },
+      set(color) {
+        this.updateEmbed({
+          id: this.id,
+          color: parseInt(color.substring(1), 16)
+        });
+      }
+    }
   }
 };
 </script>
@@ -142,6 +174,9 @@ export default {
   margin: 5px 0;
   width: 100%;
   height: 100px;
+}
+.message-embed__color-picker {
+  margin: 5px 0;
 }
 .message-embed__author {
   grid-column-start: 1;

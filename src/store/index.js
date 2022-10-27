@@ -61,6 +61,7 @@ export default createStore({
                     title: '',
                     description: '',
                     url: '',
+                    color: 0,
                     footer: {
                         text: '',
                         icon_url: ''
