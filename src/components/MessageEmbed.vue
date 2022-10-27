@@ -145,12 +145,13 @@ export default {
     },
     color: {
       get() {
-        return '#' + this.embedById(this.id).color.toString(16);
+        return `#${this.embedById(this.id).color.toString(16)}`;
       },
       set(color) {
+        const colorInt = parseInt(color.substring(1), 16);
         this.updateEmbed({
           id: this.id,
-          color: parseInt(color.substring(1), 16)
+          color: !isNaN(colorInt) ? colorInt : 0
         });
       }
     }
