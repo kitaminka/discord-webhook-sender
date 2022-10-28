@@ -28,7 +28,7 @@
       </div>
       <div class="message-embed__color">
         <p>Color</p>
-        <color-picker class="message-embed__color-picker" v-model="color"/>
+        <color-picker class="message-embed__color-picker" v-model="color" @focusout="updateColor"/>
       </div>
     </div>
   </app-accordion>
@@ -52,13 +52,29 @@ export default {
     ErrorMessage,
     AppInput
   },
+  data() {
+    return {
+      color: '#000000'
+    }
+  },
   props: [
     'id'
   ],
   methods: {
     ...mapMutations([
       'updateEmbed'
-    ])
+    ]),
+    updateColor() {
+      const colorInt = parseInt(this.color.substring(1), 16);
+      if (!isNaN(colorInt) && colorInt <= 16777215 && this.color.length <= 7) {
+        this.updateEmbed({
+          id: this.id,
+          color: colorInt
+        });
+      } else {
+        this.color = `#${this.embedById(this.id).color.toString(16)}`;
+      }
+    }
   },
   computed: {
     ...mapState([
@@ -143,18 +159,20 @@ export default {
         });
       }
     },
-    color: {
-      get() {
-        return `#${this.embedById(this.id).color.toString(16)}`;
-      },
-      set(color) {
-        const colorInt = parseInt(color.substring(1), 16);
-        this.updateEmbed({
-          id: this.id,
-          color: !isNaN(colorInt) ? colorInt : 0
-        });
-      }
-    }
+    // color: {
+    //   get() {
+    //     return `#${this.embedById(this.id).color.toString(16)}`;
+    //   },
+    //   set(color) {
+    //     const colorInt = parseInt(color.substring(1), 16);
+    //     if (!isNaN(colorInt)) {
+    //       this.updateEmbed({
+    //         id: this.id,
+    //         color: !isNaN(colorInt) ? colorInt : 0
+    //       });
+    //     }
+    //   }
+    // }
   }
 };
 </script>
