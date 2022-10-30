@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <h2>discord-webhook-sender</h2>
+    <h2>Discord Webhook Sender</h2>
   </header>
   <main class="main">
     <webhook-settings/>
