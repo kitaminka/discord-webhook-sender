@@ -1,8 +1,7 @@
 <template>
   <div class="modal">
     <div class="modal__content">
-<!--      <slot/>-->
-      <p>Test content</p>
+      <slot/>
     </div>
   </div>
 </template>
