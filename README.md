@@ -1,16 +1,21 @@
 # discord-webhook-sender
-
-## Project setup
+**Discord webhook** message sender.
+___
+## Installation
+- Clone the repository:
+```bash
+git clone https://github.com/kitaminka/discord-webhook-sender.git
 ```
+- Install dependencies:
+```bash
 yarn install
 ```
-
-### Compiles and hot-reloads for development
-```
+- Start the program in development mode:
+```bash
 yarn serve
 ```
-
-### Compiles and minifies for production
+- Compile for production:
 ```
 yarn build
 ```
+___
