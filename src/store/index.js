@@ -62,14 +62,20 @@ export default createStore({
                     description: '',
                     url: '',
                     color: 0,
-                    footer: {
-                        text: '',
-                        icon_url: ''
-                    },
                     author: {
                         name: '',
                         url: '',
                         icon_url: ''
+                    },
+                    footer: {
+                        text: '',
+                        icon_url: ''
+                    },
+                    image: {
+                        url: ''
+                    },
+                    thumbnail: {
+                        url: ''
                     },
                     fields: []
                 });
@@ -85,14 +91,22 @@ export default createStore({
             const originalEmbed = state.embeds.find((emb) => emb.id === embed.id);
             Object.assign(originalEmbed, {
                 ...embed,
+                author: {
+                    ...originalEmbed.author,
+                    ...embed.author
+                },
                 footer: {
                     ...originalEmbed.footer,
                     ...embed.footer
                 },
-                author: {
-                    ...originalEmbed.author,
-                    ...embed.author
-                }
+                image: {
+                    ...originalEmbed.image,
+                    ...embed.image
+                },
+                thumbnail: {
+                    ...originalEmbed.thumbnail,
+                    ...embed.thumbnail
+                },
             });
         }
     },

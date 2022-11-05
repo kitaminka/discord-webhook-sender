@@ -117,7 +117,7 @@ export default {
   width: 100%;
 }
 .webhook-settings__buttons {
-  margin-top: 10px;
+  margin-top: 5px;
   box-sizing: border-box;
 }
 .webhook-settings__button {

@@ -20,7 +20,6 @@
       <div class="message-embed__description">
         <p>Description</p>
         <app-textarea class="message-settings__textarea" v-model="description" placeholder="Some description" maxlength="4096"/>
-        <error-message :show="emptyEmbedError">Embed cannot be empty.</error-message>
       </div>
       <div class="message-embed__url">
         <p>URL</p>
@@ -29,6 +28,15 @@
       <div class="message-embed__color">
         <p>Color</p>
         <color-picker class="message-embed__color-picker" v-model="color" @focusout="updateColor"/>
+      </div>
+      <div class="message-embed__image-url">
+        <p>Image URL</p>
+        <app-input class="message-embed__input" v-model="imageUrl" placeholder="https://example.com/image.png"/>
+        <error-message :show="emptyEmbedError">Embed cannot be empty.</error-message>
+      </div>
+      <div class="message-embed__thumbnail-url">
+        <p>Thumbnail URL</p>
+        <app-input class="message-embed__input" v-model="thumbnailUrl" placeholder="https://example.com/image.png"/>
       </div>
     </div>
   </app-accordion>
@@ -85,7 +93,7 @@ export default {
     ]),
     emptyEmbedError() {
       const embed = this.embedById(this.id);
-      return (embed.title.length === 0 && embed.description.length === 0 && embed.author.name.length === 0) && this.validWebhookUrl;
+      return (embed.title.length === 0 && embed.description.length === 0 && embed.author.name.length === 0 && embed.image.url.length === 0 && embed.thumbnail.url.length === 0) && this.validWebhookUrl;
     },
     title: {
       get() {
@@ -156,6 +164,32 @@ export default {
         this.updateEmbed({
           id: this.id,
           url
+        });
+      }
+    },
+    imageUrl: {
+      get() {
+        return this.embedById(this.id).image.url;
+      },
+      set(imageUrl) {
+        this.updateEmbed({
+          id: this.id,
+          image: {
+            url: imageUrl
+          }
+        });
+      }
+    },
+    thumbnailUrl: {
+      get() {
+        return this.embedById(this.id).thumbnail.url;
+      },
+      set(thumbnailUrl) {
+        this.updateEmbed({
+          id: this.id,
+          thumbnail: {
+            url: thumbnailUrl
+          }
         });
       }
     }
