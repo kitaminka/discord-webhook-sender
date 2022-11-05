@@ -8,7 +8,7 @@
       </div>
       <h3>{{header}}</h3>
     </div>
-    <div class="accordion__content" v-if="show">
+    <div class="accordion__content" v-show="show">
       <slot/>
     </div>
   </div>

@@ -158,21 +158,7 @@ export default {
           url
         });
       }
-    },
-    // color: {
-    //   get() {
-    //     return `#${this.embedById(this.id).color.toString(16)}`;
-    //   },
-    //   set(color) {
-    //     const colorInt = parseInt(color.substring(1), 16);
-    //     if (!isNaN(colorInt)) {
-    //       this.updateEmbed({
-    //         id: this.id,
-    //         color: !isNaN(colorInt) ? colorInt : 0
-    //       });
-    //     }
-    //   }
-    // }
+    }
   }
 };
 </script>

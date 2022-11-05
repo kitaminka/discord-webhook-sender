@@ -38,11 +38,14 @@ export default {
   border-radius: 5px;
 }
 .color-picker__picker {
+  border: none;
+  height: 100%;
   width: 100%;
 }
 .color-picker__input {
+  padding: 7px;
   outline: none;
-  padding-left: 7px;
+  width: 50%;
   border: none;
   font-size: 15px;
   color: white;
