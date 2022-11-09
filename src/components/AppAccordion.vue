@@ -19,7 +19,7 @@ export default {
   name: 'AppAccordion',
   data() {
     return {
-      show: false
+      show: this.$props.showDefault
     }
   },
   props: {
@@ -29,9 +29,6 @@ export default {
       type: String,
       default: 'primary'
     }
-  },
-  created() {
-    this.show = this.$props.showDefault;
   },
   methods: {
     toggleShow() {
