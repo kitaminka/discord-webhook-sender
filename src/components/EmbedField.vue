@@ -3,16 +3,14 @@
     <div class="embed-field__name">
       <p>Name</p>
       <app-input class="embed-field__input"
-                 :value="field.name"
                  placeholder="Some name"
-                 @input="updateName"/>
+                 v-model="name"/>
     </div>
     <div class="embed-field__value">
       <p>Value</p>
       <app-input class="embed-field__input"
-                 :value="field.value"
                  placeholder="Some value"
-                 @input="updateValue"/>
+                 v-model="value"/>
     </div>
   </app-accordion>
 </template>
@@ -30,16 +28,28 @@ export default {
   props: [
     'field'
   ],
-  methods: {
-    updateName(event) {
-      this.$emit('updateField', {
-        name: event.target.value
-      });
+  computed: {
+    name: {
+      get() {
+        return this.field.name;
+      },
+      set(name) {
+        this.$emit('updateField', {
+          id: this.field.id,
+          name: name,
+        });
+      }
     },
-    updateValue(event) {
-      this.$emit('updateField', {
-        value: event.target.value
-      });
+    value: {
+      get() {
+        return this.field.value;
+      },
+      set(value) {
+        this.$emit('updateField', {
+          id: this.field.id,
+          value: value
+        });
+      }
     }
   }
 };

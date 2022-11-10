@@ -77,12 +77,7 @@ export default createStore({
                     thumbnail: {
                         url: ''
                     },
-                    fields: [
-                        {
-                            name: 'test',
-                            value: 'sdfds'
-                        }
-                    ]
+                    fields: []
                 });
             }
         },
@@ -112,7 +107,24 @@ export default createStore({
                     ...originalEmbed.thumbnail,
                     ...embed.thumbnail
                 },
+                fields: [
+                    ...originalEmbed.fields,
+                    ...embed.fields
+                ]
             });
+        },
+        createEmbedField(state, embedId) {
+            // TODO Add field count check
+            const originalEmbed = state.embeds.find((emb) => emb.id === embedId)
+            originalEmbed.fields.push({
+                id: originalEmbed.fields.length + 1,
+                name: '',
+                value: ''
+            });
+        },
+        updateEmbedField(state, {embedId, field}) {
+            const originalField = state.embeds.find((emb) => emb.id === embedId).fields.find((f) => f.id === field.id);
+            Object.assign(originalField, field);
         }
     },
     actions: {

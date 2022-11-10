@@ -40,26 +40,30 @@
       </div>
       <div class="message-embed__fields">
         <p>Fields</p>
-<!--        <embed-field v-for="(field, index) in embedById(this.embed.id).fields" :field="field" :key="index" @updateField="updateField"/>-->
+        <app-button @click="createEmbedField(embed.id)">Create field</app-button>
+<!--        <app-button @click="deleteAllEmbeds" variant="danger">Delete all fields</app-button>-->
+        <embed-field class="message-embed__field" v-for="field in this.embed.fields" :field="field" :key="field.id" @updateField="updateField"/>
       </div>
     </div>
   </app-accordion>
 </template>
 
 <script>
-import {mapState, mapMutations, mapGetters} from 'vuex';
+import {mapState, mapMutations} from 'vuex';
 
 import AppInput from '@/components/AppInput';
 import ErrorMessage from '@/components/ErrorMessage';
 import AppAccordion from '@/components/AppAccordion';
 import AppTextarea from '@/components/AppTextarea';
 import ColorPicker from '@/components/ColorPicker';
-// import EmbedField from '@/components/EmbedField';
+import EmbedField from '@/components/EmbedField';
+import AppButton from '@/components/AppButton';
 
 export default {
   name: 'MessageEmbed',
   components: {
-    // EmbedField,
+    AppButton,
+    EmbedField,
     ColorPicker,
     AppTextarea,
     AppAccordion,
@@ -79,7 +83,8 @@ export default {
   ],
   methods: {
     ...mapMutations([
-      'updateEmbed'
+      'createEmbedField',
+      'updateEmbedField'
     ]),
     updateColor() {
       const colorInt = parseInt(this.color.substring(1), 16);
@@ -92,21 +97,16 @@ export default {
         this.color = `#${this.embed.color.toString(16)}`;
       }
     },
-    // updateField(event) {
-    //   this.updateEmbed({
-    //     id: this.embed.id,
-    //     fields: [
-    //       event
-    //     ]
-    //   })
-    // }
+    updateField(field) {
+      this.updateEmbedField({
+        embedId: this.embed.id,
+        field
+      });
+    }
   },
   computed: {
     ...mapState([
       'validWebhookUrl'
-    ]),
-    ...mapGetters([
-      'embedById'
     ]),
     emptyEmbedError() {
       return (this.embed.title.length === 0
@@ -249,6 +249,15 @@ export default {
 .message-embed__description {
   grid-column-start: 1;
   grid-column-end: 3;
+}
+.message-embed__fields {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+.message-embed__field {
+  box-sizing: border-box;
+  margin: 5px 0;
+  width: 100%;
 }
 
 @media only screen and (max-width: 800px) {
