@@ -106,11 +106,7 @@ export default createStore({
                 thumbnail: {
                     ...originalEmbed.thumbnail,
                     ...embed.thumbnail
-                },
-                fields: [
-                    ...originalEmbed.fields,
-                    ...embed.fields
-                ]
+                }
             });
         },
         createEmbedField(state, embedId) {

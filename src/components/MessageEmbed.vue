@@ -32,7 +32,6 @@
       <div class="message-embed__image-url">
         <p>Image URL</p>
         <app-input class="message-embed__input" v-model="imageUrl" placeholder="https://example.com/image.png"/>
-        <error-message :show="emptyEmbedError">Embed cannot be empty.</error-message>
       </div>
       <div class="message-embed__thumbnail-url">
         <p>Thumbnail URL</p>
@@ -47,6 +46,7 @@
           <embed-field class="embed-fields__field" v-for="field in this.embed.fields" :field="field" :key="field.id" @updateField="updateField"/>
         </div>
       </app-accordion>
+      <error-message :show="emptyEmbedError">Embed cannot be empty.</error-message>
     </div>
   </app-accordion>
 </template>
@@ -113,11 +113,13 @@ export default {
       'validWebhookUrl'
     ]),
     emptyEmbedError() {
+      // TODO Move this to store and update disableSendButton in WebhookSettings
       return (this.embed.title.length === 0
         && this.embed.description.length === 0
         && this.embed.author.name.length === 0
         && this.embed.image.url.length === 0
-        && this.embed.thumbnail.url.length === 0)
+        && this.embed.thumbnail.url.length === 0
+        && this.embed.fields.length === 0)
         && this.validWebhookUrl;
     },
     disableCreateField() {
@@ -285,7 +287,7 @@ export default {
   .message-embed {
     grid-template-columns: auto;
   }
-  .message-embed__author, .message-embed__title, .message-embed__description {
+  .message-embed__author, .message-embed__title, .message-embed__description, .embed-fields {
     grid-column-start: 1;
     grid-column-end: 2;
   }
