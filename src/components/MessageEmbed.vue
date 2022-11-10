@@ -1,5 +1,5 @@
 <template>
-  <app-accordion :header="`Embed ${id}`" :show-default="true" variant="secondary">
+  <app-accordion :header="`Embed ${embed.id}`" :show-default="true" variant="secondary">
     <div class="message-embed">
       <div class="message-embed__author">
         <p>Author</p>
@@ -15,7 +15,7 @@
       </div>
       <div class="message-embed__title">
         <p>Title</p>
-        <app-input class="message-embed__input" v-model="title" placeholder="Some title"/>
+        <app-input class="message-embed__input" v-model="title" placeholder="Some title" maxlength="256"/>
       </div>
       <div class="message-embed__description">
         <p>Description</p>
@@ -38,16 +38,21 @@
         <p>Thumbnail URL</p>
         <app-input class="message-embed__input" v-model="thumbnailUrl" placeholder="https://example.com/image.png"/>
       </div>
-      <div class="message-embed__fields">
-        <p>Fields</p>
-        <embed-field v-for="(field, index) in embedById(this.id).fields" :field="field" :key="index" @updateField="updateField"/>
-      </div>
+      <app-accordion header="Fields" :show-default="false"  class="embed-fields">
+        <div class="embed-fields__buttons">
+          <app-button @click="createEmbedField(embed.id)" :disabled="disableCreateField">Create field</app-button>
+          <app-button @click="deleteAllEmbedFields(embed.id)" :disabled="disableDeleteFields" variant="danger">Delete all fields</app-button>
+        </div>
+        <div class="embed-fields__fields">
+          <embed-field class="embed-fields__field" v-for="field in this.embed.fields" :field="field" :key="field.id" @updateField="updateField"/>
+        </div>
+      </app-accordion>
     </div>
   </app-accordion>
 </template>
 
 <script>
-import {mapState, mapMutations, mapGetters} from 'vuex';
+import {mapState, mapMutations} from 'vuex';
 
 import AppInput from '@/components/AppInput';
 import ErrorMessage from '@/components/ErrorMessage';
@@ -55,10 +60,12 @@ import AppAccordion from '@/components/AppAccordion';
 import AppTextarea from '@/components/AppTextarea';
 import ColorPicker from '@/components/ColorPicker';
 import EmbedField from '@/components/EmbedField';
+import AppButton from '@/components/AppButton';
 
 export default {
   name: 'MessageEmbed',
   components: {
+    AppButton,
     EmbedField,
     ColorPicker,
     AppTextarea,
@@ -72,77 +79,82 @@ export default {
     }
   },
   props: [
-    'id'
+    'embed'
+  ],
+  emits: [
+    'updateEmbed'
   ],
   methods: {
     ...mapMutations([
-      'updateEmbed'
+      'createEmbedField',
+      'deleteAllEmbedFields',
+      'updateEmbedField'
     ]),
     updateColor() {
       const colorInt = parseInt(this.color.substring(1), 16);
       if (!isNaN(colorInt) && colorInt <= 16777215 && this.color.length <= 7) {
-        this.updateEmbed({
-          id: this.id,
+        this.$emit('updateEmbed', {
+          id: this.embed.id,
           color: colorInt
         });
       } else {
-        this.color = `#${this.embedById(this.id).color.toString(16)}`;
+        this.color = `#${this.embed.color.toString(16)}`;
       }
     },
-    updateField(event) {
-      this.updateEmbed({
-        id: this.id,
-        fields: [
-          event
-        ]
-      })
+    updateField(field) {
+      this.updateEmbedField({
+        embedId: this.embed.id,
+        field
+      });
     }
   },
   computed: {
     ...mapState([
       'validWebhookUrl'
     ]),
-    ...mapGetters([
-      'embedById'
-    ]),
     emptyEmbedError() {
-      const embed = this.embedById(this.id);
-      return (embed.title.length === 0
-        && embed.description.length === 0
-        && embed.author.name.length === 0
-        && embed.image.url.length === 0
-        && embed.thumbnail.url.length === 0)
+      return (this.embed.title.length === 0
+        && this.embed.description.length === 0
+        && this.embed.author.name.length === 0
+        && this.embed.image.url.length === 0
+        && this.embed.thumbnail.url.length === 0)
         && this.validWebhookUrl;
+    },
+    disableCreateField() {
+      return this.embed.fields.length >= 25;
+    },
+    disableDeleteFields() {
+      return this.embed.fields.length <= 0;
     },
     title: {
       get() {
-        return this.embedById(this.id).title;
+        return this.embed.title;
       },
       set(title) {
-        this.updateEmbed({
-          id: this.id,
+        this.$emit('updateEmbed', {
+          id: this.embed.id,
           title
         });
       }
     },
     description: {
       get() {
-        return this.embedById(this.id).description;
+        return this.embed.description;
       },
       set(description) {
-        this.updateEmbed({
-          id: this.id,
+        this.$emit('updateEmbed', {
+          id: this.embed.id,
           description
         });
       }
     },
     author: {
       get() {
-        return this.embedById(this.id).author.name;
+        return this.embed.author.name;
       },
       set(author) {
-        this.updateEmbed({
-          id: this.id,
+        this.$emit('updateEmbed', {
+          id: this.embed.id,
           author: {
             name: author
           }
@@ -151,11 +163,11 @@ export default {
     },
     authorUrl: {
       get() {
-        return this.embedById(this.id).author.url;
+        return this.embed.author.url;
       },
       set(authorUrl) {
-        this.updateEmbed({
-          id: this.id,
+        this.$emit('updateEmbed', {
+          id: this.embed.id,
           author: {
             url: authorUrl
           }
@@ -164,11 +176,11 @@ export default {
     },
     authorIconUrl: {
       get() {
-        return this.embedById(this.id).author.icon_url;
+        return this.embed.author.icon_url;
       },
       set(authorIconUrl) {
-        this.updateEmbed({
-          id: this.id,
+        this.$emit('updateEmbed', {
+          id: this.embed.id,
           author: {
             icon_url: authorIconUrl
           }
@@ -177,22 +189,22 @@ export default {
     },
     url: {
       get() {
-        return this.embedById(this.id).url;
+        return this.embed.url;
       },
       set(url) {
-        this.updateEmbed({
-          id: this.id,
+        this.$emit('updateEmbed', {
+          id: this.embed.id,
           url
         });
       }
     },
     imageUrl: {
       get() {
-        return this.embedById(this.id).image.url;
+        return this.embed.image.url;
       },
       set(imageUrl) {
-        this.updateEmbed({
-          id: this.id,
+        this.$emit('updateEmbed', {
+          id: this.embed.id,
           image: {
             url: imageUrl
           }
@@ -201,11 +213,11 @@ export default {
     },
     thumbnailUrl: {
       get() {
-        return this.embedById(this.id).thumbnail.url;
+        return this.embed.thumbnail.url;
       },
       set(thumbnailUrl) {
-        this.updateEmbed({
-          id: this.id,
+        this.$emit('updateEmbed', {
+          id: this.embed.id,
           thumbnail: {
             url: thumbnailUrl
           }
@@ -247,6 +259,26 @@ export default {
 .message-embed__description {
   grid-column-start: 1;
   grid-column-end: 3;
+}
+.embed-fields {
+  margin-top: 5px;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+.embed-fields__buttons {
+  justify-content: left;
+  grid-template-columns: auto auto;
+  display: grid;
+  grid-gap: 10px;
+  margin-bottom: 10px;
+}
+.embed-fields__fields {
+  display: grid;
+  grid-gap: 10px;
+}
+.embed-fields__field {
+  box-sizing: border-box;
+  width: 100%;
 }
 
 @media only screen and (max-width: 800px) {
