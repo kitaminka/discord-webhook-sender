@@ -114,13 +114,17 @@ export default createStore({
             });
         },
         createEmbedField(state, embedId) {
-            // TODO Add field count check
-            const originalEmbed = state.embeds.find((emb) => emb.id === embedId)
-            originalEmbed.fields.push({
-                id: originalEmbed.fields.length + 1,
-                name: '',
-                value: ''
-            });
+            const originalEmbed = state.embeds.find((emb) => emb.id === embedId);
+            if (originalEmbed.fields.length < 25) {
+                originalEmbed.fields.push({
+                    id: originalEmbed.fields.length + 1,
+                    name: '',
+                    value: ''
+                });
+            }
+        },
+        deleteAllEmbedFields(state, embedId) {
+            state.embeds.find((emb) => emb.id === embedId).fields = [];
         },
         updateEmbedField(state, {embedId, field}) {
             const originalField = state.embeds.find((emb) => emb.id === embedId).fields.find((f) => f.id === field.id);

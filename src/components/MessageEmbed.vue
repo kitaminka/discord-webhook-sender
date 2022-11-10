@@ -15,7 +15,7 @@
       </div>
       <div class="message-embed__title">
         <p>Title</p>
-        <app-input class="message-embed__input" v-model="title" placeholder="Some title"/>
+        <app-input class="message-embed__input" v-model="title" placeholder="Some title" maxlength="256"/>
       </div>
       <div class="message-embed__description">
         <p>Description</p>
@@ -38,12 +38,15 @@
         <p>Thumbnail URL</p>
         <app-input class="message-embed__input" v-model="thumbnailUrl" placeholder="https://example.com/image.png"/>
       </div>
-      <div class="message-embed__fields">
-        <p>Fields</p>
-        <app-button @click="createEmbedField(embed.id)">Create field</app-button>
-<!--        <app-button @click="deleteAllEmbeds" variant="danger">Delete all fields</app-button>-->
-        <embed-field class="message-embed__field" v-for="field in this.embed.fields" :field="field" :key="field.id" @updateField="updateField"/>
-      </div>
+      <app-accordion header="Fields" :show-default="false"  class="embed-fields">
+        <div class="embed-fields__buttons">
+          <app-button @click="createEmbedField(embed.id)" :disabled="disableCreateField">Create field</app-button>
+          <app-button @click="deleteAllEmbedFields(embed.id)" :disabled="disableDeleteFields" variant="danger">Delete all fields</app-button>
+        </div>
+        <div class="embed-fields__fields">
+          <embed-field class="embed-fields__field" v-for="field in this.embed.fields" :field="field" :key="field.id" @updateField="updateField"/>
+        </div>
+      </app-accordion>
     </div>
   </app-accordion>
 </template>
@@ -84,6 +87,7 @@ export default {
   methods: {
     ...mapMutations([
       'createEmbedField',
+      'deleteAllEmbedFields',
       'updateEmbedField'
     ]),
     updateColor() {
@@ -115,6 +119,12 @@ export default {
         && this.embed.image.url.length === 0
         && this.embed.thumbnail.url.length === 0)
         && this.validWebhookUrl;
+    },
+    disableCreateField() {
+      return this.embed.fields.length >= 25;
+    },
+    disableDeleteFields() {
+      return this.embed.fields.length <= 0;
     },
     title: {
       get() {
@@ -250,13 +260,24 @@ export default {
   grid-column-start: 1;
   grid-column-end: 3;
 }
-.message-embed__fields {
+.embed-fields {
+  margin-top: 5px;
   grid-column-start: 1;
   grid-column-end: 3;
 }
-.message-embed__field {
+.embed-fields__buttons {
+  justify-content: left;
+  grid-template-columns: auto auto;
+  display: grid;
+  grid-gap: 10px;
+  margin-bottom: 10px;
+}
+.embed-fields__fields {
+  display: grid;
+  grid-gap: 10px;
+}
+.embed-fields__field {
   box-sizing: border-box;
-  margin: 5px 0;
   width: 100%;
 }
 
