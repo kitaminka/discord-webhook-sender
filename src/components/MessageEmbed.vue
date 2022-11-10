@@ -38,6 +38,10 @@
         <p>Thumbnail URL</p>
         <app-input class="message-embed__input" v-model="thumbnailUrl" placeholder="https://example.com/image.png"/>
       </div>
+      <div class="message-embed__fields">
+        <p>Fields</p>
+        <embed-field v-for="(field, index) in embedById(this.id).fields" :field="field" :key="index" @updateField="updateField"/>
+      </div>
     </div>
   </app-accordion>
 </template>
@@ -50,10 +54,12 @@ import ErrorMessage from '@/components/ErrorMessage';
 import AppAccordion from '@/components/AppAccordion';
 import AppTextarea from '@/components/AppTextarea';
 import ColorPicker from '@/components/ColorPicker';
+import EmbedField from '@/components/EmbedField';
 
 export default {
   name: 'MessageEmbed',
   components: {
+    EmbedField,
     ColorPicker,
     AppTextarea,
     AppAccordion,
@@ -82,6 +88,14 @@ export default {
       } else {
         this.color = `#${this.embedById(this.id).color.toString(16)}`;
       }
+    },
+    updateField(event) {
+      this.updateEmbed({
+        id: this.id,
+        fields: [
+          event
+        ]
+      })
     }
   },
   computed: {
@@ -93,7 +107,12 @@ export default {
     ]),
     emptyEmbedError() {
       const embed = this.embedById(this.id);
-      return (embed.title.length === 0 && embed.description.length === 0 && embed.author.name.length === 0 && embed.image.url.length === 0 && embed.thumbnail.url.length === 0) && this.validWebhookUrl;
+      return (embed.title.length === 0
+        && embed.description.length === 0
+        && embed.author.name.length === 0
+        && embed.image.url.length === 0
+        && embed.thumbnail.url.length === 0)
+        && this.validWebhookUrl;
     },
     title: {
       get() {

@@ -77,7 +77,12 @@ export default createStore({
                     thumbnail: {
                         url: ''
                     },
-                    fields: []
+                    fields: [
+                        {
+                            name: 'test',
+                            value: 'sdfds'
+                        }
+                    ]
                 });
             }
         },
