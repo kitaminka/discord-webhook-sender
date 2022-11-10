@@ -10,7 +10,8 @@
           class="embed-settings__embed"
           v-for="embed in embeds"
           :key="embed.id"
-          :id="embed.id"
+          :embed="embed"
+          @updateEmbed="updateEmbed"
         />
       </div>
     </div>
@@ -34,7 +35,8 @@ export default {
   methods: {
     ...mapMutations([
       'createEmbed',
-      'deleteAllEmbeds'
+      'deleteAllEmbeds',
+      'updateEmbed'
     ])
   },
   computed: {

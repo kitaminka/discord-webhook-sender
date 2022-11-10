@@ -1,5 +1,5 @@
 <template>
-  <app-accordion :header="`Embed ${id}`" :show-default="true" variant="secondary">
+  <app-accordion :header="`Embed ${embed.id}`" :show-default="true" variant="secondary">
     <div class="message-embed">
       <div class="message-embed__author">
         <p>Author</p>
@@ -40,7 +40,7 @@
       </div>
       <div class="message-embed__fields">
         <p>Fields</p>
-        <embed-field v-for="(field, index) in embedById(this.id).fields" :field="field" :key="index" @updateField="updateField"/>
+<!--        <embed-field v-for="(field, index) in embedById(this.embed.id).fields" :field="field" :key="index" @updateField="updateField"/>-->
       </div>
     </div>
   </app-accordion>
@@ -54,12 +54,12 @@ import ErrorMessage from '@/components/ErrorMessage';
 import AppAccordion from '@/components/AppAccordion';
 import AppTextarea from '@/components/AppTextarea';
 import ColorPicker from '@/components/ColorPicker';
-import EmbedField from '@/components/EmbedField';
+// import EmbedField from '@/components/EmbedField';
 
 export default {
   name: 'MessageEmbed',
   components: {
-    EmbedField,
+    // EmbedField,
     ColorPicker,
     AppTextarea,
     AppAccordion,
@@ -72,7 +72,10 @@ export default {
     }
   },
   props: [
-    'id'
+    'embed'
+  ],
+  emits: [
+    'updateEmbed'
   ],
   methods: {
     ...mapMutations([
@@ -81,22 +84,22 @@ export default {
     updateColor() {
       const colorInt = parseInt(this.color.substring(1), 16);
       if (!isNaN(colorInt) && colorInt <= 16777215 && this.color.length <= 7) {
-        this.updateEmbed({
-          id: this.id,
+        this.$emit('updateEmbed', {
+          id: this.embed.id,
           color: colorInt
         });
       } else {
-        this.color = `#${this.embedById(this.id).color.toString(16)}`;
+        this.color = `#${this.embed.color.toString(16)}`;
       }
     },
-    updateField(event) {
-      this.updateEmbed({
-        id: this.id,
-        fields: [
-          event
-        ]
-      })
-    }
+    // updateField(event) {
+    //   this.updateEmbed({
+    //     id: this.embed.id,
+    //     fields: [
+    //       event
+    //     ]
+    //   })
+    // }
   },
   computed: {
     ...mapState([
@@ -106,43 +109,42 @@ export default {
       'embedById'
     ]),
     emptyEmbedError() {
-      const embed = this.embedById(this.id);
-      return (embed.title.length === 0
-        && embed.description.length === 0
-        && embed.author.name.length === 0
-        && embed.image.url.length === 0
-        && embed.thumbnail.url.length === 0)
+      return (this.embed.title.length === 0
+        && this.embed.description.length === 0
+        && this.embed.author.name.length === 0
+        && this.embed.image.url.length === 0
+        && this.embed.thumbnail.url.length === 0)
         && this.validWebhookUrl;
     },
     title: {
       get() {
-        return this.embedById(this.id).title;
+        return this.embed.title;
       },
       set(title) {
-        this.updateEmbed({
-          id: this.id,
+        this.$emit('updateEmbed', {
+          id: this.embed.id,
           title
         });
       }
     },
     description: {
       get() {
-        return this.embedById(this.id).description;
+        return this.embed.description;
       },
       set(description) {
-        this.updateEmbed({
-          id: this.id,
+        this.$emit('updateEmbed', {
+          id: this.embed.id,
           description
         });
       }
     },
     author: {
       get() {
-        return this.embedById(this.id).author.name;
+        return this.embed.author.name;
       },
       set(author) {
-        this.updateEmbed({
-          id: this.id,
+        this.$emit('updateEmbed', {
+          id: this.embed.id,
           author: {
             name: author
           }
@@ -151,11 +153,11 @@ export default {
     },
     authorUrl: {
       get() {
-        return this.embedById(this.id).author.url;
+        return this.embed.author.url;
       },
       set(authorUrl) {
-        this.updateEmbed({
-          id: this.id,
+        this.$emit('updateEmbed', {
+          id: this.embed.id,
           author: {
             url: authorUrl
           }
@@ -164,11 +166,11 @@ export default {
     },
     authorIconUrl: {
       get() {
-        return this.embedById(this.id).author.icon_url;
+        return this.embed.author.icon_url;
       },
       set(authorIconUrl) {
-        this.updateEmbed({
-          id: this.id,
+        this.$emit('updateEmbed', {
+          id: this.embed.id,
           author: {
             icon_url: authorIconUrl
           }
@@ -177,22 +179,22 @@ export default {
     },
     url: {
       get() {
-        return this.embedById(this.id).url;
+        return this.embed.url;
       },
       set(url) {
-        this.updateEmbed({
-          id: this.id,
+        this.$emit('updateEmbed', {
+          id: this.embed.id,
           url
         });
       }
     },
     imageUrl: {
       get() {
-        return this.embedById(this.id).image.url;
+        return this.embed.image.url;
       },
       set(imageUrl) {
-        this.updateEmbed({
-          id: this.id,
+        this.$emit('updateEmbed', {
+          id: this.embed.id,
           image: {
             url: imageUrl
           }
@@ -201,11 +203,11 @@ export default {
     },
     thumbnailUrl: {
       get() {
-        return this.embedById(this.id).thumbnail.url;
+        return this.embed.thumbnail.url;
       },
       set(thumbnailUrl) {
-        this.updateEmbed({
-          id: this.id,
+        this.$emit('updateEmbed', {
+          id: this.embed.id,
           thumbnail: {
             url: thumbnailUrl
           }
