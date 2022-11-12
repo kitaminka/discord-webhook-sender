@@ -3,17 +3,21 @@
     <h3 class="embed-field__header">Field {{field.id}}</h3>
     <div class="embed-field__name">
       <p>Name</p>
-      <app-input class="embed-field__input"
-                 placeholder="Some name"
-                 v-model="name"
-                 maxlength="256"/>
+      <app-input
+        class="embed-field__input"
+        placeholder="Some name"
+        v-model="name"
+        maxlength="256"
+      />
     </div>
     <div class="embed-field__value">
       <p>Value</p>
-      <app-textarea class="embed-field__textarea"
-                    placeholder="Some value"
-                    v-model="value"
-                    maxlength="1024"/>
+      <app-textarea
+        class="embed-field__textarea"
+        placeholder="Some value"
+        v-model="value"
+        maxlength="1024"
+      />
     </div>
   </div>
 </template>

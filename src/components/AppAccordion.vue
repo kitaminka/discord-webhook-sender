@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style scoped>
-@import "@/styles/main.css";
+@import "@/styles/variants.css";
 
 .accordion {
   border-radius: 5px;

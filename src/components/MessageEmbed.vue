@@ -268,13 +268,12 @@ export default {
   grid-template-columns: auto auto;
   display: grid;
   grid-gap: 10px;
-  margin-bottom: 10px;
 }
 .embed-fields__fields {
   display: grid;
-  grid-gap: 10px;
 }
 .embed-fields__field {
+  margin-top: 10px;
   box-sizing: border-box;
   width: 100%;
 }

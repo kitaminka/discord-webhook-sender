@@ -17,7 +17,7 @@ export default {
 </script>
 
 <style scoped>
-@import "@/styles/main.css";
+@import "@/styles/variants.css";
 
 .button {
   color: white;
