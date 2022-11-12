@@ -1,13 +1,13 @@
 <template>
   <div class="color-picker">
     <input
-      class="color-picker__picker"
+      class="picker"
       type="color"
       :value="modelValue"
       @input="updateInput"
     />
     <input
-      class="color-picker__input"
+      class="input"
       type="text"
       :value="modelValue"
       @input="updateInput"
@@ -37,12 +37,12 @@ export default {
   background-color: #13132a;
   border-radius: 5px;
 }
-.color-picker__picker {
+.picker {
   border: none;
   height: 100%;
   width: 100%;
 }
-.color-picker__input {
+.input {
   padding: 7px;
   outline: none;
   width: 50%;

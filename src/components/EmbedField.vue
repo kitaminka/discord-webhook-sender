@@ -1,19 +1,19 @@
 <template>
   <div class="embed-field">
-    <h3 class="embed-field__header">Field {{field.id}}</h3>
-    <div class="embed-field__name">
+    <h3 class="header">Field {{field.id}}</h3>
+    <div class="name">
       <p>Name</p>
       <app-input
-        class="embed-field__input"
+        class="input"
         placeholder="Some name"
         v-model="name"
         maxlength="256"
       />
     </div>
-    <div class="embed-field__value">
+    <div class="value">
       <p>Value</p>
       <app-textarea
-        class="embed-field__textarea"
+        class="textarea"
         placeholder="Some value"
         v-model="value"
         maxlength="1024"
@@ -63,15 +63,12 @@ export default {
 </script>
 
 <style scoped>
-.embed-field__header {
+@import "@/styles/components.css";
+
+.header {
   margin-bottom: 5px;
 }
-.embed-field__input {
-  box-sizing: border-box;
-  margin: 5px 0;
-  width: 100%;
-}
-.embed-field__textarea {
+.textarea {
   box-sizing: border-box;
   margin: 5px 0;
   width: 100%;

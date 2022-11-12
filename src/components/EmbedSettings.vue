@@ -1,13 +1,13 @@
 <template>
   <app-accordion header="Embed settings" :show-default="true">
     <div class="embed-settings">
-      <div class="embed-settings__buttons">
+      <div class="buttons">
         <app-button @click="createEmbed" :disabled="disableCreateEmbed">Create embed</app-button>
         <app-button @click="deleteAllEmbeds" :disabled="disableDeleteEmbeds" variant="danger">Delete all embeds</app-button>
       </div>
-      <div class="embed-settings__embeds">
+      <div class="embeds">
         <message-embed
-          class="embed-settings__embed"
+          class="embed"
           v-for="embed in embeds"
           :key="embed.id"
           :embed="embed"
@@ -54,16 +54,17 @@ export default {
 </script>
 
 <style scoped>
-.embed-settings__buttons {
+.buttons {
   justify-content: left;
   grid-template-columns: auto auto;
   display: grid;
   grid-gap: 10px;
-  margin-bottom: 10px;
 }
-.embed-settings__embeds {
+.embeds {
   display: grid;
-  grid-gap: 10px;
   box-sizing: border-box;
+}
+.embed {
+  margin-top: 10px;
 }
 </style>

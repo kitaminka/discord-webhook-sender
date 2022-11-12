@@ -1,13 +1,13 @@
 <template>
   <app-accordion header="Message settings" :show-default="true">
     <div class="message-settings">
-      <div class="message-settings__message-id">
+      <div class="message-id">
         <p>Message ID or URL</p>
-        <app-input type="text" class="message-settings__input" placeholder="https://discord.com/channels/..." @focusout="extractMessageId" v-model="messageId"/>
+        <app-input type="text" class="input" placeholder="https://discord.com/channels/..." @focusout="extractMessageId" v-model="messageId"/>
       </div>
-      <div class="message-settings__content">
+      <div class="content">
         <p>Content</p>
-        <app-textarea class="message-settings__textarea" placeholder="Some text" maxlength="2000" v-model="content"/>
+        <app-textarea class="textarea" placeholder="Some text" maxlength="2000" v-model="content"/>
         <error-message :show="emptyContentError">Content cannot be empty.</error-message>
       </div>
     </div>
@@ -66,15 +66,9 @@ export default {
 </script>
 
 <style scoped>
-.message-settings__input {
-  margin: 5px 0;
-  box-sizing: border-box;
-  width: 100%;
-}
-.message-settings__textarea {
-  box-sizing: border-box;
-  margin: 5px 0;
-  width: 100%;
+@import "@/styles/components.css";
+
+.textarea {
   height: 100px;
 }
 </style>

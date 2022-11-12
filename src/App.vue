@@ -1,5 +1,5 @@
 <template>
-  <header class="header">
+  <header class="app-header">
     <h2>Discord Webhook Sender</h2>
   </header>
   <main class="main">
@@ -38,7 +38,7 @@ html, body {
   width: 100%;
   min-height: 100%;
 }
-.header {
+.app-header {
   display: grid;
   justify-content: center;
   align-items: center;

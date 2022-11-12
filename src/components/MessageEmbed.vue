@@ -1,72 +1,62 @@
 <template>
   <app-accordion :header="`Embed ${embed.id}`" :show-default="true" variant="secondary">
     <div class="message-embed">
-      <div class="message-embed__author">
+      <div class="author">
         <p>Author</p>
-        <app-input class="message-embed__input" v-model="author" placeholder="Some author"/>
+        <app-input class="input" v-model="author" placeholder="Some author"/>
       </div>
-      <div class="message-embed__author-url">
+      <div class="author-url">
         <p>Author URL</p>
-        <app-input class="message-embed__input" v-model="authorUrl" placeholder="https://example.com/"/>
+        <app-input class="input" v-model="authorUrl" placeholder="https://example.com/"/>
       </div>
-      <div class="message-embed__author-icon-url">
+      <div class="author-icon-url">
         <p>Author Icon URL</p>
-        <app-input class="message-embed__input" v-model="authorIconUrl" placeholder="https://example.com/icon.png"/>
+        <app-input class="input" v-model="authorIconUrl" placeholder="https://example.com/icon.png"/>
       </div>
-      <div class="message-embed__title">
+      <div class="title">
         <p>Title</p>
-        <app-input class="message-embed__input" v-model="title" placeholder="Some title" maxlength="256"/>
+        <app-input class="input" v-model="title" placeholder="Some title" maxlength="256"/>
       </div>
-      <div class="message-embed__description">
+      <div class="description">
         <p>Description</p>
         <app-textarea class="message-settings__textarea" v-model="description" placeholder="Some description" maxlength="4096"/>
       </div>
-      <div class="message-embed__url">
+      <div class="url">
         <p>URL</p>
-        <app-input class="message-embed__input" v-model="url" placeholder="https://example.com/"/>
+        <app-input class="input" v-model="url" placeholder="https://example.com/"/>
       </div>
-      <div class="message-embed__color">
+      <div class="color">
         <p>Color</p>
-        <color-picker class="message-embed__color-picker" v-model="color" @focusout="updateColor"/>
+        <color-picker class="color-picker" v-model="color" @focusout="updateColor"/>
       </div>
-      <div class="message-embed__image-url">
+      <div class="image-url">
         <p>Image URL</p>
-        <app-input class="message-embed__input" v-model="imageUrl" placeholder="https://example.com/image.png"/>
+        <app-input class="input" v-model="imageUrl" placeholder="https://example.com/image.png"/>
       </div>
-      <div class="message-embed__thumbnail-url">
+      <div class="thumbnail-url">
         <p>Thumbnail URL</p>
-        <app-input class="message-embed__input" v-model="thumbnailUrl" placeholder="https://example.com/image.png"/>
+        <app-input class="input" v-model="thumbnailUrl" placeholder="https://example.com/image.png"/>
       </div>
-      <app-accordion header="Fields" :show-default="false"  class="embed-fields">
-        <div class="embed-fields__buttons">
-          <app-button @click="createEmbedField(embed.id)" :disabled="disableCreateField">Create field</app-button>
-          <app-button @click="deleteAllEmbedFields(embed.id)" :disabled="disableDeleteFields" variant="danger">Delete all fields</app-button>
-        </div>
-        <div class="embed-fields__fields">
-          <embed-field class="embed-fields__field" v-for="field in this.embed.fields" :field="field" :key="field.id" @updateField="updateField"/>
-        </div>
-      </app-accordion>
+      <field-list class="field-list" :embed="embed"/>
       <error-message :show="emptyEmbedError">Embed cannot be empty.</error-message>
     </div>
   </app-accordion>
 </template>
 
 <script>
-import { mapState, mapMutations, mapGetters } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 
 import AppInput from '@/components/AppInput';
 import ErrorMessage from '@/components/ErrorMessage';
 import AppAccordion from '@/components/AppAccordion';
 import AppTextarea from '@/components/AppTextarea';
 import ColorPicker from '@/components/ColorPicker';
-import EmbedField from '@/components/EmbedField';
-import AppButton from '@/components/AppButton';
+import FieldList from '@/components/FieldList';
 
 export default {
   name: 'MessageEmbed',
   components: {
-    AppButton,
-    EmbedField,
+    FieldList,
     ColorPicker,
     AppTextarea,
     AppAccordion,
@@ -85,11 +75,6 @@ export default {
     'updateEmbed'
   ],
   methods: {
-    ...mapMutations([
-      'createEmbedField',
-      'deleteAllEmbedFields',
-      'updateEmbedField'
-    ]),
     updateColor() {
       const colorInt = parseInt(this.color.substring(1), 16);
       if (!isNaN(colorInt) && colorInt <= 16777215 && this.color.length <= 7) {
@@ -100,12 +85,6 @@ export default {
       } else {
         this.color = `#${this.embed.color.toString(16)}`;
       }
-    },
-    updateField(field) {
-      this.updateEmbedField({
-        embedId: this.embed.id,
-        field
-      });
     }
   },
   computed: {
@@ -117,12 +96,6 @@ export default {
     ]),
     emptyEmbedError() {
       return this.emptyEmbed(this.embed.id)
-    },
-    disableCreateField() {
-      return this.embed.fields.length >= 25;
-    },
-    disableDeleteFields() {
-      return this.embed.fields.length <= 0;
     },
     title: {
       get() {
@@ -227,62 +200,37 @@ export default {
 </script>
 
 <style scoped>
+@import "@/styles/components.css";
+
 .message-embed {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 10px;
 }
-.message-embed__input {
-  box-sizing: border-box;
-  margin: 5px 0;
-  width: 100%;
-}
 .message-settings__textarea {
-  box-sizing: border-box;
-  margin: 5px 0;
-  width: 100%;
   height: 100px;
 }
-.message-embed__color-picker {
+.color-picker {
   margin: 5px 0;
 }
-.message-embed__author {
+.author {
   grid-column-start: 1;
   grid-column-end: 3;
 }
-.message-embed__title {
+.title {
   grid-column-start: 1;
   grid-column-end: 3;
 }
-.message-embed__description {
+.description {
   grid-column-start: 1;
   grid-column-end: 3;
-}
-.embed-fields {
-  margin-top: 5px;
-  grid-column-start: 1;
-  grid-column-end: 3;
-}
-.embed-fields__buttons {
-  justify-content: left;
-  grid-template-columns: auto auto;
-  display: grid;
-  grid-gap: 10px;
-}
-.embed-fields__fields {
-  display: grid;
-}
-.embed-fields__field {
-  margin-top: 10px;
-  box-sizing: border-box;
-  width: 100%;
 }
 
 @media only screen and (max-width: 800px) {
   .message-embed {
     grid-template-columns: auto;
   }
-  .message-embed__author, .message-embed__title, .message-embed__description, .embed-fields {
+  .author, .title, .description, .field-list {
     grid-column-start: 1;
     grid-column-end: 2;
   }

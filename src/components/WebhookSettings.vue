@@ -1,23 +1,23 @@
 <template>
   <app-accordion header="Webhook settings" :show-default="true">
     <div class="webhook-settings">
-      <div class="webhook-settings__webhook-url">
+      <div class="webhook-url">
         <p>Webhook URL*</p>
-        <app-input type="text" class="webhook-settings__input" placeholder="https://discord.com/api/webhooks/..." v-model="webhookUrl"/>
+        <app-input type="text" class="input" placeholder="https://discord.com/api/webhooks/..." v-model="webhookUrl"/>
         <error-message :show="webhookUrlError">Invalid Webhook URL</error-message>
       </div>
-      <div class="webhook-settings__username">
+      <div class="username">
         <p>Username</p>
-        <app-input type="text" maxlength="80" class="webhook-settings__input" placeholder="Captain Hook" v-model="username"/>
+        <app-input type="text" maxlength="80" class="input" placeholder="Captain Hook" v-model="username"/>
       </div>
-      <div class="webhook-settings__avatar-url">
+      <div class="avatar-url">
         <p>Avatar URL</p>
-        <app-input type="text" class="webhook-settings__input" placeholder="https://example.com/avatar.png" v-model="avatarUrl"/>
+        <app-input type="text" class="input" placeholder="https://example.com/avatar.png" v-model="avatarUrl"/>
       </div>
-      <div class="webhook-settings__buttons">
-        <app-button :disabled="disableSendButton" class="webhook-settings__button" @click="sendMessage">{{sendButtonText}}</app-button>
-        <app-button :disabled="disableEditButton" class="webhook-settings__button" @click="editMessage">{{editButtonText}}</app-button>
-        <app-button :disabled="disableLoadButton" class="webhook-settings__button" @click="loadMessage" variant="secondary">{{loadButtonText}}</app-button>
+      <div class="buttons">
+        <app-button :disabled="disableSendButton" class="button" @click="sendMessage">{{sendButtonText}}</app-button>
+        <app-button :disabled="disableEditButton" class="button" @click="editMessage">{{editButtonText}}</app-button>
+        <app-button :disabled="disableLoadButton" class="button" @click="loadMessage" variant="secondary">{{loadButtonText}}</app-button>
       </div>
     </div>
   </app-accordion>
@@ -105,25 +105,22 @@ export default {
 </script>
 
 <style scoped>
+@import "@/styles/components.css";
+
 .webhook-settings {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 10px;
 }
-.webhook-settings__webhook-url {
+.webhook-url {
   grid-column-start: 1;
   grid-column-end: 3;
 }
-.webhook-settings__input {
-  margin: 5px 0;
-  box-sizing: border-box;
-  width: 100%;
-}
-.webhook-settings__buttons {
+.buttons {
   margin-top: 5px;
   box-sizing: border-box;
 }
-.webhook-settings__button {
+.button {
   margin-right: 10px;
 }
 
@@ -131,7 +128,7 @@ export default {
   .webhook-settings {
     grid-template-columns: auto;
   }
-  .webhook-settings__webhook-url {
+  .webhook-url {
     grid-column-end: 2;
   }
 }

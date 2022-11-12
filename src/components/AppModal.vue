@@ -1,6 +1,6 @@
 <template>
   <div class="modal">
-    <div class="modal__content">
+    <div class="content">
       <slot/>
     </div>
   </div>
@@ -24,7 +24,7 @@ export default {
   align-items: center;
   background-color: rgba(19, 19, 42, 0.3);
 }
-.modal__content {
+.content {
   display: grid;
   justify-content: center;
   align-items: center;

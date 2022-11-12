@@ -1,14 +1,14 @@
 <template>
   <div class="accordion" :class="variant">
-    <div class="accordion__header" @click="toggleShow">
-      <div class="accordion__icon" :class="{active: show}">
+    <div class="header" @click="toggleShow">
+      <div class="icon" :class="{active: show}">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
           <path d="M12 10L8 6L4 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
       </div>
       <h3>{{header}}</h3>
     </div>
-    <div class="accordion__content" v-show="show">
+    <div class="content" v-show="show">
       <slot/>
     </div>
   </div>
@@ -46,7 +46,7 @@ export default {
   background-color: var(--accordion-background-color);
   overflow: hidden;
 }
-.accordion__header {
+.header {
   display: grid;
   grid-template-columns: auto auto;
   justify-content: left;
@@ -56,7 +56,7 @@ export default {
   cursor: pointer;
   user-select: none;
 }
-.accordion__icon {
+.icon {
   display: grid;
   justify-content: center;
   align-items: center;
@@ -64,7 +64,7 @@ export default {
 .active {
   transform: rotate(180deg);
 }
-.accordion__content {
+.content {
   padding: 0 15px 15px 15px;
 }
 </style>
