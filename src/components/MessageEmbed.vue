@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import {mapState, mapMutations} from 'vuex';
+import { mapState, mapMutations, mapGetters } from 'vuex';
 
 import AppInput from '@/components/AppInput';
 import ErrorMessage from '@/components/ErrorMessage';
@@ -112,15 +112,11 @@ export default {
     ...mapState([
       'validWebhookUrl'
     ]),
+    ...mapGetters([
+      'emptyEmbed'
+    ]),
     emptyEmbedError() {
-      // TODO Move this to store and update disableSendButton in WebhookSettings
-      return (this.embed.title.length === 0
-        && this.embed.description.length === 0
-        && this.embed.author.name.length === 0
-        && this.embed.image.url.length === 0
-        && this.embed.thumbnail.url.length === 0
-        && this.embed.fields.length === 0)
-        && this.validWebhookUrl;
+      return this.emptyEmbed(this.embed.id)
     },
     disableCreateField() {
       return this.embed.fields.length >= 25;

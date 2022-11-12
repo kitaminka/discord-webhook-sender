@@ -20,6 +20,16 @@ export default createStore({
     getters: {
         embedById: (state) => (id) => {
             return state.embeds.find((emb) => emb.id === id);
+        },
+        emptyEmbed: (state) => (id) => {
+            const embed = state.embeds.find((emb) => emb.id === id);
+            return (embed.title.length === 0
+                    && embed.description.length === 0
+                    && embed.author.name.length === 0
+                    && embed.image.url.length === 0
+                    && embed.thumbnail.url.length === 0
+                    && embed.fields.length === 0)
+                && state.validWebhookUrl;
         }
     },
     mutations: {

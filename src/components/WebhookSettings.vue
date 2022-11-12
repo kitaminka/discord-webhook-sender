@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 
 import AppButton from '@/components/AppButton';
 import AppInput from '@/components/AppInput';
@@ -56,12 +56,15 @@ export default {
       'editButtonText',
       'loadButtonText'
     ]),
+    ...mapGetters([
+      'emptyEmbed'
+    ]),
     webhookUrlError() {
       return !this.validWebhookUrl && this.webhook.url.length !== 0;
     },
     disableSendButton() {
       for (const embed of this.embeds) {
-        if (embed.title.length === 0 && embed.description.length === 0 && embed.author.name.length === 0) {
+        if (this.emptyEmbed(embed.id)) {
           return true;
         }
       }
