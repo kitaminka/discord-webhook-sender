@@ -39,8 +39,6 @@ export default {
 </script>
 
 <style scoped>
-@import "@/styles/variants.css";
-
 .accordion {
   border-radius: 5px;
   background-color: var(--accordion-background-color);

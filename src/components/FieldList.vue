@@ -52,8 +52,6 @@ export default {
 </script>
 
 <style scoped>
-@import "@/styles/components.css";
-
 .field-list {
   margin-top: 5px;
   grid-column-start: 1;

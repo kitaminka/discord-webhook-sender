@@ -19,7 +19,7 @@
       </div>
       <div class="description">
         <p>Description</p>
-        <app-textarea class="message-settings__textarea" v-model="description" placeholder="Some description" maxlength="4096"/>
+        <app-textarea class="textarea" v-model="description" placeholder="Some description" maxlength="4096"/>
       </div>
       <div class="url">
         <p>URL</p>
@@ -200,18 +200,24 @@ export default {
 </script>
 
 <style scoped>
-@import "@/styles/components.css";
-
 .message-embed {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 10px;
 }
-.message-settings__textarea {
-  height: 100px;
-}
 .color-picker {
   margin: 5px 0;
+}
+.input {
+  margin: 5px 0;
+  box-sizing: border-box;
+  width: 100%;
+}
+.textarea {
+  box-sizing: border-box;
+  margin: 5px 0;
+  height: 100px;
+  width: 100%;
 }
 .author {
   grid-column-start: 1;

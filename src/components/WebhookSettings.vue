@@ -105,8 +105,6 @@ export default {
 </script>
 
 <style scoped>
-@import "@/styles/components.css";
-
 .webhook-settings {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -115,6 +113,11 @@ export default {
 .webhook-url {
   grid-column-start: 1;
   grid-column-end: 3;
+}
+.input {
+  margin: 5px 0;
+  box-sizing: border-box;
+  width: 100%;
 }
 .buttons {
   margin-top: 5px;

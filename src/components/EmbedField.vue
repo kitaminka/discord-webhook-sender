@@ -63,10 +63,13 @@ export default {
 </script>
 
 <style scoped>
-@import "@/styles/components.css";
-
 .header {
   margin-bottom: 5px;
+}
+.input {
+  margin: 5px 0;
+  box-sizing: border-box;
+  width: 100%;
 }
 .textarea {
   box-sizing: border-box;

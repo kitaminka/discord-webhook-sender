@@ -7,7 +7,7 @@
       @input="updateInput"
     />
     <input
-      class="input"
+      class="color-input"
       type="text"
       :value="modelValue"
       @input="updateInput"
@@ -42,10 +42,10 @@ export default {
   height: 100%;
   width: 100%;
 }
-.input {
+.color-input {
   padding: 7px;
   outline: none;
-  width: 50%;
+  width: 100%;
   border: none;
   font-size: 15px;
   color: white;

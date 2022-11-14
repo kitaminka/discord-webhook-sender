@@ -17,8 +17,6 @@ export default {
 </script>
 
 <style scoped>
-@import "@/styles/variants.css";
-
 .button {
   color: white;
   padding: 7px 12px;
