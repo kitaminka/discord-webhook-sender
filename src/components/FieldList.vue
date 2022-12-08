@@ -1,5 +1,6 @@
 <template>
-  <app-accordion header="Fields" :show-default="false" class="field-list">
+  <div class="field-list">
+    <h3 class="header">Fields</h3>
     <div class="buttons">
       <app-button @click="createEmbedField(embed.id)" :disabled="disableCreateField">Create field</app-button>
       <app-button @click="deleteAllEmbedFields(embed.id)" :disabled="disableDeleteFields" variant="danger">Delete all fields</app-button>
@@ -7,13 +8,12 @@
     <div class="fields">
       <embed-field class="field" v-for="field in this.embed.fields" :field="field" :key="field.id" @updateField="updateField"/>
     </div>
-  </app-accordion>
+  </div>
 </template>
 
 <script>
 import { mapMutations } from 'vuex';
 
-import AppAccordion from '@/components/AppAccordion';
 import AppButton from '@/components/AppButton';
 import EmbedField from '@/components/EmbedField';
 
@@ -21,8 +21,7 @@ export default {
   name: 'FieldList',
   components: {
     EmbedField,
-    AppButton,
-    AppAccordion
+    AppButton
   },
   props: [
     'embed'
@@ -52,6 +51,9 @@ export default {
 </script>
 
 <style scoped>
+.header {
+  margin-bottom: 5px;
+}
 .field-list {
   margin-top: 5px;
   grid-column-start: 1;

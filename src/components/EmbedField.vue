@@ -73,7 +73,7 @@ export default {
 }
 .textarea {
   box-sizing: border-box;
-  margin: 5px 0;
+  margin-top: 5px;
   width: 100%;
   height: 75px;
 }
