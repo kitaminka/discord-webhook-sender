@@ -1,17 +1,16 @@
 <template>
-  <app-accordion header="Message settings" :show-default="true">
-    <div class="message-settings">
-      <div class="message-id">
-        <p>Message ID or URL</p>
-        <app-input type="text" class="input" placeholder="https://discord.com/channels/..." @focusout="extractMessageId" v-model="messageId"/>
-      </div>
-      <div class="content">
-        <p>Content</p>
-        <app-textarea class="textarea" placeholder="Some text" maxlength="2000" v-model="content"/>
-        <error-message :show="emptyContentError">Content cannot be empty.</error-message>
-      </div>
+  <div class="message-settings">
+    <h3 class="header">Message settings</h3>
+    <div class="message-id">
+      <p>Message ID or URL</p>
+      <app-input type="text" class="input" placeholder="https://discord.com/channels/..." @focusout="extractMessageId" v-model="messageId"/>
     </div>
-  </app-accordion>
+    <div class="content">
+      <p>Content</p>
+      <app-textarea class="textarea" placeholder="Some text" maxlength="2000" v-model="content"/>
+      <error-message :show="emptyContentError">Content cannot be empty.</error-message>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -20,12 +19,10 @@ import { mapState, mapMutations } from 'vuex';
 import AppTextarea from '@/components/AppTextarea';
 import ErrorMessage from '@/components/ErrorMessage';
 import AppInput from '@/components/AppInput';
-import AppAccordion from '@/components/AppAccordion';
 
 export default {
   name: 'MessageSettings',
   components: {
-    AppAccordion,
     AppInput,
     ErrorMessage,
     AppTextarea
@@ -66,6 +63,14 @@ export default {
 </script>
 
 <style scoped>
+.message-settings {
+  border-radius: 5px;
+  padding: 15px;
+  background-color: #121225;
+}
+.header {
+  padding-bottom: 10px;
+}
 .input {
   margin: 5px 0;
   box-sizing: border-box;

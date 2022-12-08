@@ -8,7 +8,7 @@
       </div>
       <h3>{{header}}</h3>
     </div>
-    <div class="content" v-show="show">
+    <div v-show="show"  class="content">
       <slot/>
     </div>
   </div>
@@ -41,6 +41,7 @@ export default {
 <style scoped>
 .accordion {
   border-radius: 5px;
+  padding: 15px;
   background-color: var(--accordion-background-color);
   overflow: hidden;
 }
@@ -50,7 +51,6 @@ export default {
   justify-content: left;
   align-items: center;
   grid-gap: 10px;
-  padding: 15px;
   cursor: pointer;
   user-select: none;
 }
@@ -63,6 +63,9 @@ export default {
   transform: rotate(180deg);
 }
 .content {
-  padding: 0 15px 15px 15px;
+  box-sizing: border-box;
+}
+.content {
+  padding-top: 15px;
 }
 </style>
