@@ -1,6 +1,6 @@
 <template>
   <div class="embed-field">
-    <h3 class="header">Field {{field.id}}</h3>
+    <h3 class="header">{{field.name || `Field ${field.id}`}}</h3>
     <div class="name">
       <p>Name</p>
       <app-input

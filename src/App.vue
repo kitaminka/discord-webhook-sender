@@ -6,6 +6,7 @@
     <webhook-settings/>
     <message-settings/>
     <embed-settings/>
+    <embed-list/>
   </main>
 </template>
 
@@ -13,10 +14,12 @@
 import WebhookSettings from '@/components/WebhookSettings';
 import MessageSettings from '@/components/MessageSettings';
 import EmbedSettings from '@/components/EmbedSettings';
+import EmbedList from '@/components/EmbedList.vue';
 
 export default {
   name: 'App',
   components: {
+    EmbedList,
     EmbedSettings,
     MessageSettings,
     WebhookSettings
@@ -46,7 +49,7 @@ html, body {
 }
 .main {
   display: grid;
-  grid-gap: 20px;
+  grid-gap: 15px;
   padding: 0 20%;
   box-sizing: border-box;
 }

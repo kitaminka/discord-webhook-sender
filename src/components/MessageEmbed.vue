@@ -1,5 +1,5 @@
 <template>
-  <app-accordion :header="`Embed ${embed.id}`" :show-default="true" variant="secondary">
+  <app-accordion :header="embed.title || `Embed ${embed.id}`" :show-default="true" variant="primary">
     <div class="message-embed">
       <div class="author">
         <p>Author</p>
