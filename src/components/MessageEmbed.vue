@@ -1,4 +1,7 @@
 <template>
+<!--  <transition>-->
+<!--    -->
+<!--  </transition>-->
   <div class="message-embed">
     <div class="author">
       <p>Author</p>
