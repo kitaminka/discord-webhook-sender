@@ -1,6 +1,6 @@
 <template>
-  <app-accordion :header="embed.title || `Embed ${embed.id}`" :show-default="true" variant="primary">
-    <div class="message-embed">
+  <transition @enter="enter" @after-enter="afterEnter" @leave="leave">
+    <div class="message-embed" v-show="embed.show" ref="embed">
       <div class="author">
         <p>Author</p>
         <app-input class="input" v-model="author" placeholder="Some author"/>
@@ -40,7 +40,7 @@
       <field-list class="field-list" :embed="embed"/>
       <error-message :show="emptyEmbedError">Embed cannot be empty.</error-message>
     </div>
-  </app-accordion>
+  </transition>
 </template>
 
 <script>
@@ -48,7 +48,6 @@ import { mapState, mapGetters } from 'vuex';
 
 import AppInput from '@/components/AppInput';
 import ErrorMessage from '@/components/ErrorMessage';
-import AppAccordion from '@/components/AppAccordion';
 import AppTextarea from '@/components/AppTextarea';
 import ColorPicker from '@/components/ColorPicker';
 import FieldList from '@/components/FieldList';
@@ -59,7 +58,6 @@ export default {
     FieldList,
     ColorPicker,
     AppTextarea,
-    AppAccordion,
     ErrorMessage,
     AppInput
   },
@@ -85,6 +83,25 @@ export default {
       } else {
         this.color = `#${this.embed.color.toString(16)}`;
       }
+    },
+    enter() {
+      this.$refs.embed.style.height = 'auto';
+      const height = getComputedStyle(this.$refs.embed).height;
+      this.$refs.embed.style.height = 0;
+      getComputedStyle(this.$refs.embed);
+      setTimeout(() => {
+        this.$refs.embed.style.height = height;
+      });
+    },
+    afterEnter() {
+      this.$refs.embed.style.height = 'auto';
+    },
+    leave() {
+      this.$refs.embed.style.height = getComputedStyle(this.$refs.embed).height;
+      getComputedStyle(this.$refs.embed);
+      setTimeout(() => {
+        this.$refs.embed.style.height = 0;
+      });
     }
   },
   computed: {
@@ -205,6 +222,9 @@ export default {
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 10px;
 }
+.author {
+  margin-top: 15px;
+}
 .color-picker {
   margin: 5px 0;
 }
@@ -240,5 +260,9 @@ export default {
     grid-column-start: 1;
     grid-column-end: 2;
   }
+}
+.v-enter-active, .v-leave-active {
+  transition: height .5s ease-in-out;
+  overflow: hidden;
 }
 </style>
