@@ -1,46 +1,44 @@
 <template>
-  <app-accordion :header="embed.title || `Embed ${embed.id}`" :show-default="true" variant="primary">
-    <div class="message-embed">
-      <div class="author">
-        <p>Author</p>
-        <app-input class="input" v-model="author" placeholder="Some author"/>
-      </div>
-      <div class="author-url">
-        <p>Author URL</p>
-        <app-input class="input" v-model="authorUrl" placeholder="https://example.com/"/>
-      </div>
-      <div class="author-icon-url">
-        <p>Author Icon URL</p>
-        <app-input class="input" v-model="authorIconUrl" placeholder="https://example.com/icon.png"/>
-      </div>
-      <div class="title">
-        <p>Title</p>
-        <app-input class="input" v-model="title" placeholder="Some title" maxlength="256"/>
-      </div>
-      <div class="description">
-        <p>Description</p>
-        <app-textarea class="textarea" v-model="description" placeholder="Some description" maxlength="4096"/>
-      </div>
-      <div class="url">
-        <p>URL</p>
-        <app-input class="input" v-model="url" placeholder="https://example.com/"/>
-      </div>
-      <div class="color">
-        <p>Color</p>
-        <color-picker class="color-picker" v-model="color" @focusout="updateColor"/>
-      </div>
-      <div class="image-url">
-        <p>Image URL</p>
-        <app-input class="input" v-model="imageUrl" placeholder="https://example.com/image.png"/>
-      </div>
-      <div class="thumbnail-url">
-        <p>Thumbnail URL</p>
-        <app-input class="input" v-model="thumbnailUrl" placeholder="https://example.com/image.png"/>
-      </div>
-      <field-list class="field-list" :embed="embed"/>
-      <error-message :show="emptyEmbedError">Embed cannot be empty.</error-message>
+  <div class="message-embed">
+    <div class="author">
+      <p>Author</p>
+      <app-input class="input" v-model="author" placeholder="Some author"/>
     </div>
-  </app-accordion>
+    <div class="author-url">
+      <p>Author URL</p>
+      <app-input class="input" v-model="authorUrl" placeholder="https://example.com/"/>
+    </div>
+    <div class="author-icon-url">
+      <p>Author Icon URL</p>
+      <app-input class="input" v-model="authorIconUrl" placeholder="https://example.com/icon.png"/>
+    </div>
+    <div class="title">
+      <p>Title</p>
+      <app-input class="input" v-model="title" placeholder="Some title" maxlength="256"/>
+    </div>
+    <div class="description">
+      <p>Description</p>
+      <app-textarea class="textarea" v-model="description" placeholder="Some description" maxlength="4096"/>
+    </div>
+    <div class="url">
+      <p>URL</p>
+      <app-input class="input" v-model="url" placeholder="https://example.com/"/>
+    </div>
+    <div class="color">
+      <p>Color</p>
+      <color-picker class="color-picker" v-model="color" @focusout="updateColor"/>
+    </div>
+    <div class="image-url">
+      <p>Image URL</p>
+      <app-input class="input" v-model="imageUrl" placeholder="https://example.com/image.png"/>
+    </div>
+    <div class="thumbnail-url">
+      <p>Thumbnail URL</p>
+      <app-input class="input" v-model="thumbnailUrl" placeholder="https://example.com/image.png"/>
+    </div>
+    <field-list class="field-list" :embed="embed"/>
+    <error-message :show="emptyEmbedError">Embed cannot be empty.</error-message>
+  </div>
 </template>
 
 <script>
@@ -48,7 +46,6 @@ import { mapState, mapGetters } from 'vuex';
 
 import AppInput from '@/components/AppInput';
 import ErrorMessage from '@/components/ErrorMessage';
-import AppAccordion from '@/components/AppAccordion';
 import AppTextarea from '@/components/AppTextarea';
 import ColorPicker from '@/components/ColorPicker';
 import FieldList from '@/components/FieldList';
@@ -59,7 +56,6 @@ export default {
     FieldList,
     ColorPicker,
     AppTextarea,
-    AppAccordion,
     ErrorMessage,
     AppInput
   },

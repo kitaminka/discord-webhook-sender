@@ -1,16 +1,6 @@
 <template>
   <div class="accordion" :class="variant">
-    <div class="header" @click="toggleShow">
-      <div class="icon" :class="{active: show}">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M12 10L8 6L4 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-        </svg>
-      </div>
-      <h3>{{header}}</h3>
-    </div>
-    <div v-show="show"  class="content">
-      <slot/>
-    </div>
+
   </div>
 </template>
 
