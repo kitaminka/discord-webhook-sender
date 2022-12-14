@@ -1,47 +1,46 @@
 <template>
-<!--  <transition>-->
-<!--    -->
-<!--  </transition>-->
-  <div class="message-embed">
-    <div class="author">
-      <p>Author</p>
-      <app-input class="input" v-model="author" placeholder="Some author"/>
+  <transition @enter="enter" @after-enter="afterEnter" @leave="leave">
+    <div class="message-embed" v-show="embed.show" ref="embed">
+      <div class="author">
+        <p>Author</p>
+        <app-input class="input" v-model="author" placeholder="Some author"/>
+      </div>
+      <div class="author-url">
+        <p>Author URL</p>
+        <app-input class="input" v-model="authorUrl" placeholder="https://example.com/"/>
+      </div>
+      <div class="author-icon-url">
+        <p>Author Icon URL</p>
+        <app-input class="input" v-model="authorIconUrl" placeholder="https://example.com/icon.png"/>
+      </div>
+      <div class="title">
+        <p>Title</p>
+        <app-input class="input" v-model="title" placeholder="Some title" maxlength="256"/>
+      </div>
+      <div class="description">
+        <p>Description</p>
+        <app-textarea class="textarea" v-model="description" placeholder="Some description" maxlength="4096"/>
+      </div>
+      <div class="url">
+        <p>URL</p>
+        <app-input class="input" v-model="url" placeholder="https://example.com/"/>
+      </div>
+      <div class="color">
+        <p>Color</p>
+        <color-picker class="color-picker" v-model="color" @focusout="updateColor"/>
+      </div>
+      <div class="image-url">
+        <p>Image URL</p>
+        <app-input class="input" v-model="imageUrl" placeholder="https://example.com/image.png"/>
+      </div>
+      <div class="thumbnail-url">
+        <p>Thumbnail URL</p>
+        <app-input class="input" v-model="thumbnailUrl" placeholder="https://example.com/image.png"/>
+      </div>
+      <field-list class="field-list" :embed="embed"/>
+      <error-message :show="emptyEmbedError">Embed cannot be empty.</error-message>
     </div>
-    <div class="author-url">
-      <p>Author URL</p>
-      <app-input class="input" v-model="authorUrl" placeholder="https://example.com/"/>
-    </div>
-    <div class="author-icon-url">
-      <p>Author Icon URL</p>
-      <app-input class="input" v-model="authorIconUrl" placeholder="https://example.com/icon.png"/>
-    </div>
-    <div class="title">
-      <p>Title</p>
-      <app-input class="input" v-model="title" placeholder="Some title" maxlength="256"/>
-    </div>
-    <div class="description">
-      <p>Description</p>
-      <app-textarea class="textarea" v-model="description" placeholder="Some description" maxlength="4096"/>
-    </div>
-    <div class="url">
-      <p>URL</p>
-      <app-input class="input" v-model="url" placeholder="https://example.com/"/>
-    </div>
-    <div class="color">
-      <p>Color</p>
-      <color-picker class="color-picker" v-model="color" @focusout="updateColor"/>
-    </div>
-    <div class="image-url">
-      <p>Image URL</p>
-      <app-input class="input" v-model="imageUrl" placeholder="https://example.com/image.png"/>
-    </div>
-    <div class="thumbnail-url">
-      <p>Thumbnail URL</p>
-      <app-input class="input" v-model="thumbnailUrl" placeholder="https://example.com/image.png"/>
-    </div>
-    <field-list class="field-list" :embed="embed"/>
-    <error-message :show="emptyEmbedError">Embed cannot be empty.</error-message>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -84,6 +83,25 @@ export default {
       } else {
         this.color = `#${this.embed.color.toString(16)}`;
       }
+    },
+    enter() {
+      this.$refs.embed.style.height = 'auto';
+      const height = getComputedStyle(this.$refs.embed).height;
+      this.$refs.embed.style.height = 0;
+      getComputedStyle(this.$refs.embed);
+      setTimeout(() => {
+        this.$refs.embed.style.height = height;
+      });
+    },
+    afterEnter() {
+      this.$refs.embed.style.height = 'auto';
+    },
+    leave() {
+      this.$refs.embed.style.height = getComputedStyle(this.$refs.embed).height;
+      getComputedStyle(this.$refs.embed);
+      setTimeout(() => {
+        this.$refs.embed.style.height = 0;
+      });
     }
   },
   computed: {
@@ -204,6 +222,9 @@ export default {
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 10px;
 }
+.author {
+  margin-top: 15px;
+}
 .color-picker {
   margin: 5px 0;
 }
@@ -239,5 +260,9 @@ export default {
     grid-column-start: 1;
     grid-column-end: 2;
   }
+}
+.v-enter-active, .v-leave-active {
+  transition: height .5s ease-in-out;
+  overflow: hidden;
 }
 </style>

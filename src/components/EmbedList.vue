@@ -10,8 +10,7 @@
         <h3>{{embed.title || `Embed ${embed.id}`}}</h3>
       </div>
       <message-embed
-        v-show="embed.show"
-        class="embed-content"
+        class="message-embed"
         :embed="embed"
         @updateEmbed="updateEmbed"
       />
@@ -68,12 +67,9 @@ export default {
   display: grid;
   justify-content: center;
   align-items: center;
+  transition: transform .5s ease-in-out;
 }
 .active {
   transform: rotate(180deg);
-}
-.embed-content {
-  box-sizing: border-box;
-  padding-top: 15px;
 }
 </style>
