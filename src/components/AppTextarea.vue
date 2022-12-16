@@ -1,11 +1,5 @@
 <template>
-  <textarea
-    :value="modelValue"
-    :placeholder="placeholder"
-    @input="updateTextarea"
-    class="textarea"
-    :maxlength="maxlength"
-  >
+  <textarea :value="modelValue" :placeholder="placeholder" @input="updateTextarea" class="textarea" :maxlength="maxlength">
   </textarea>
 </template>
 

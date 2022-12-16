@@ -1,17 +1,7 @@
 <template>
   <div class="color-picker">
-    <input
-      class="picker"
-      type="color"
-      :value="modelValue"
-      @input="updateInput"
-    />
-    <input
-      class="color-input"
-      type="text"
-      :value="modelValue"
-      @input="updateInput"
-    />
+    <input class="picker" type="color" :value="modelValue" @input="updateInput"/>
+    <input class="color-input" type="text" :value="modelValue" @input="updateInput"/>
   </div>
 </template>
 
@@ -51,5 +41,6 @@ export default {
   color: white;
   font-family: 'Roboto', sans-serif;
   background-color: #13132a;
+  box-sizing: border-box;
 }
 </style>

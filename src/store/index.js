@@ -120,10 +120,6 @@ export default createStore({
                 }
             });
         },
-        toggleEmbedShow(state, embedId) {
-            const embed = state.embeds.find((emb) => emb.id === embedId);
-            embed.show = !embed.show;
-        },
         createEmbedField(state, embedId) {
             const originalEmbed = state.embeds.find((emb) => emb.id === embedId);
             if (originalEmbed.fields.length < 25) {
