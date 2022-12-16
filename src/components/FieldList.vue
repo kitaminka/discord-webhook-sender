@@ -64,12 +64,13 @@ export default {
   grid-template-columns: auto auto;
   display: grid;
   grid-gap: 10px;
+  margin-bottom: 5px;
 }
 .fields {
   display: grid;
 }
 .field {
-  margin-top: 10px;
+  margin-top: 5px;
   box-sizing: border-box;
   width: 100%;
 }
