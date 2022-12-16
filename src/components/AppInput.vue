@@ -1,10 +1,5 @@
 <template>
-  <input
-    :value="modelValue"
-    :placeholder="placeholder"
-    @input="updateInput"
-    class="input"
-  />
+  <input :value="modelValue" :placeholder="placeholder" @input="updateInput" class="input"/>
 </template>
 
 <script>

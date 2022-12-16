@@ -67,7 +67,7 @@ export default createStore({
         createEmbed(state) {
             if (state.embeds.length < 10) {
                 state.embeds.push({
-                    id: state.embeds.length + 1,
+                    id: Date.now(),
                     title: '',
                     description: '',
                     url: '',
@@ -120,15 +120,30 @@ export default createStore({
                 }
             });
         },
-        toggleEmbedShow(state, embedId) {
+        moveEmbedUp(state, embedId) {
             const embed = state.embeds.find((emb) => emb.id === embedId);
-            embed.show = !embed.show;
+            const index = state.embeds.indexOf(embed);
+            if (index > 0) {
+                state.embeds.splice(index, 1);
+                state.embeds.splice(index - 1, 0, embed);
+            }
+        },
+        moveEmbedDown(state, embedId) {
+            const embed = state.embeds.find((emb) => emb.id === embedId);
+            const index = state.embeds.indexOf(embed);
+            if (index < state.embeds.length - 1) {
+                state.embeds.splice(index, 1);
+                state.embeds.splice(index + 1, 0, embed);
+            }
+        },
+        deleteEmbed(state, embedId) {
+            state.embeds = state.embeds.filter((emb) => emb.id !== embedId);
         },
         createEmbedField(state, embedId) {
-            const originalEmbed = state.embeds.find((emb) => emb.id === embedId);
-            if (originalEmbed.fields.length < 25) {
-                originalEmbed.fields.push({
-                    id: originalEmbed.fields.length + 1,
+            const embed = state.embeds.find((emb) => emb.id === embedId);
+            if (embed.fields.length < 25) {
+                embed.fields.push({
+                    id: Date.now(),
                     name: '',
                     value: ''
                 });
@@ -138,8 +153,8 @@ export default createStore({
             state.embeds.find((emb) => emb.id === embedId).fields = [];
         },
         updateEmbedField(state, {embedId, field}) {
-            const originalField = state.embeds.find((emb) => emb.id === embedId).fields.find((f) => f.id === field.id);
-            Object.assign(originalField, field);
+            const embed = state.embeds.find((emb) => emb.id === embedId).fields.find((f) => f.id === field.id);
+            Object.assign(embed, field);
         }
     },
     actions: {

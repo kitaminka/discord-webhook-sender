@@ -4,7 +4,7 @@
     <div class="webhook-url">
       <p>Webhook URL</p>
       <app-input type="text" class="input" placeholder="https://discord.com/api/webhooks/..." v-model="webhookUrl"/>
-      <error-message :show="webhookUrlError">Invalid Webhook URL</error-message>
+      <error-message :show="webhookUrlError" class="error-message">Invalid Webhook URL</error-message>
     </div>
     <div class="username">
       <p>Username</p>
