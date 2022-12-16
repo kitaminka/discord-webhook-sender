@@ -6,7 +6,7 @@
           <path d="M12 10L8 6L4 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
       </div>
-      <h3>{{embed.title || `Embed ${embed.id}`}}</h3>
+      <h3>{{embed.title || 'Embed'}}</h3>
       <div class="header-buttons">
         <app-button class="header-button" variant="secondary" @click.stop="moveEmbedUp(embed.id)">
           <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
