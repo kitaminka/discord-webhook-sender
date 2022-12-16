@@ -2,11 +2,28 @@
   <div class="message-embed">
     <div class="header" @click="toggleEmbedShow">
       <div class="icon" :class="{active: show}">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M12 10L8 6L4 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
       </div>
       <h3>{{embed.title || `Embed ${embed.id}`}}</h3>
+      <app-button class="header-button" variant="secondary" @click.stop>
+        <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 10L8 6L4 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </app-button>
+      <app-button class="header-button" variant="secondary" @click.stop>
+        <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g transform="rotate(180 8 8)">
+            <path d="M12 10L8 6L4 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </g>
+        </svg>
+      </app-button>
+      <app-button class="header-button" variant="danger" @click.stop>
+        <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+          <path d="M19 6L5 6M14 5L10 5M6 10L6 20C6 20.6666667 6.33333333 21 7 21 7.66666667 21 11 21 17 21 17.6666667 21 18 20.6666667 18 20 18 19.3333333 18 16 18 10"/>
+        </svg>
+      </app-button>
     </div>
     <transition @enter="enter" @after-enter="afterEnter" @leave="leave" @after-leave="afterLeave">
       <div class="embed" v-show="show" ref="embed">
@@ -61,10 +78,12 @@ import ErrorMessage from '@/components/ErrorMessage';
 import AppTextarea from '@/components/AppTextarea';
 import ColorPicker from '@/components/ColorPicker';
 import FieldList from '@/components/FieldList';
+import AppButton from '@/components/AppButton.vue';
 
 export default {
   name: 'MessageEmbed',
   components: {
+    AppButton,
     FieldList,
     ColorPicker,
     AppTextarea,
@@ -246,8 +265,9 @@ export default {
   overflow: hidden;
 }
 .header {
+  height: 24px;
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto 1fr auto auto auto;
   justify-content: left;
   align-items: center;
   grid-gap: 10px;
@@ -262,6 +282,14 @@ export default {
 }
 .active {
   transform: rotate(180deg);
+}
+.header-button {
+  padding: 0;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  height: 24px;
+  width: 24px;
 }
 .embed {
   display: grid;
