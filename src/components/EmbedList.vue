@@ -1,6 +1,8 @@
 <template>
   <div class="embed-list">
-    <message-embed class="message-embed" v-for="embed in embeds" :key="embed.id" :embed="embed" @updateEmbed="updateEmbed"/>
+    <transition-group>
+      <message-embed class="message-embed" v-for="embed in embeds" :key="embed.id" :embed="embed" @updateEmbed="updateEmbed"/>
+    </transition-group>
   </div>
 </template>
 
@@ -31,5 +33,13 @@ export default {
 .embed-list {
   display: grid;
   box-sizing: border-box;
+}
+
+.v-move, .v-enter-active, .v-leave-active {
+  transition: all .5s ease;
+}
+.v-enter-from, .v-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
 }
 </style>

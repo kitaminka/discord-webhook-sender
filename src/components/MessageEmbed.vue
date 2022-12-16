@@ -7,26 +7,28 @@
         </svg>
       </div>
       <h3>{{embed.title || `Embed ${embed.id}`}}</h3>
-      <app-button class="header-button" variant="secondary" @click.stop>
-        <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 10L8 6L4 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-        </svg>
-      </app-button>
-      <app-button class="header-button" variant="secondary" @click.stop>
-        <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g transform="rotate(180 8 8)">
+      <div class="header-buttons">
+        <app-button class="header-button" variant="secondary" @click.stop="moveEmbedUp(embed.id)">
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 10L8 6L4 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-          </g>
-        </svg>
-      </app-button>
-      <app-button class="header-button" variant="danger" @click.stop>
-        <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
-          <path d="M19 6L5 6M14 5L10 5M6 10L6 20C6 20.6666667 6.33333333 21 7 21 7.66666667 21 11 21 17 21 17.6666667 21 18 20.6666667 18 20 18 19.3333333 18 16 18 10"/>
-        </svg>
-      </app-button>
+          </svg>
+        </app-button>
+        <app-button class="header-button" variant="secondary" @click.stop="moveEmbedDown(embed.id)">
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g transform="rotate(180 8 8)">
+              <path d="M12 10L8 6L4 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </g>
+          </svg>
+        </app-button>
+        <app-button class="header-button" variant="danger" @click.stop="deleteEmbed(embed.id)">
+          <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+            <path d="M19 6L5 6M14 5L10 5M6 10L6 20C6 20.6666667 6.33333333 21 7 21 7.66666667 21 11 21 17 21 17.6666667 21 18 20.6666667 18 20 18 19.3333333 18 16 18 10"/>
+          </svg>
+        </app-button>
+      </div>
     </div>
     <transition @enter="enter" @after-enter="afterEnter" @leave="leave" @after-leave="afterLeave">
-      <div class="embed" v-show="show" ref="embed">
+      <div class="embed" v-show="show">
         <div class="author">
           <p>Author</p>
           <app-input class="input" v-model="author" placeholder="Some author"/>
@@ -71,7 +73,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
+import {mapState, mapGetters, mapMutations} from 'vuex';
 
 import AppInput from '@/components/AppInput';
 import ErrorMessage from '@/components/ErrorMessage';
@@ -104,6 +106,11 @@ export default {
     'updateEmbed'
   ],
   methods: {
+    ...mapMutations([
+      'moveEmbedUp',
+      'moveEmbedDown',
+      'deleteEmbed'
+    ]),
     updateColor() {
       const colorInt = parseInt(this.color.substring(1), 16);
       if (!isNaN(colorInt) && colorInt <= 16777215 && this.color.length <= 7) {
@@ -120,24 +127,24 @@ export default {
       this.transitioning = true;
       this.show = !this.show;
     },
-    enter() {
-      this.$refs.embed.style.height = 'auto';
-      const height = getComputedStyle(this.$refs.embed).height;
-      this.$refs.embed.style.height = 0;
-      getComputedStyle(this.$refs.embed);
+    enter(embed) {
+      embed.style.height = 'auto';
+      const height = getComputedStyle(embed).height;
+      embed.style.height = 0;
+      getComputedStyle(embed);
       setTimeout(() => {
-        this.$refs.embed.style.height = height;
+        embed.style.height = height;
       });
     },
-    afterEnter() {
-      this.$refs.embed.style.height = 'auto';
+    afterEnter(embed) {
+      embed.style.height = 'auto';
       this.transitioning = false;
     },
-    leave() {
-      this.$refs.embed.style.height = getComputedStyle(this.$refs.embed).height;
-      getComputedStyle(this.$refs.embed);
+    leave(embed) {
+      embed.style.height = getComputedStyle(embed).height;
+      getComputedStyle(embed);
       setTimeout(() => {
-        this.$refs.embed.style.height = 0;
+        embed.style.height = 0;
       });
     },
     afterLeave() {
@@ -267,7 +274,7 @@ export default {
 .header {
   height: 24px;
   display: grid;
-  grid-template-columns: auto 1fr auto auto auto;
+  grid-template-columns: auto 1fr auto;
   justify-content: left;
   align-items: center;
   grid-gap: 10px;
@@ -282,6 +289,13 @@ export default {
 }
 .active {
   transform: rotate(180deg);
+}
+.header-buttons {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 10px;
+  justify-content: right;
+  align-items: center;
 }
 .header-button {
   padding: 0;
@@ -328,6 +342,11 @@ export default {
   grid-column-end: 3;
 }
 
+.v-enter-active, .v-leave-active {
+  transition: height .3s ease-in-out;
+  overflow: hidden;
+}
+
 @media only screen and (max-width: 800px) {
   .message-embed {
     grid-template-columns: auto;
@@ -336,9 +355,5 @@ export default {
     grid-column-start: 1;
     grid-column-end: 2;
   }
-}
-.v-enter-active, .v-leave-active {
-  transition: height .3s ease-in-out;
-  overflow: hidden;
 }
 </style>

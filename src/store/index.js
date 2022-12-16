@@ -120,6 +120,25 @@ export default createStore({
                 }
             });
         },
+        moveEmbedUp(state, embedId) {
+            const embed = state.embeds.find((emb) => emb.id === embedId);
+            const index = state.embeds.indexOf(embed);
+            if (index > 0) {
+                state.embeds.splice(index, 1);
+                state.embeds.splice(index - 1, 0, embed);
+            }
+        },
+        moveEmbedDown(state, embedId) {
+            const embed = state.embeds.find((emb) => emb.id === embedId);
+            const index = state.embeds.indexOf(embed);
+            if (index < state.embeds.length - 1) {
+                state.embeds.splice(index, 1);
+                state.embeds.splice(index + 1, 0, embed);
+            }
+        },
+        deleteEmbed(state, embedId) {
+            state.embeds = state.embeds.filter((emb) => emb.id !== embedId);
+        },
         createEmbedField(state, embedId) {
             const originalEmbed = state.embeds.find((emb) => emb.id === embedId);
             if (originalEmbed.fields.length < 25) {
