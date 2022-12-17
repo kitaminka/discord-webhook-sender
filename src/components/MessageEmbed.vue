@@ -7,7 +7,7 @@
         </svg>
       </div>
       <h3>{{embed.title || 'Embed'}}</h3>
-      <div class="header-buttons">
+      <div class="header-buttons" @click.stop>
         <app-button class="header-button" variant="secondary" @click.stop="moveEmbedUp(embed.id)">
           <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 10L8 6L4 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -296,6 +296,7 @@ export default {
   grid-gap: 10px;
   justify-content: right;
   align-items: center;
+  cursor: default;
 }
 .header-button {
   padding: 0;
@@ -348,7 +349,7 @@ export default {
 }
 
 @media only screen and (max-width: 800px) {
-  .message-embed {
+  .embed {
     grid-template-columns: auto;
   }
   .author, .title, .description, .field-list {
