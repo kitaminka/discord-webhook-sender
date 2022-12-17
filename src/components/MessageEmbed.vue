@@ -2,9 +2,7 @@
   <div class="message-embed">
     <div class="header" @click="toggleEmbedShow">
       <div class="icon" :class="{active: show}">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 10L8 6L4 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-        </svg>
+        <app-icon name="up"/>
       </div>
       <h3>{{embed.title || 'Embed'}}</h3>
       <embed-buttons :embed="embed"></embed-buttons>
@@ -63,10 +61,12 @@ import AppTextarea from '@/components/AppTextarea';
 import ColorPicker from '@/components/ColorPicker';
 import FieldList from '@/components/FieldList';
 import EmbedButtons from '@/components/EmbedButtons.vue';
+import AppIcon from '@/components/AppIcon.vue';
 
 export default {
   name: 'MessageEmbed',
   components: {
+    AppIcon,
     EmbedButtons,
     FieldList,
     ColorPicker,
