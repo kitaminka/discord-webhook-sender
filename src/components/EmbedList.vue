@@ -36,7 +36,7 @@ export default {
 }
 
 .v-move, .v-enter-active, .v-leave-active {
-  transition: all .5s ease;
+  transition: all .5s ease-in-out;
 }
 .v-enter-from, .v-leave-to {
   opacity: 0;

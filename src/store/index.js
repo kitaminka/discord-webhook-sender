@@ -30,7 +30,19 @@ export default createStore({
                     && embed.thumbnail.url.length === 0
                     && embed.fields.length === 0)
                 && state.validWebhookUrl;
+        },
+        allowMoveEmbedUp: (state) => (id) => {
+            const index = state.embeds.findIndex((emb) => emb.id === id);
+            return index > 0;
+        },
+        allowMoveEmbedDown: (state) => (id) => {
+            const index = state.embeds.findIndex((emb) => emb.id === id);
+            return index < state.embeds.length - 1;
         }
+        // bleMoveEmbedUp: (state) => (id) => {
+        //     const index = state.embeds.findIndex((emb) => emb.id === id);
+        //     return index !== 0;
+        // }
     },
     mutations: {
         setMessageId(state, messageId) {
