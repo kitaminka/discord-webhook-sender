@@ -9,7 +9,7 @@
 <script>
 import { mapState, mapMutations } from 'vuex';
 
-import MessageEmbed from '@/components/Embed.vue';
+import MessageEmbed from '@/components/MessageEmbed.vue';
 
 export default {
   name: 'EmbedList',

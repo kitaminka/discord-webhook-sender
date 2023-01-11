@@ -276,7 +276,7 @@ export default {
 }
 .embed {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-column-gap: 10px;
 }
 .author {
