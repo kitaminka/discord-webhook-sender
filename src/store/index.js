@@ -31,14 +31,6 @@ export default createStore({
                     && embed.fields.length === 0)
                 && state.validWebhookUrl;
         },
-        allowMoveEmbedUp: (state) => (id) => {
-            const index = state.embeds.findIndex((emb) => emb.id === id);
-            return index > 0;
-        },
-        allowMoveEmbedDown: (state) => (id) => {
-            const index = state.embeds.findIndex((emb) => emb.id === id);
-            return index < state.embeds.length - 1;
-        }
     },
     mutations: {
         setMessageId(state, messageId) {

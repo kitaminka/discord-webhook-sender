@@ -15,7 +15,7 @@
 import { mapMutations } from 'vuex';
 
 import AppButton from '@/components/AppButton';
-import EmbedField from '@/components/EmbedField';
+import EmbedField from '@/components/Field.vue';
 
 export default {
   name: 'FieldList',

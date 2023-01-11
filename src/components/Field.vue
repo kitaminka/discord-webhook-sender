@@ -1,5 +1,5 @@
 <template>
-  <div class="embed-field">
+  <div class="field">
     <h3 class="header">{{field.name || 'Field'}}</h3>
     <div class="name">
       <p>Name</p>

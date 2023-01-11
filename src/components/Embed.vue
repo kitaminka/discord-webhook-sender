@@ -1,5 +1,5 @@
 <template>
-  <div class="message-embed">
+  <div class="embed">
     <div class="header" @click="toggleEmbedShow">
       <div class="icon" :class="{active: show}">
         <app-icon name="up"/>
@@ -248,7 +248,7 @@ export default {
 </script>
 
 <style scoped>
-.message-embed {
+.embed {
   margin-bottom: 15px;
   border-radius: 5px;
   padding: 15px;
