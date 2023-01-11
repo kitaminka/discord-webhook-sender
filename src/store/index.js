@@ -39,10 +39,6 @@ export default createStore({
             const index = state.embeds.findIndex((emb) => emb.id === id);
             return index < state.embeds.length - 1;
         }
-        // bleMoveEmbedUp: (state) => (id) => {
-        //     const index = state.embeds.findIndex((emb) => emb.id === id);
-        //     return index !== 0;
-        // }
     },
     mutations: {
         setMessageId(state, messageId) {
