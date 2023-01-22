@@ -44,16 +44,18 @@ export default {
     ])
   },
   computed: {
+    ...mapState('embeds', [
+      'embeds'
+    ]),
     ...mapState([
       'webhook',
       'message',
-      'embeds',
       'validWebhookUrl',
       'sendButtonText',
       'editButtonText',
       'loadButtonText'
     ]),
-    ...mapGetters([
+    ...mapGetters('embeds', [
       'emptyEmbed'
     ]),
     webhookUrlError() {

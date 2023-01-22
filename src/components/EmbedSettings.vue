@@ -19,14 +19,14 @@ export default {
     AppButton
   },
   methods: {
-    ...mapMutations([
+    ...mapMutations('embeds', [
       'createEmbed',
       'deleteAllEmbeds',
       'updateEmbed'
     ])
   },
   computed: {
-    ...mapState([
+    ...mapState('embeds', [
       'embeds'
     ]),
     disableCreateEmbed() {

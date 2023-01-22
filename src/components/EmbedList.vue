@@ -17,12 +17,12 @@ export default {
     MessageEmbed
   },
   methods: {
-    ...mapMutations([
+    ...mapMutations('embeds', [
       'updateEmbed'
-    ])
+    ]),
   },
   computed: {
-    ...mapState([
+    ...mapState('embeds', [
       'embeds'
     ]),
   }

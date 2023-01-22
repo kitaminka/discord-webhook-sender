@@ -137,7 +137,7 @@ export default {
     ...mapState([
       'validWebhookUrl'
     ]),
-    ...mapGetters([
+    ...mapGetters('embeds', [
       'emptyEmbed'
     ]),
     emptyEmbedError() {
