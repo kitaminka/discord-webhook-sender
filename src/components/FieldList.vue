@@ -2,11 +2,13 @@
   <div class="field-list">
     <h3 class="header">Fields</h3>
     <div class="buttons">
-      <app-button @click="createEmbedField(embed.id)" :disabled="disableCreateField">Create field</app-button>
-      <app-button @click="deleteAllEmbedFields(embed.id)" :disabled="disableDeleteFields" variant="danger">Delete all fields</app-button>
+      <app-button @click="createField(embed.id)" :disabled="disableCreateField">Create field</app-button>
+      <app-button @click="deleteAllFields(embed.id)" :disabled="disableDeleteFields" variant="danger">Delete all fields</app-button>
     </div>
     <div class="fields">
-      <embed-field class="field" v-for="field in this.embed.fields" :field="field" :key="field.id" @updateField="updateField"/>
+      <transition-group>
+        <embed-field class="field" v-for="field in this.embed.fields" :field="field" :key="field.id" @updateField="updateEmbedField"/>
+      </transition-group>
     </div>
   </div>
 </template>
@@ -28,12 +30,12 @@ export default {
   ],
   methods: {
     ...mapMutations([
-      'createEmbedField',
-      'deleteAllEmbedFields',
-      'updateEmbedField'
+      'createField',
+      'deleteAllFields',
+      'updateField'
     ]),
-    updateField(field) {
-      this.updateEmbedField({
+    updateEmbedField(field) {
+      this.updateField({
         embedId: this.embed.id,
         field
       });
@@ -73,6 +75,13 @@ export default {
   margin-top: 5px;
   box-sizing: border-box;
   width: 100%;
+}
+
+.v-move, .v-enter-active, .v-leave-active {
+  transition: all .5s ease-in-out;
+}
+.v-enter-from, .v-leave-to {
+  opacity: 0;
 }
 
 @media only screen and (max-width: 800px) {

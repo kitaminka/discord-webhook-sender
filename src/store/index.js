@@ -139,7 +139,7 @@ export default createStore({
         deleteEmbed(state, embedId) {
             state.embeds = state.embeds.filter((emb) => emb.id !== embedId);
         },
-        createEmbedField(state, embedId) {
+        createField(state, embedId) {
             const embed = state.embeds.find((emb) => emb.id === embedId);
             if (embed.fields.length < 25) {
                 embed.fields.push({
@@ -149,12 +149,38 @@ export default createStore({
                 });
             }
         },
-        deleteAllEmbedFields(state, embedId) {
+        deleteAllFields(state, embedId) {
             state.embeds.find((emb) => emb.id === embedId).fields = [];
         },
-        updateEmbedField(state, {embedId, field}) {
-            const embed = state.embeds.find((emb) => emb.id === embedId).fields.find((f) => f.id === field.id);
-            Object.assign(embed, field);
+        updateField() {
+            // TODO
+            // const embed = state.embeds.find((emb) => emb.id === embedId).fields.find((f) => f.id === field.id);
+            // Object.assign(embed, field);
+        },
+        moveFieldUp() {
+            // TODO
+            // const embed = state.embeds.find((emb) => emb.id === embedId);
+            // const field = embed.fields.find((fld) => fld.id === fieldId);
+            // const index = embed.fields.indexOf(field);
+            // if (index > 0) {
+            //     embed.fields.splice(index, 1);
+            //     embed.fields.splice(index - 1, 0, field);
+            // }
+        },
+        moveFieldDown() {
+            // TODO
+            // const embed = state.embeds.find((emb) => emb.id === embedId);
+            // const field = embed.fields.find((fld) => fld.id === fieldId);
+            // const index = embed.fields.indexOf(field);
+            // if (index < embed.fields.length - 1) {
+            //     embed.fields.splice(index, 1);
+            //     embed.fields.splice(index + 1, 0, field);
+            // }
+        },
+        deleteField() {
+            // TODO
+            // const embed = state.embeds.find((emb) => emb.id === embedId);
+            // embed.fields = embed.fields.filter((fld) => fld.id !== fieldId);
         }
     },
     actions: {

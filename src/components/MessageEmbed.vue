@@ -1,5 +1,5 @@
 <template>
-  <div class="embed">
+  <div class="message-embed">
     <div class="header" @click="toggleEmbedShow">
       <div class="icon" :class="{active: show}">
         <app-icon name="up"/>
@@ -138,9 +138,7 @@ export default {
       'validWebhookUrl'
     ]),
     ...mapGetters([
-      'emptyEmbed',
-      'allowMoveEmbedUp',
-      'allowMoveEmbedDown'
+      'emptyEmbed'
     ]),
     emptyEmbedError() {
       return this.emptyEmbed(this.embed.id)
@@ -248,7 +246,7 @@ export default {
 </script>
 
 <style scoped>
-.embed {
+.message-embed {
   margin-bottom: 15px;
   border-radius: 5px;
   padding: 15px;
@@ -276,7 +274,7 @@ export default {
 }
 .embed {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-column-gap: 10px;
 }
 .author {

@@ -1,6 +1,9 @@
 <template>
   <div class="field">
-    <h3 class="header">{{field.name || 'Field'}}</h3>
+    <div class="header">
+      <h3>{{field.name || 'Field'}}</h3>
+      <field-buttons :field="field"/>
+    </div>
     <div class="name">
       <p>Name</p>
       <app-input class="input" placeholder="Some name" v-model="name" maxlength="256"/>
@@ -15,12 +18,14 @@
 <script>
 import AppInput from '@/components/AppInput';
 import AppTextarea from '@/components/AppTextarea';
+import FieldButtons from '@/components/FieldButtons.vue';
 
 export default {
   name: 'EmbedField',
   components: {
     AppTextarea,
-    AppInput
+    AppInput,
+    FieldButtons
   },
   props: [
     'field'
@@ -54,6 +59,10 @@ export default {
 
 <style scoped>
 .header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  justify-content: left;
+  align-items: center;
   margin-bottom: 5px;
 }
 .input {
