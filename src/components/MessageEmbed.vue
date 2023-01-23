@@ -88,7 +88,7 @@ export default {
     'updateEmbed'
   ],
   methods: {
-    ...mapMutations([
+    ...mapMutations('embeds', [
       'moveEmbedUp',
       'moveEmbedDown',
       'deleteEmbed'
@@ -141,7 +141,7 @@ export default {
       'emptyEmbed'
     ]),
     emptyEmbedError() {
-      return this.emptyEmbed(this.embed.id)
+      return this.emptyEmbed(this.embed.id);
     },
     title: {
       get() {
@@ -276,6 +276,7 @@ export default {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 10px;
+  transition: height .3s ease-in-out;
 }
 .author {
   margin-top: 15px;
@@ -310,7 +311,6 @@ export default {
 }
 
 .v-enter-active, .v-leave-active {
-  transition: height .3s ease-in-out;
   overflow: hidden;
 }
 

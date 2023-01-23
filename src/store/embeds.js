@@ -7,7 +7,7 @@ export default {
         embedById: (state) => (id) => {
             return state.embeds.find((emb) => emb.id === id);
         },
-        emptyEmbed: (state) => (id) => {
+        emptyEmbed: (state, getters, rootState) => (id) => {
             const embed = state.embeds.find((emb) => emb.id === id);
             return (embed.title.length === 0
                     && embed.description.length === 0
@@ -15,7 +15,7 @@ export default {
                     && embed.image.url.length === 0
                     && embed.thumbnail.url.length === 0
                     && embed.fields.length === 0)
-                && state.validWebhookUrl;
+                && rootState.validWebhookUrl;
         },
     },
     mutations: {
