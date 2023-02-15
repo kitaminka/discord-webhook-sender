@@ -69,6 +69,7 @@ export default createStore({
         createEmbed(state) {
             if (state.embeds.length < 10) {
                 state.embeds.push({
+                    id: state.embeds.length,
                     title: '',
                     description: '',
                     url: '',
@@ -100,40 +101,50 @@ export default createStore({
             state.embeds = embeds;
         },
         updateEmbed(state, embed) {
-            state.embeds[embed.index] = {
-                ...state.embeds[embed.index],
+            const index = state.embeds.findIndex((emb) => emb.id === embed.id);
+            state.embeds[index] = {
+                ...state.embeds[index],
                 ...embed
             }
         },
-        updateEmbedAuthor(state, {author, index}) {
+        updateEmbedAuthor(state, {author, id}) {
+            const index = state.embeds.findIndex((emb) => emb.id === id);
             state.embeds[index].author = {
                 ...state.embeds[index].author,
                 ...author
             }
         },
-        updateEmbedFooter(state, {footer, index}) {
+        updateEmbedFooter(state, {footer, id}) {
+            const index = state.embeds.findIndex((emb) => emb.id === id);
             state.embeds[index].footer = {
                 ...state.embeds[index].footer,
                 ...footer
             }
         },
-        updateEmbedImage(state, {imageUrl, index}) {
+        updateEmbedImage(state, {imageUrl, id}) {
+            const index = state.embeds.findIndex((emb) => emb.id === id);
             state.embeds[index].image.url = imageUrl;
         },
-        updateEmbedThumbnail(state, {thumbnailUrl, index}) {
+        updateEmbedThumbnail(state, {thumbnailUrl, id}) {
+            const index = state.embeds.findIndex((emb) => emb.id === id);
             state.embeds[index].thumbnail.url = thumbnailUrl;
         },
-        moveEmbedUp(state, index) {
-            const embed = state.embeds[index];
-            state.embeds.splice(index, 1);
-            state.embeds.splice(index - 1, 0, embed);
+        moveEmbedUp(state, embed) {
+            const index = state.embeds.findIndex((emb) => emb.id === embed.id);
+            if (index > 0) {
+                state.embeds.splice(index, 1);
+                state.embeds.splice(index - 1, 0, embed);
+            }
         },
-        moveEmbedDown(state, index) {
-            const embed = state.embeds[index];
-            state.embeds.splice(index, 1);
-            state.embeds.splice(index + 1, 0, embed);
+        moveEmbedDown(state, embed) {
+            const index = state.embeds.findIndex((emb) => emb.id === embed.id);
+            if (index < state.embeds.length - 1) {
+                state.embeds.splice(index, 1);
+                state.embeds.splice(index + 1, 0, embed);
+            }
         },
-        deleteEmbed(state, index) {
+        deleteEmbed(state, id) {
+            const index = state.embeds.findIndex((emb) => emb.id === id);
             state.embeds.splice(index, 1);
         },
         createField(state, embedId) {

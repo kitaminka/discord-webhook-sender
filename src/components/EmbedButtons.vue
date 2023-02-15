@@ -1,12 +1,12 @@
 <template>
   <div class="embed-buttons" @click.stop>
-    <app-button class="button" variant="secondary" @click="moveEmbedUp(index)">
+    <app-button class="button" variant="secondary" @click="moveEmbedUp(embed)">
       <app-icon name="up"/>
     </app-button>
-    <app-button class="button" variant="secondary" @click="moveEmbedDown(index)">
+    <app-button class="button" variant="secondary" @click="moveEmbedDown(embed)">
       <app-icon name="down"/>
     </app-button>
-    <app-button class="button" variant="danger" @click="deleteEmbed(index)">
+    <app-button class="button" variant="danger" @click="deleteEmbed(embed.id)">
       <app-icon name="delete"/>
     </app-button>
   </div>
@@ -25,7 +25,7 @@ export default {
     AppIcon
   },
   props: [
-    'index'
+    'embed',
   ],
   methods: {
     ...mapMutations([

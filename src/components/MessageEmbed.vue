@@ -5,7 +5,7 @@
         <app-icon name="up"/>
       </div>
       <h3>{{embed.title || 'Embed'}}</h3>
-      <embed-buttons :index="index"></embed-buttons>
+      <embed-buttons :embed="embed"></embed-buttons>
     </div>
     <transition @enter="enter" @after-enter="afterEnter" @leave="leave" @after-leave="afterLeave">
       <div class="embed" v-show="show">
@@ -82,11 +82,7 @@ export default {
     }
   },
   props: [
-    'index',
-    'embed'
-  ],
-  emits: [
-    'updateEmbed'
+    'embed',
   ],
   methods: {
     ...mapMutations([
@@ -155,7 +151,7 @@ export default {
       },
       set(title) {
         this.updateEmbed({
-          index: this.index,
+          id: this.embed.id,
           title
         });
       }
@@ -166,7 +162,7 @@ export default {
       },
       set(description) {
         this.updateEmbed({
-          index: this.index,
+          id: this.embed.id,
           description
         });
       }
@@ -177,7 +173,7 @@ export default {
       },
       set(url) {
         this.updateEmbed({
-          index: this.index,
+          id: this.embed.id,
           url
         });
       }
@@ -188,7 +184,7 @@ export default {
       },
       set(author) {
         this.updateEmbedAuthor({
-          index: this.index,
+          id: this.embed.id,
           author: {
             name: author
           }
@@ -201,7 +197,7 @@ export default {
       },
       set(authorUrl) {
         this.updateEmbedAuthor({
-          index: this.index,
+          id: this.embed.id,
           author: {
             url: authorUrl
           }
@@ -214,7 +210,7 @@ export default {
       },
       set(authorIconUrl) {
         this.updateEmbedAuthor({
-          index: this.index,
+          id: this.embed.id,
           author: {
             icon_url: authorIconUrl
           }
@@ -227,7 +223,7 @@ export default {
       },
       set(imageUrl) {
         this.updateEmbedImage({
-          index: this.index,
+          id: this.embed.id,
           imageUrl: imageUrl
         });
       }
