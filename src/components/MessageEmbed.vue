@@ -5,7 +5,7 @@
         <app-icon name="up"/>
       </div>
       <h3>{{embed.title || 'Embed'}}</h3>
-      <embed-buttons :embed="embed"></embed-buttons>
+      <embed-buttons :index="index"></embed-buttons>
     </div>
     <transition @enter="enter" @after-enter="afterEnter" @leave="leave" @after-leave="afterLeave">
       <div class="embed" v-show="show">
@@ -82,16 +82,22 @@ export default {
     }
   },
   props: [
+    'index',
     'embed'
   ],
   emits: [
     'updateEmbed'
   ],
   methods: {
-    ...mapMutations('embeds', [
+    ...mapMutations([
       'moveEmbedUp',
       'moveEmbedDown',
-      'deleteEmbed'
+      'deleteEmbed',
+      'updateEmbed',
+      'updateEmbedAuthor',
+      'updateEmbedFooter',
+      'updateEmbedImage',
+      'updateEmbedThumbnail',
     ]),
     updateColor() {
       const colorInt = parseInt(this.color.substring(1), 16);
@@ -137,7 +143,7 @@ export default {
     ...mapState([
       'validWebhookUrl'
     ]),
-    ...mapGetters('embeds', [
+    ...mapGetters([
       'emptyEmbed'
     ]),
     emptyEmbedError() {
@@ -148,8 +154,8 @@ export default {
         return this.embed.title;
       },
       set(title) {
-        this.$emit('updateEmbed', {
-          id: this.embed.id,
+        this.updateEmbed({
+          index: this.index,
           title
         });
       }
@@ -159,9 +165,20 @@ export default {
         return this.embed.description;
       },
       set(description) {
-        this.$emit('updateEmbed', {
-          id: this.embed.id,
+        this.updateEmbed({
+          index: this.index,
           description
+        });
+      }
+    },
+    url: {
+      get() {
+        return this.embed.url;
+      },
+      set(url) {
+        this.updateEmbed({
+          index: this.index,
+          url
         });
       }
     },
@@ -170,8 +187,8 @@ export default {
         return this.embed.author.name;
       },
       set(author) {
-        this.$emit('updateEmbed', {
-          id: this.embed.id,
+        this.updateEmbedAuthor({
+          index: this.index,
           author: {
             name: author
           }
@@ -183,8 +200,8 @@ export default {
         return this.embed.author.url;
       },
       set(authorUrl) {
-        this.$emit('updateEmbed', {
-          id: this.embed.id,
+        this.updateEmbedAuthor({
+          index: this.index,
           author: {
             url: authorUrl
           }
@@ -196,22 +213,11 @@ export default {
         return this.embed.author.icon_url;
       },
       set(authorIconUrl) {
-        this.$emit('updateEmbed', {
-          id: this.embed.id,
+        this.updateEmbedAuthor({
+          index: this.index,
           author: {
             icon_url: authorIconUrl
           }
-        });
-      }
-    },
-    url: {
-      get() {
-        return this.embed.url;
-      },
-      set(url) {
-        this.$emit('updateEmbed', {
-          id: this.embed.id,
-          url
         });
       }
     },
@@ -220,11 +226,9 @@ export default {
         return this.embed.image.url;
       },
       set(imageUrl) {
-        this.$emit('updateEmbed', {
-          id: this.embed.id,
-          image: {
-            url: imageUrl
-          }
+        this.updateEmbedImage({
+          index: this.index,
+          imageUrl: imageUrl
         });
       }
     },
@@ -233,11 +237,9 @@ export default {
         return this.embed.thumbnail.url;
       },
       set(thumbnailUrl) {
-        this.$emit('updateEmbed', {
-          id: this.embed.id,
-          thumbnail: {
-            url: thumbnailUrl
-          }
+        this.updateEmbedThumbnail({
+          index: this.index,
+          thumbnailUrl: thumbnailUrl
         });
       }
     }

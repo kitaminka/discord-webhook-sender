@@ -1,7 +1,7 @@
 <template>
   <div class="embed-list">
     <transition-group>
-      <message-embed class="message-embed" v-for="embed in embeds" :key="embed.id" :embed="embed" @updateEmbed="updateEmbed"/>
+      <message-embed class="message-embed" v-for="(embed, index) in embeds" :key="index" :index="index" :embed="embed"/>
     </transition-group>
   </div>
 </template>
@@ -17,12 +17,12 @@ export default {
     MessageEmbed
   },
   methods: {
-    ...mapMutations('embeds', [
+    ...mapMutations([
       'updateEmbed'
     ]),
   },
   computed: {
-    ...mapState('embeds', [
+    ...mapState([
       'embeds'
     ]),
   }

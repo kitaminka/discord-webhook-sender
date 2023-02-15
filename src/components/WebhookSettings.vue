@@ -44,7 +44,7 @@ export default {
     ])
   },
   computed: {
-    ...mapState('embeds', [
+    ...mapState([
       'embeds'
     ]),
     ...mapState([
@@ -55,7 +55,7 @@ export default {
       'editButtonText',
       'loadButtonText'
     ]),
-    ...mapGetters('embeds', [
+    ...mapGetters([
       'emptyEmbed'
     ]),
     webhookUrlError() {

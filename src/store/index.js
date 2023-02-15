@@ -1,25 +1,38 @@
 import { createStore } from 'vuex';
 
-import embeds from '@/store/embeds';
-
 export default createStore({
-    state: {
-        validWebhookUrl: false,
-        sendButtonText: 'Send',
-        editButtonText: 'Edit',
-        loadButtonText: 'Load',
-        webhook: {
-            url: '',
-            username: '',
-            avatarUrl: ''
-        },
-        message: {
-            id: '',
-            content: ''
+    state() {
+        return {
+            validWebhookUrl: false,
+            sendButtonText: 'Send',
+            editButtonText: 'Edit',
+            loadButtonText: 'Load',
+            webhook: {
+                url: '',
+                username: '',
+                avatarUrl: ''
+            },
+            message: {
+                id: '',
+                content: ''
+            },
+            embeds: []
         }
     },
-    modules: {
-        embeds
+    getters: {
+        embedById: (state) => (id) => {
+            return state.embeds.find((emb) => emb.id === id);
+        },
+        emptyEmbed: (state) => (id) => {
+            const embed = state.embeds.find((emb) => emb.id === id);
+            return (embed.title.length === 0
+                    && embed.description.length === 0
+                    && embed.author.name.length === 0
+                    && embed.image.url.length === 0
+                    && embed.thumbnail.url.length === 0
+                    && embed.fields.length === 0)
+                && state.validWebhookUrl;
+        }
     },
     mutations: {
         setMessageId(state, messageId) {
@@ -52,6 +65,76 @@ export default createStore({
         },
         setLoadButtonText(state, loadButtonText) {
             state.loadButtonText = loadButtonText;
+        },
+        createEmbed(state) {
+            if (state.embeds.length < 10) {
+                state.embeds.push({
+                    title: '',
+                    description: '',
+                    url: '',
+                    color: 0,
+                    author: {
+                        name: '',
+                        url: '',
+                        icon_url: ''
+                    },
+                    footer: {
+                        text: '',
+                        icon_url: ''
+                    },
+                    image: {
+                        url: ''
+                    },
+                    thumbnail: {
+                        url: ''
+                    },
+                    fields: [],
+                    show: true
+                });
+            }
+        },
+        deleteAllEmbeds(state) {
+            state.embeds = [];
+        },
+        setEmbeds(state, embeds) {
+            state.embeds = embeds;
+        },
+        updateEmbed(state, embed) {
+            state.embeds[embed.index] = {
+                ...state.embeds[embed.index],
+                ...embed
+            }
+        },
+        updateEmbedAuthor(state, {author, index}) {
+            state.embeds[index].author = {
+                ...state.embeds[index].author,
+                ...author
+            }
+        },
+        updateEmbedFooter(state, {footer, index}) {
+            state.embeds[index].footer = {
+                ...state.embeds[index].footer,
+                ...footer
+            }
+        },
+        updateEmbedImage(state, {imageUrl, index}) {
+            state.embeds[index].image.url = imageUrl;
+        },
+        updateEmbedThumbnail(state, {thumbnailUrl, index}) {
+            state.embeds[index].thumbnail.url = thumbnailUrl;
+        },
+        moveEmbedUp(state, index) {
+            const embed = state.embeds[index];
+            state.embeds.splice(index, 1);
+            state.embeds.splice(index - 1, 0, embed);
+        },
+        moveEmbedDown(state, index) {
+            const embed = state.embeds[index];
+            state.embeds.splice(index, 1);
+            state.embeds.splice(index + 1, 0, embed);
+        },
+        deleteEmbed(state, index) {
+            state.embeds.splice(index, 1);
         },
         createField(state, embedId) {
             const embed = state.embeds.find((emb) => emb.id === embedId);
