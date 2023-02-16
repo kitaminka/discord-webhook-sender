@@ -1,12 +1,12 @@
 <template>
   <div class="field-buttons">
-    <app-button class="button" variant="secondary" @click="moveFieldUp">
+    <app-button class="button" variant="secondary" @click="moveFieldUp({embedId, fieldId})">
       <app-icon name="up"/>
     </app-button>
-    <app-button class="button" variant="secondary" @click="moveFieldDown">
+    <app-button class="button" variant="secondary" @click="moveFieldDown({embedId, fieldId})">
       <app-icon name="down"/>
     </app-button>
-    <app-button class="button" variant="danger" @click="deleteField">
+    <app-button class="button" variant="danger" @click="deleteField({embedId, fieldId})">
       <app-icon name="delete"/>
     </app-button>
   </div>
@@ -25,14 +25,15 @@ export default {
     AppButton
   },
   props: [
-    'embed'
+    'embedId',
+    'fieldId'
   ],
   methods: {
     ...mapMutations([
       'deleteField',
       'moveFieldUp',
       'moveFieldDown'
-    ]),
+    ])
   }
 };
 </script>

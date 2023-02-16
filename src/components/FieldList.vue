@@ -3,26 +3,26 @@
     <h3 class="header">Fields</h3>
     <div class="buttons">
       <app-button @click="createField(embed.id)" :disabled="disableCreateField">Create field</app-button>
-      <app-button @click="deleteAllFields(embed.id)" :disabled="disableDeleteFields" variant="danger">Delete all fields</app-button>
+      <app-button @click="deleteEmbedFields(embed.id)" :disabled="disableDeleteFields" variant="danger">Delete all fields</app-button>
     </div>
     <div class="fields">
       <transition-group>
-        <embed-field class="field" v-for="field in this.embed.fields" :field="field" :key="field.id" @updateField="updateEmbedField"/>
+        <field class="field" v-for="field in embedFieldArray(embed.id)" :embed-id="embed.id" :field="field" :key="field.id"/>
       </transition-group>
     </div>
   </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 
 import AppButton from '@/components/AppButton';
-import EmbedField from '@/components/Field.vue';
+import Field from '@/components/Field.vue';
 
 export default {
   name: 'FieldList',
   components: {
-    EmbedField,
+    Field,
     AppButton
   },
   props: [
@@ -31,17 +31,13 @@ export default {
   methods: {
     ...mapMutations([
       'createField',
-      'deleteAllFields',
-      'updateField'
-    ]),
-    updateEmbedField(field) {
-      this.updateField({
-        embedId: this.embed.id,
-        field
-      });
-    }
+      'deleteEmbedFields'
+    ])
   },
   computed: {
+    ...mapGetters([
+      'embedFieldArray'
+    ]),
     disableCreateField() {
       return this.embed.fields.length >= 25;
     },

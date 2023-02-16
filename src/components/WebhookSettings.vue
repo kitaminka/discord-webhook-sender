@@ -45,7 +45,8 @@ export default {
   },
   computed: {
     ...mapState([
-      'embeds'
+      'embeds',
+      'webhook'
     ]),
     ...mapState([
       'webhook',
@@ -62,8 +63,8 @@ export default {
       return !this.validWebhookUrl && this.webhook.url.length !== 0;
     },
     disableSendButton() {
-      for (const embed of this.embeds) {
-        if (this.emptyEmbed(embed.id)) {
+      for (const embedId of this.embeds.allIds) {
+        if (this.emptyEmbed(embedId)) {
           return true;
         }
       }
@@ -77,7 +78,7 @@ export default {
     },
     webhookUrl: {
       get() {
-        return this.$store.state.webhook.url;
+        return this.webhook.url;
       },
       set(webhookUrl) {
         this.$store.dispatch('updateWebhookUrl', webhookUrl)
@@ -85,7 +86,7 @@ export default {
     },
     username: {
       get() {
-        return this.$store.state.webhook.username;
+        return this.webhook.username;
       },
       set(username) {
         this.$store.commit('setUsername', username);
@@ -93,7 +94,7 @@ export default {
     },
     avatarUrl: {
       get() {
-        return this.$store.state.webhook.avatarUrl;
+        return this.webhook.avatarUrl;
       },
       set(avatarUrl) {
         this.$store.commit('setAvatarUrl', avatarUrl);

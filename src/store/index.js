@@ -16,20 +16,27 @@ export default createStore({
                 id: '',
                 content: ''
             },
-            embeds: []
+            embeds: {
+                byId: {},
+                allIds: []
+            },
+            fields: {},
         }
     },
     getters: {
-        embedById: (state) => (id) => {
-            return state.embeds.find((emb) => emb.id === id);
+        embedArray: (state) => {
+            return state.embeds.allIds.map((id) => state.embeds.byId[id]);
         },
-        emptyEmbed: (state) => (id) => {
-            const embed = state.embeds.find((emb) => emb.id === id);
+        embedFieldArray: (state) => (embedId) => {
+            return state.embeds.byId[embedId].fields.map((id) => state.fields[id]);
+        },
+        emptyEmbed: (state) => (embedId) => {
+            const embed = state.embeds.byId[embedId];
             return (embed.title.length === 0
                     && embed.description.length === 0
-                    && embed.author.name.length === 0
-                    && embed.image.url.length === 0
-                    && embed.thumbnail.url.length === 0
+                    && embed.authorName.length === 0
+                    && embed.imageUrl.length === 0
+                    && embed.thumbnailUrl.length === 0
                     && embed.fields.length === 0)
                 && state.validWebhookUrl;
         }
@@ -67,128 +74,94 @@ export default createStore({
             state.loadButtonText = loadButtonText;
         },
         createEmbed(state) {
-            if (state.embeds.length < 10) {
-                state.embeds.push({
-                    id: state.embeds.length,
+            if (state.embeds.allIds.length < 10) {
+                const embedId = Date.now();
+                state.embeds.allIds.push(embedId);
+                state.embeds.byId[embedId] = {
+                    id: embedId,
                     title: '',
                     description: '',
                     url: '',
                     color: 0,
-                    author: {
-                        name: '',
-                        url: '',
-                        icon_url: ''
-                    },
-                    footer: {
-                        text: '',
-                        icon_url: ''
-                    },
-                    image: {
-                        url: ''
-                    },
-                    thumbnail: {
-                        url: ''
-                    },
+                    authorName: '',
+                    authorUrl: '',
+                    authorIconUrl: '',
+                    footerText: '',
+                    footerIconUrl: '',
+                    imageUrl: '',
+                    thumbnailUrl: '',
                     fields: [],
                     show: true
-                });
+                }
             }
         },
         deleteAllEmbeds(state) {
-            state.embeds = [];
-        },
-        setEmbeds(state, embeds) {
-            state.embeds = embeds;
+            state.embeds.byId = {};
+            state.embeds.allIds = [];
         },
         updateEmbed(state, embed) {
-            const index = state.embeds.findIndex((emb) => emb.id === embed.id);
-            state.embeds[index] = {
-                ...state.embeds[index],
+            state.embeds.byId[embed.id] = {
+                ...state.embeds[embed.id],
                 ...embed
             }
         },
-        updateEmbedAuthor(state, {author, id}) {
-            const index = state.embeds.findIndex((emb) => emb.id === id);
-            state.embeds[index].author = {
-                ...state.embeds[index].author,
-                ...author
-            }
-        },
-        updateEmbedFooter(state, {footer, id}) {
-            const index = state.embeds.findIndex((emb) => emb.id === id);
-            state.embeds[index].footer = {
-                ...state.embeds[index].footer,
-                ...footer
-            }
-        },
-        updateEmbedImage(state, {imageUrl, id}) {
-            const index = state.embeds.findIndex((emb) => emb.id === id);
-            state.embeds[index].image.url = imageUrl;
-        },
-        updateEmbedThumbnail(state, {thumbnailUrl, id}) {
-            const index = state.embeds.findIndex((emb) => emb.id === id);
-            state.embeds[index].thumbnail.url = thumbnailUrl;
-        },
-        moveEmbedUp(state, embed) {
-            const index = state.embeds.findIndex((emb) => emb.id === embed.id);
+        moveEmbedUp(state, embedId) {
+            const index = state.embeds.allIds.findIndex((id) => id === embedId);
             if (index > 0) {
-                state.embeds.splice(index, 1);
-                state.embeds.splice(index - 1, 0, embed);
+                state.embeds.allIds.splice(index, 1);
+                state.embeds.allIds.splice(index - 1, 0, embedId);
             }
         },
-        moveEmbedDown(state, embed) {
-            const index = state.embeds.findIndex((emb) => emb.id === embed.id);
-            if (index < state.embeds.length - 1) {
-                state.embeds.splice(index, 1);
-                state.embeds.splice(index + 1, 0, embed);
+        moveEmbedDown(state, embedId) {
+            const index = state.embeds.allIds.findIndex((id) => id === embedId);
+            if (index < state.embeds.allIds.length - 1) {
+                state.embeds.allIds.splice(index, 1);
+                state.embeds.allIds.splice(index + 1, 0, embedId);
             }
         },
-        deleteEmbed(state, id) {
-            const index = state.embeds.findIndex((emb) => emb.id === id);
-            state.embeds.splice(index, 1);
+        deleteEmbed(state, embedId) {
+            state.embeds.allIds = state.embeds.allIds.filter((id) => id !== embedId);
+            delete state.embeds.byId[embedId];
         },
         createField(state, embedId) {
-            const embed = state.embeds.find((emb) => emb.id === embedId);
-            if (embed.fields.length < 25) {
-                embed.fields.push({
-                    id: Date.now(),
-                    name: '',
-                    value: ''
-                });
+            const fieldId = Date.now();
+            state.embeds.byId[embedId].fields.push(fieldId);
+            state.fields[fieldId] = {
+                id: fieldId,
+                name: '',
+                value: ''
             }
         },
-        deleteAllFields(state, embedId) {
-            state.embeds.find((emb) => emb.id === embedId).fields = [];
+        deleteEmbedFields(state, embedId) {
+            state.embeds.byId[embedId].fields = [];
+            delete state.fields[embedId];
         },
-        updateField() {
-            // TODO
-            // const embed = state.embeds.find((emb) => emb.id === embedId).fields.find((f) => f.id === field.id);
-            // Object.assign(embed, field);
+        updateField(state, field) {
+            state.fields[field.id] = {
+                ...state.fields[field.id],
+                ...field
+            }
         },
-        moveFieldUp() {
-            // TODO
-            // const embed = state.embeds.find((emb) => emb.id === embedId);
-            // const field = embed.fields.find((fld) => fld.id === fieldId);
-            // const index = embed.fields.indexOf(field);
-            // if (index > 0) {
-            //     embed.fields.splice(index, 1);
-            //     embed.fields.splice(index - 1, 0, field);
-            // }
+        moveFieldUp(state, {embedId, fieldId}) {
+            const embed = state.embeds.byId[embedId];
+            const index = state.embeds.byId[embedId].fields.findIndex((id) => id === fieldId);
+            if (index > 0) {
+                embed.fields.splice(index, 1);
+                embed.fields.splice(index - 1, 0, fieldId);
+            }
         },
-        moveFieldDown() {
-            // TODO
-            // const embed = state.embeds.find((emb) => emb.id === embedId);
-            // const field = embed.fields.find((fld) => fld.id === fieldId);
-            // const index = embed.fields.indexOf(field);
-            // if (index < embed.fields.length - 1) {
-            //     embed.fields.splice(index, 1);
-            //     embed.fields.splice(index + 1, 0, field);
-            // }
+        moveFieldDown(state, {embedId, fieldId}) {
+            const embed = state.embeds.byId[embedId];
+            const index = embed.fields.findIndex((id) => id === fieldId);
+            if (index < embed.fields.length - 1) {
+                embed.fields.splice(index, 1);
+                embed.fields.splice(index + 1, 0, fieldId);
+            }
         },
-        deleteField() {
-            // TODO
-            // const embed = state.embeds.find((emb) => emb.id === embedId);
-            // embed.fields = embed.fields.filter((fld) => fld.id !== fieldId);
+        deleteField(state, {embedId, fieldId}) {
+            const embed = state.embeds.byId[embedId];
+            embed.fields = embed.fields.filter((id) => id !== fieldId);
+            delete state.fields[fieldId];
         }
     },
     actions: {

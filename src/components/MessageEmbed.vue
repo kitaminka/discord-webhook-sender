@@ -5,13 +5,13 @@
         <app-icon name="up"/>
       </div>
       <h3>{{embed.title || 'Embed'}}</h3>
-      <embed-buttons :embed="embed"></embed-buttons>
+      <embed-buttons :embed-id="embed.id"></embed-buttons>
     </div>
     <transition @enter="enter" @after-enter="afterEnter" @leave="leave" @after-leave="afterLeave">
       <div class="embed" v-show="show">
         <div class="author">
           <p>Author</p>
-          <app-input class="input" v-model="author" placeholder="Some author"/>
+          <app-input class="input" v-model="authorName" placeholder="Some author"/>
         </div>
         <div class="author-url">
           <p>Author URL</p>
@@ -74,6 +74,9 @@ export default {
     ErrorMessage,
     AppInput
   },
+  created() {
+    this.color = `#${this.embed.color.toString(16).padStart(6, '0')}`;
+  },
   data() {
     return {
       color: '#000000',
@@ -82,28 +85,24 @@ export default {
     }
   },
   props: [
-    'embed',
+    'embed'
   ],
   methods: {
     ...mapMutations([
       'moveEmbedUp',
       'moveEmbedDown',
       'deleteEmbed',
-      'updateEmbed',
-      'updateEmbedAuthor',
-      'updateEmbedFooter',
-      'updateEmbedImage',
-      'updateEmbedThumbnail',
+      'updateEmbed'
     ]),
     updateColor() {
       const colorInt = parseInt(this.color.substring(1), 16);
       if (!isNaN(colorInt) && colorInt <= 16777215 && this.color.length <= 7) {
-        this.$emit('updateEmbed', {
+        this.updateEmbed({
           id: this.embed.id,
           color: colorInt
         });
       } else {
-        this.color = `#${this.embed.color.toString(16)}`;
+        this.color = `#${this.embed.color.toString(16).padStart(6, '0')}`;
       }
     },
     toggleEmbedShow() {
@@ -178,64 +177,58 @@ export default {
         });
       }
     },
-    author: {
+    authorName: {
       get() {
-        return this.embed.author.name;
+        return this.embed.authorName;
       },
-      set(author) {
-        this.updateEmbedAuthor({
+      set(authorName) {
+        this.updateEmbed({
           id: this.embed.id,
-          author: {
-            name: author
-          }
+          authorName
         });
       }
     },
     authorUrl: {
       get() {
-        return this.embed.author.url;
+        return this.embed.authorUrl;
       },
       set(authorUrl) {
-        this.updateEmbedAuthor({
+        this.updateEmbed({
           id: this.embed.id,
-          author: {
-            url: authorUrl
-          }
+          authorUrl
         });
       }
     },
     authorIconUrl: {
       get() {
-        return this.embed.author.icon_url;
+        return this.embed.authorIconUrl;
       },
       set(authorIconUrl) {
-        this.updateEmbedAuthor({
+        this.updateEmbed({
           id: this.embed.id,
-          author: {
-            icon_url: authorIconUrl
-          }
+          authorIconUrl
         });
       }
     },
     imageUrl: {
       get() {
-        return this.embed.image.url;
+        return this.embed.imageUrl;
       },
       set(imageUrl) {
-        this.updateEmbedImage({
+        this.updateEmbed({
           id: this.embed.id,
-          imageUrl: imageUrl
+          imageUrl
         });
       }
     },
     thumbnailUrl: {
       get() {
-        return this.embed.thumbnail.url;
+        return this.embed.thumbnailUrl;
       },
       set(thumbnailUrl) {
-        this.updateEmbedThumbnail({
-          index: this.index,
-          thumbnailUrl: thumbnailUrl
+        this.updateEmbed({
+          id: this.embed.id,
+          thumbnailUrl
         });
       }
     }
