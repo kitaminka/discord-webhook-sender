@@ -17,7 +17,7 @@
     <div class="buttons">
       <app-button :disabled="disableSendButton" class="button" @click="sendMessage">{{sendButtonText}}</app-button>
       <app-button :disabled="disableEditButton" class="button" @click="editMessage">{{editButtonText}}</app-button>
-      <app-button :disabled="disableLoadButton" class="button" @click="loadMessage" variant="secondary">{{loadButtonText}}</app-button>
+      <app-button :disabled="disableLoadButton" class="button" @click="getMessage" variant="secondary">{{loadButtonText}}</app-button>
     </div>
   </div>
 </template>
@@ -40,7 +40,7 @@ export default {
     ...mapActions([
       'sendMessage',
       'editMessage',
-      'loadMessage'
+      'getMessage'
     ])
   },
   computed: {

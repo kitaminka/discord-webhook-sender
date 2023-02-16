@@ -24,6 +24,44 @@ export default createStore({
         }
     },
     getters: {
+        webhookParams: (state) => {
+            return {
+                content: state.message.content || undefined,
+                username: state.webhook.username || undefined,
+                avatar_url: state.webhook.avatarUrl || undefined,
+                embeds: state.embeds.allIds.map((id) => {
+                    const embed = state.embeds.byId[id];
+                    return {
+                        title: embed.title || undefined,
+                        description: embed.description || undefined,
+                        url: embed.url || undefined,
+                        color: embed.color || undefined,
+                        footer: {
+                            text: embed.footerText || undefined,
+                            icon_url: embed.footerIconUrl || undefined
+                        },
+                        image: {
+                            url: embed.imageUrl || undefined
+                        },
+                        thumbnail: {
+                            url: embed.thumbnailUrl || undefined
+                        },
+                        author: {
+                            name: embed.authorName || undefined,
+                            url: embed.authorUrl || undefined,
+                            icon_url: embed.authorIconUrl || undefined
+                        },
+                        fields: embed.fields.map((id) => {
+                            const field = state.fields[id];
+                            return {
+                                name: field.name,
+                                value: field.value
+                            }
+                        })
+                    }
+                })
+            }
+        },
         embedArray: (state) => {
             return state.embeds.allIds.map((id) => state.embeds.byId[id]);
         },
@@ -95,6 +133,39 @@ export default createStore({
                 }
             }
         },
+        loadEmbeds(state, embeds) {
+            for (const embed of embeds) {
+                const embedId = Date.now();
+                state.embeds.allIds.push(embedId);
+                state.embeds.byId[embedId] = {
+                    id: embedId,
+                    title: embed.title || '',
+                    description: embed.description || '',
+                    url: embed.url || '',
+                    color: embed.color || 0,
+                    authorName: embed.author?.name || '',
+                    authorUrl: embed.author?.url || '',
+                    authorIconUrl: embed.author?.icon_url || '',
+                    footerText: embed.footer?.text || '',
+                    footerIconUrl: embed.footer?.icon_url || '',
+                    imageUrl: embed.image?.url || '',
+                    thumbnailUrl: embed.thumbnail?.url || '',
+                    fields: [],
+                    show: true
+                }
+                if (embed.fields) {
+                    for (const field of embed.fields) {
+                        const fieldId = Date.now();
+                        state.embeds.byId[embedId].fields.push(fieldId);
+                        state.fields[fieldId] = {
+                            id: fieldId,
+                            name: field.name || '',
+                            value: field.value || ''
+                        }
+                    }
+                }
+            }
+        },
         deleteAllEmbeds(state) {
             state.embeds.byId = {};
             state.embeds.allIds = [];
@@ -136,6 +207,9 @@ export default createStore({
             state.embeds.byId[embedId].fields = [];
             delete state.fields[embedId];
         },
+        deleteAllFields(state) {
+            state.fields = {};
+        },
         updateField(state, field) {
             state.fields[field.id] = {
                 ...state.fields[field.id],
@@ -173,19 +247,14 @@ export default createStore({
             }
             commit('setWebhookUrl', webhookUrl);
         },
-        async sendMessage({ state, commit }) {
+        async sendMessage({ state, getters, commit }) {
             const response  = await fetch(state.webhook.url + '?wait=true', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    username: state.webhook.username,
-                    avatar_url: state.webhook.avatarUrl,
-                    content: state.message.content,
-                    embeds: state.embeds
-                })
+                body: JSON.stringify(getters.webhookParams)
             });
             const message = await response.json();
             commit('setMessageId', message.id);
@@ -198,18 +267,14 @@ export default createStore({
                 commit('setSendButtonText', 'Send');
             }, 1000);
         },
-        async editMessage({ state, commit }) {
+        async editMessage({ state, getters, commit }) {
             const response  = await fetch(`${state.webhook.url}/messages/${state.message.id}`, {
                 method: 'PATCH',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    username: state.webhook.username,
-                    content: state.message.content,
-                    embeds: state.embeds
-                })
+                body: JSON.stringify(getters.webhookParams)
             });
             if (response.ok) {
                 commit('setEditButtonText', 'Message edited!');
@@ -220,12 +285,11 @@ export default createStore({
                 commit('setEditButtonText', 'Edit');
             }, 1000);
         },
-        async loadMessage({ state, commit }) {
+        async getMessage({ state, commit, dispatch }) {
             const response = await fetch(`${state.webhook.url}/messages/${state.message.id}`);
             if (response.ok) {
                 const message = await response.json();
-                commit('setContent', message.content);
-                commit('setEmbeds', message.embeds);
+                dispatch('loadMessage', message);
                 commit('setLoadButtonText', 'Message loaded!');
             } else {
                 commit('setLoadButtonText', 'Failed to load message!');
@@ -233,6 +297,12 @@ export default createStore({
             setTimeout(() => {
                 commit('setLoadButtonText', 'Load');
             }, 1000);
+        },
+        loadMessage({ commit }, message) {
+            commit('setContent', message.content);
+            commit('deleteAllEmbeds');
+            commit('deleteAllFields');
+            commit('loadEmbeds', message.embeds);
         }
     }
 })
