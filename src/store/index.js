@@ -101,7 +101,7 @@ export default createStore({
         },
         updateEmbed(state, embed) {
             state.embeds.byId[embed.id] = {
-                ...state.embeds[embed.id],
+                ...state.embeds.byId[embed.id],
                 ...embed
             }
         },
