@@ -2,7 +2,7 @@
   <div class="field">
     <div class="header">
       <h3>{{field.name || 'Field'}}</h3>
-      <field-buttons :field="field"/>
+      <field-buttons :embedId="embedId" :fieldId="field.id"/>
     </div>
     <div class="name">
       <p>Name</p>
@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 import AppInput from '@/components/AppInput';
 import AppTextarea from '@/components/AppTextarea';
 import FieldButtons from '@/components/FieldButtons.vue';
@@ -28,17 +30,23 @@ export default {
     FieldButtons
   },
   props: [
+    'embedId',
     'field'
   ],
+  methods: {
+    ...mapMutations([
+      'updateField'
+    ])
+  },
   computed: {
     name: {
       get() {
         return this.field.name;
       },
       set(name) {
-        this.$emit('updateField', {
+        this.updateField({
           id: this.field.id,
-          name: name,
+          name: name
         });
       }
     },
@@ -47,7 +55,7 @@ export default {
         return this.field.value;
       },
       set(value) {
-        this.$emit('updateField', {
+        this.updateField({
           id: this.field.id,
           value: value
         });
