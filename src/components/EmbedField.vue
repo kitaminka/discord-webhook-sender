@@ -2,7 +2,7 @@
   <div class="field">
     <div class="header">
       <h3>{{field.name || 'Field'}}</h3>
-      <field-buttons :embedId="embedId" :fieldId="field.id"/>
+      <embed-field-buttons :embedId="embedId" :fieldId="field.id"/>
     </div>
     <div class="name">
       <p>Name</p>
@@ -20,14 +20,14 @@ import { mapMutations } from 'vuex';
 
 import AppInput from '@/components/AppInput';
 import AppTextarea from '@/components/AppTextarea';
-import FieldButtons from '@/components/FieldButtons.vue';
+import EmbedFieldButtons from '@/components/EmbedFieldButtons.vue';
 
 export default {
   name: 'EmbedField',
   components: {
     AppTextarea,
     AppInput,
-    FieldButtons
+    EmbedFieldButtons
   },
   props: [
     'embedId',

@@ -6,7 +6,7 @@
     <webhook-settings/>
     <message-settings/>
     <embed-settings/>
-    <embed-list/>
+    <message-embed-list/>
   </main>
 </template>
 
@@ -14,12 +14,12 @@
 import WebhookSettings from '@/components/WebhookSettings';
 import MessageSettings from '@/components/MessageSettings';
 import EmbedSettings from '@/components/EmbedSettings';
-import EmbedList from '@/components/EmbedList.vue';
+import MessageEmbedList from '@/components/MessageEmbedList.vue';
 
 export default {
   name: 'App',
   components: {
-    EmbedList,
+    MessageEmbedList,
     EmbedSettings,
     MessageSettings,
     WebhookSettings
@@ -70,7 +70,7 @@ html, body {
   --button-background-color-active: #8f1919;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 1000px) {
   .main {
     padding: 0 20px;
   }

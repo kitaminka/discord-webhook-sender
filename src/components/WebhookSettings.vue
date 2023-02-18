@@ -15,9 +15,9 @@
       <app-input type="text" class="input" placeholder="https://example.com/avatar.png" v-model="avatarUrl"/>
     </div>
     <div class="buttons">
-      <app-button class="button" @click="sendMessageButton">{{sendButtonText}}</app-button>
-      <app-button :disabled="disableEditButton" class="button" @click="editMessageButton">{{editButtonText}}</app-button>
-      <app-button :disabled="disableLoadButton" class="button" @click="loadMessageButton" variant="secondary">{{loadButtonText}}</app-button>
+      <app-button class="button" :disabled="disableSendButton" @click="sendMessageButton">{{sendButtonText}}</app-button>
+      <app-button class="button" :disabled="disableEditButton" @click="editMessageButton">{{editButtonText}}</app-button>
+      <app-button class="button" :disabled="disableLoadButton" @click="loadMessageButton" variant="secondary">{{loadButtonText}}</app-button>
     </div>
   </div>
 </template>

@@ -2,12 +2,12 @@
   <div class="field-list">
     <h3 class="header">Fields</h3>
     <div class="buttons">
-      <app-button @click="createField(embed.id)" :disabled="disableCreateField">Create field</app-button>
-      <app-button @click="deleteEmbedFields(embed.id)" :disabled="disableDeleteFields" variant="danger">Delete all fields</app-button>
+      <app-button @click="createField(embedId)" :disabled="disableCreateField">Create field</app-button>
+      <app-button @click="deleteEmbedFields(embedId)" :disabled="disableDeleteFields" variant="danger">Delete all fields</app-button>
     </div>
     <div class="fields">
       <transition-group>
-        <field class="field" v-for="field in embedFieldArray(embed.id)" :embed-id="embed.id" :field="field" :key="field.id"/>
+        <embed-field class="field" v-for="field in embedFieldArray(embedId)" :embed-id="embedId" :field="field" :key="field.id"/>
       </transition-group>
     </div>
   </div>
@@ -17,16 +17,16 @@
 import { mapGetters, mapMutations } from 'vuex';
 
 import AppButton from '@/components/AppButton';
-import Field from '@/components/Field.vue';
+import EmbedField from '@/components/EmbedField.vue';
 
 export default {
   name: 'FieldList',
   components: {
-    Field,
+    EmbedField,
     AppButton
   },
   props: [
-    'embed'
+    'embedId'
   ],
   methods: {
     ...mapMutations([
@@ -39,10 +39,10 @@ export default {
       'embedFieldArray'
     ]),
     disableCreateField() {
-      return this.embed.fields.length >= 25;
+      return this.embedFieldArray(this.embedId).length >= 25;
     },
     disableDeleteFields() {
-      return this.embed.fields.length <= 0;
+      return this.embedFieldArray(this.embedId).length <= 0;
     }
   }
 };
