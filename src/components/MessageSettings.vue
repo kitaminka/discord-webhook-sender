@@ -29,6 +29,8 @@ export default {
   },
   methods: {
     ...mapMutations([
+      'setMessageId',
+      'setContent',
       'extractMessageId'
     ])
   },
@@ -40,22 +42,22 @@ export default {
       'validWebhookUrl'
     ]),
     emptyContentError() {
-      return this.message.content.length === 0 && this.validWebhookUrl && this.webhook.url.length !== 0 && this.embeds.length === 0;
+      return this.message.content.length === 0 && this.embeds.allIds.length === 0;
     },
     messageId: {
       get() {
-        return this.$store.state.message.id;
+        return this.message.id;
       },
       set(messageId) {
-        this.$store.commit('setMessageId', messageId)
+        this.setMessageId(messageId);
       }
     },
     content: {
       get() {
-        return this.$store.state.message.content;
+        return this.message.content;
       },
       set(content) {
-        this.$store.commit('setContent', content);
+        this.setContent(content);
       }
     }
   }

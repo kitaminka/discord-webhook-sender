@@ -1,7 +1,5 @@
 <template>
-  <header class="app-header">
-    <h2>Discord Webhook Sender</h2>
-  </header>
+  <app-header/>
   <main class="main">
     <webhook-settings/>
     <message-settings/>
@@ -15,10 +13,12 @@ import WebhookSettings from '@/components/WebhookSettings';
 import MessageSettings from '@/components/MessageSettings';
 import EmbedSettings from '@/components/EmbedSettings';
 import MessageEmbedList from '@/components/MessageEmbedList.vue';
+import AppHeader from '@/components/AppHeader.vue';
 
 export default {
   name: 'App',
   components: {
+    AppHeader,
     MessageEmbedList,
     EmbedSettings,
     MessageSettings,
@@ -40,12 +40,6 @@ html, body {
   background-color: #030318;
   width: 100%;
   min-height: 100%;
-}
-.app-header {
-  display: grid;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
 }
 .main {
   display: grid;

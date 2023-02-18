@@ -11,7 +11,7 @@ export default createStore({
             },
             message: {
                 id: '',
-                content: ''
+                content: 'Test message'
             },
             embeds: {
                 byId: {},
@@ -61,13 +61,12 @@ export default createStore({
         },
         emptyEmbed: (state) => (embedId) => {
             const embed = state.embeds.byId[embedId];
-            return (embed.title.length === 0
-                    && embed.description.length === 0
-                    && embed.authorName.length === 0
-                    && embed.imageUrl.length === 0
-                    && embed.thumbnailUrl.length === 0
-                    && embed.fields.length === 0)
-                && state.validWebhookUrl;
+            return embed.title.trim().length === 0
+                    && embed.description.trim().length === 0
+                    && embed.authorName.trim().length === 0
+                    && embed.imageUrl.trim().length === 0
+                    && embed.thumbnailUrl.trim().length === 0
+                    && embed.fields.length === 0;
         },
         embedArray: (state) => {
             return state.embeds.allIds.map((id) => state.embeds.byId[id]);

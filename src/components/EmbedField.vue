@@ -1,7 +1,7 @@
 <template>
   <div class="field">
     <div class="header">
-      <h3>{{field.name || 'Field'}}</h3>
+      <h3>{{field.name.trim() || 'Field'}}</h3>
       <embed-field-buttons :embedId="embedId" :fieldId="field.id"/>
     </div>
     <div class="name">

@@ -4,7 +4,7 @@
       <div class="icon" :class="{active: show}">
         <app-icon name="up"/>
       </div>
-      <h3>{{embed.title || 'Embed'}}</h3>
+      <h3>{{embed.title.trim() || 'Embed'}}</h3>
       <embed-buttons :embed-id="embed.id"></embed-buttons>
     </div>
     <transition @enter="enter" @after-enter="afterEnter" @leave="leave" @after-leave="afterLeave">
