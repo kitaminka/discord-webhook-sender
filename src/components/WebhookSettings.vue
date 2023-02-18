@@ -15,9 +15,9 @@
       <app-input type="text" class="input" placeholder="https://example.com/avatar.png" v-model="avatarUrl"/>
     </div>
     <div class="buttons">
-      <app-button :disabled="disableSendButton" class="button" @click="sendMessage">{{sendButtonText}}</app-button>
-      <app-button :disabled="disableEditButton" class="button" @click="editMessage">{{editButtonText}}</app-button>
-      <app-button :disabled="disableLoadButton" class="button" @click="getMessage" variant="secondary">{{loadButtonText}}</app-button>
+      <app-button class="button" @click="sendMessageButton">{{sendButtonText}}</app-button>
+      <app-button :disabled="disableEditButton" class="button" @click="editMessageButton">{{editButtonText}}</app-button>
+      <app-button :disabled="disableLoadButton" class="button" @click="loadMessageButton" variant="secondary">{{loadButtonText}}</app-button>
     </div>
   </div>
 </template>
@@ -36,25 +36,62 @@ export default {
     AppButton,
     AppInput
   },
+  data() {
+    return {
+      sendButtonText: 'Send',
+      editButtonText: 'Edit',
+      loadButtonText: 'Load'
+    }
+  },
   methods: {
     ...mapActions([
       'sendMessage',
       'editMessage',
       'getMessage'
-    ])
+    ]),
+    async sendMessageButton() {
+      this.sendButtonText = 'Sending...';
+      const response = await this.sendMessage();
+      if (response.ok) {
+        this.sendButtonText = 'Sent!';
+      } else {
+        this.sendButtonText = 'Failed!';
+      }
+      setTimeout(() => {
+        this.sendButtonText = 'Send';
+      }, 2000);
+    },
+    async editMessageButton() {
+      this.editButtonText = 'Editing...';
+      const response = await this.editMessage();
+      if (response.ok) {
+        this.editButtonText = 'Edited!';
+      } else {
+        this.editButtonText = 'Failed!';
+      }
+      setTimeout(() => {
+        this.editButtonText = 'Edit';
+      }, 2000);
+    },
+    async loadMessageButton() {
+      this.loadButtonText = 'Loading...';
+      const response = await this.getMessage();
+      if (response.ok) {
+        this.loadButtonText = 'Loaded!';
+      } else {
+        this.loadButtonText = 'Failed!';
+      }
+      setTimeout(() => {
+        this.loadButtonText = 'Load';
+      }, 2000);
+    }
   },
   computed: {
     ...mapState([
       'embeds',
-      'webhook'
-    ]),
-    ...mapState([
       'webhook',
       'message',
-      'validWebhookUrl',
-      'sendButtonText',
-      'editButtonText',
-      'loadButtonText'
+      'validWebhookUrl'
     ]),
     ...mapGetters([
       'emptyEmbed'

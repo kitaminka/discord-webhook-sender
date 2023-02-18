@@ -4,9 +4,6 @@ export default createStore({
     state() {
         return {
             validWebhookUrl: false,
-            sendButtonText: 'Send',
-            editButtonText: 'Edit',
-            loadButtonText: 'Load',
             webhook: {
                 url: '',
                 username: '',
@@ -62,12 +59,6 @@ export default createStore({
                 })
             }
         },
-        embedArray: (state) => {
-            return state.embeds.allIds.map((id) => state.embeds.byId[id]);
-        },
-        embedFieldArray: (state) => (embedId) => {
-            return state.embeds.byId[embedId].fields.map((id) => state.fields[id]);
-        },
         emptyEmbed: (state) => (embedId) => {
             const embed = state.embeds.byId[embedId];
             return (embed.title.length === 0
@@ -77,6 +68,12 @@ export default createStore({
                     && embed.thumbnailUrl.length === 0
                     && embed.fields.length === 0)
                 && state.validWebhookUrl;
+        },
+        embedArray: (state) => {
+            return state.embeds.allIds.map((id) => state.embeds.byId[id]);
+        },
+        embedFieldArray: (state) => (embedId) => {
+            return state.embeds.byId[embedId].fields.map((id) => state.fields[id]);
         }
     },
     mutations: {
@@ -101,15 +98,6 @@ export default createStore({
         },
         setAvatarUrl(state, avatarUrl) {
             state.webhook.avatarUrl = avatarUrl;
-        },
-        setSendButtonText(state, sendButtonText) {
-            state.sendButtonText = sendButtonText;
-        },
-        setEditButtonText(state, editButtonText) {
-            state.editButtonText = editButtonText;
-        },
-        setLoadButtonText(state, loadButtonText) {
-            state.loadButtonText = loadButtonText;
         },
         createEmbed(state) {
             if (state.embeds.allIds.length < 10) {
@@ -256,19 +244,14 @@ export default createStore({
                 },
                 body: JSON.stringify(getters.webhookParams)
             });
-            const message = await response.json();
-            commit('setMessageId', message.id);
             if (response.ok) {
-                commit('setSendButtonText', 'Message sent!');
-            } else {
-                commit('setSendButtonText', 'Failed to send message!');
+                const message = await response.json();
+                commit('setMessageId', message.id);
             }
-            setTimeout(() => {
-                commit('setSendButtonText', 'Send');
-            }, 1000);
+            return response;
         },
-        async editMessage({ state, getters, commit }) {
-            const response  = await fetch(`${state.webhook.url}/messages/${state.message.id}`, {
+        async editMessage({ state, getters }) {
+            return await fetch(`${state.webhook.url}/messages/${state.message.id}`, {
                 method: 'PATCH',
                 headers: {
                     'Accept': 'application/json',
@@ -276,27 +259,14 @@ export default createStore({
                 },
                 body: JSON.stringify(getters.webhookParams)
             });
-            if (response.ok) {
-                commit('setEditButtonText', 'Message edited!');
-            } else {
-                commit('setEditButtonText', 'Failed to edit message!');
-            }
-            setTimeout(() => {
-                commit('setEditButtonText', 'Edit');
-            }, 1000);
         },
-        async getMessage({ state, commit, dispatch }) {
+        async getMessage({ state, dispatch }) {
             const response = await fetch(`${state.webhook.url}/messages/${state.message.id}`);
             if (response.ok) {
                 const message = await response.json();
                 dispatch('loadMessage', message);
-                commit('setLoadButtonText', 'Message loaded!');
-            } else {
-                commit('setLoadButtonText', 'Failed to load message!');
             }
-            setTimeout(() => {
-                commit('setLoadButtonText', 'Load');
-            }, 1000);
+            return response;
         },
         loadMessage({ commit }, message) {
             commit('setContent', message.content);
