@@ -21,7 +21,7 @@ export default createStore({
         }
     },
     getters: {
-        webhookParams: (state) => {
+        webhookMessage: (state) => {
             return {
                 content: state.message.content || undefined,
                 username: state.webhook.username || undefined,
@@ -241,7 +241,7 @@ export default createStore({
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(getters.webhookParams)
+                body: JSON.stringify(getters.webhookMessage)
             });
             if (response.ok) {
                 const message = await response.json();
@@ -256,7 +256,7 @@ export default createStore({
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(getters.webhookParams)
+                body: JSON.stringify(getters.webhookMessage)
             });
         },
         async getMessage({ state, dispatch }) {
@@ -272,6 +272,19 @@ export default createStore({
             commit('deleteAllEmbeds');
             commit('deleteAllFields');
             commit('loadEmbeds', message.embeds);
+        },
+        saveMessageToLocalStorage({ getters }) {
+            localStorage.setItem('lastMessage', JSON.stringify(getters.webhookMessage));
+        },
+        loadMessageFromLocalStorage({ dispatch }) {
+            try {
+                const message = JSON.parse(localStorage.getItem('lastMessage'));
+                if (message) {
+                    dispatch('loadMessage', message);
+                }
+            } catch {
+                console.log('Failed to load message from local storage');
+            }
         }
     }
 })

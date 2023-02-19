@@ -14,6 +14,7 @@ import MessageSettings from '@/components/MessageSettings';
 import EmbedSettings from '@/components/EmbedSettings';
 import MessageEmbedList from '@/components/MessageEmbedList.vue';
 import AppHeader from '@/components/AppHeader.vue';
+import {mapActions, mapState} from 'vuex';
 
 export default {
   name: 'App',
@@ -23,6 +24,35 @@ export default {
     EmbedSettings,
     MessageSettings,
     WebhookSettings
+  },
+  methods: {
+    ...mapActions([
+      'saveMessageToLocalStorage',
+      'loadMessageFromLocalStorage'
+    ])
+  },
+  computed: {
+    ...mapState([
+      'message',
+      'embeds'
+    ])
+  },
+  watch: {
+    message: {
+      handler() {
+        this.saveMessageToLocalStorage();
+      },
+      deep: true
+    },
+    embeds: {
+      handler() {
+        this.saveMessageToLocalStorage();
+      },
+      deep: true
+    }
+  },
+  beforeMount() {
+    this.loadMessageFromLocalStorage();
   }
 }
 </script>
