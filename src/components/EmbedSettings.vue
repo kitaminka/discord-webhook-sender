@@ -30,10 +30,10 @@ export default {
       'embeds'
     ]),
     disableCreateEmbed() {
-      return this.embeds.allIds.length >= 10;
+      return this.embeds.length >= 10;
     },
     disableDeleteEmbeds() {
-      return this.embeds.allIds.length <= 0;
+      return this.embeds.length <= 0;
     }
   }
 };

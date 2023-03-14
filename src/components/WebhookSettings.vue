@@ -100,12 +100,12 @@ export default {
       return !this.validWebhookUrl && this.webhook.url.length !== 0;
     },
     disableSendButton() {
-      for (const embedId of this.embeds.allIds) {
-        if (this.emptyEmbed(embedId)) {
+      for (const embed of this.embeds) {
+        if (this.emptyEmbed(embed.id)) {
           return true;
         }
       }
-      return !this.validWebhookUrl || (this.message.content.length === 0 && this.embeds.allIds.length === 0);
+      return !this.validWebhookUrl || (this.message.content.length === 0 && this.embeds.length === 0);
     },
     disableEditButton() {
       return this.disableSendButton || this.message.id.length === 0;

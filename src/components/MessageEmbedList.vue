@@ -1,13 +1,13 @@
 <template>
   <div class="embed-list">
     <transition-group>
-      <message-embed class="message-embed" v-for="embed in embedArray" :key="embed.id" :embed="embed"/>
+      <message-embed class="message-embed" v-for="embed in embeds" :key="embed.id" :embed="embed"/>
     </transition-group>
   </div>
 </template>
 
 <script>
-import {mapMutations, mapGetters} from 'vuex';
+import { mapState } from 'vuex';
 
 import MessageEmbed from '@/components/MessageEmbed.vue';
 
@@ -16,14 +16,9 @@ export default {
   components: {
     MessageEmbed
   },
-  methods: {
-    ...mapMutations([
-      'updateEmbed'
-    ])
-  },
   computed: {
-    ...mapGetters([
-      'embedArray'
+    ...mapState([
+      'embeds'
     ])
   }
 };

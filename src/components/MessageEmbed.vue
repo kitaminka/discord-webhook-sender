@@ -45,7 +45,7 @@
           <p>Thumbnail URL</p>
           <app-input class="input" v-model="thumbnailUrl" placeholder="https://example.com/image.png"/>
         </div>
-        <embed-field-list class="field-list" :embed-id="embed.id"/>
+<!--        <embed-field-list class="field-list" :embed-id="embed.id"/>-->
         <error-message :show="emptyEmbedError">Embed cannot be empty.</error-message>
       </div>
     </transition>
@@ -59,7 +59,7 @@ import AppInput from '@/components/AppInput';
 import ErrorMessage from '@/components/ErrorMessage';
 import AppTextarea from '@/components/AppTextarea';
 import ColorPicker from '@/components/ColorPicker';
-import EmbedFieldList from '@/components/EmbedFieldList.vue';
+// import EmbedFieldList from '@/components/EmbedFieldList.vue';
 import EmbedButtons from '@/components/EmbedButtons.vue';
 import AppIcon from '@/components/AppIcon.vue';
 
@@ -68,7 +68,7 @@ export default {
   components: {
     AppIcon,
     EmbedButtons,
-    EmbedFieldList,
+    // EmbedFieldList,
     ColorPicker,
     AppTextarea,
     ErrorMessage,
@@ -179,56 +179,66 @@ export default {
     },
     authorName: {
       get() {
-        return this.embed.authorName;
+        return this.embed.author.name;
       },
       set(authorName) {
         this.updateEmbed({
           id: this.embed.id,
-          authorName
+          author: {
+            name: authorName
+          }
         });
       }
     },
     authorUrl: {
       get() {
-        return this.embed.authorUrl;
+        return this.embed.author.url;
       },
       set(authorUrl) {
         this.updateEmbed({
           id: this.embed.id,
-          authorUrl
+          author: {
+            url: authorUrl
+          }
         });
       }
     },
     authorIconUrl: {
       get() {
-        return this.embed.authorIconUrl;
+        return this.embed.author.icon_url;
       },
       set(authorIconUrl) {
         this.updateEmbed({
           id: this.embed.id,
-          authorIconUrl
+          author: {
+            icon_url: authorIconUrl
+          }
         });
       }
     },
     imageUrl: {
       get() {
-        return this.embed.imageUrl;
+        return this.embed.image.url;
       },
       set(imageUrl) {
         this.updateEmbed({
           id: this.embed.id,
-          imageUrl
+          image: {
+            url: imageUrl
+          }
         });
       }
     },
     thumbnailUrl: {
       get() {
-        return this.embed.thumbnailUrl;
+        return this.embed.thumbnail.url;
       },
       set(thumbnailUrl) {
         this.updateEmbed({
           id: this.embed.id,
-          thumbnailUrl
+          thumbnail: {
+            url: thumbnailUrl
+          }
         });
       }
     }

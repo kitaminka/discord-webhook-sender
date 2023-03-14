@@ -13,11 +13,7 @@ export default createStore({
                 id: '',
                 content: 'Test message'
             },
-            embeds: {
-                byId: {},
-                allIds: []
-            },
-            fields: {},
+            embeds: []
         }
     },
     getters: {
@@ -60,19 +56,13 @@ export default createStore({
             }
         },
         emptyEmbed: (state) => (embedId) => {
-            const embed = state.embeds.byId[embedId];
+            const embed = state.embeds.find((embed) => embed.id === embedId);
             return embed.title.trim().length === 0
                     && embed.description.trim().length === 0
-                    && embed.authorName.trim().length === 0
-                    && embed.imageUrl.trim().length === 0
-                    && embed.thumbnailUrl.trim().length === 0
+                    && embed.author.name.trim().length === 0
+                    && embed.image.url.trim().length === 0
+                    && embed.thumbnail.url.trim().length === 0
                     && embed.fields.length === 0;
-        },
-        embedArray: (state) => {
-            return state.embeds.allIds.map((id) => state.embeds.byId[id]);
-        },
-        embedFieldArray: (state) => (embedId) => {
-            return state.embeds.byId[embedId].fields.map((id) => state.fields[id]);
         }
     },
     mutations: {
@@ -99,25 +89,31 @@ export default createStore({
             state.webhook.avatarUrl = avatarUrl;
         },
         createEmbed(state) {
-            if (state.embeds.allIds.length < 10) {
-                const embedId = Date.now();
-                state.embeds.allIds.push(embedId);
-                state.embeds.byId[embedId] = {
-                    id: embedId,
+            if (state.embeds.length < 10) {
+                state.embeds.push({
+                    id: Date.now(),
                     title: '',
                     description: '',
                     url: '',
                     color: 0,
-                    authorName: '',
-                    authorUrl: '',
-                    authorIconUrl: '',
-                    footerText: '',
-                    footerIconUrl: '',
-                    imageUrl: '',
-                    thumbnailUrl: '',
+                    author: {
+                        name: '',
+                        url: '',
+                        icon_url: ''
+                    },
+                    footer: {
+                        text: '',
+                        icon_url: ''
+                    },
+                    image: {
+                        url: ''
+                    },
+                    thumbnail: {
+                        url: ''
+                    },
                     fields: [],
                     show: true
-                }
+                });
             }
         },
         loadEmbeds(state, embeds) {
@@ -154,32 +150,53 @@ export default createStore({
             }
         },
         deleteAllEmbeds(state) {
-            state.embeds.byId = {};
-            state.embeds.allIds = [];
+            state.embeds = [];
         },
         updateEmbed(state, embed) {
-            state.embeds.byId[embed.id] = {
-                ...state.embeds.byId[embed.id],
-                ...embed
+            const index = state.embeds.findIndex((emb) => emb.id === embed.id);
+            if (index > -1) {
+                const oldEmbed = state.embeds[index];
+
+                state.embeds[index] = {
+                    ...oldEmbed,
+                    ...embed,
+                    author: {
+                        ...oldEmbed.author,
+                        ...embed.author
+                    },
+                    footer: {
+                        ...oldEmbed.footer,
+                        ...embed.footer
+                    },
+                    image: {
+                        ...oldEmbed.image,
+                        ...embed.image
+                    },
+                    thumbnail: {
+                        ...oldEmbed.thumbnail,
+                        ...embed.thumbnail
+                    }
+                }
             }
         },
         moveEmbedUp(state, embedId) {
-            const index = state.embeds.allIds.findIndex((id) => id === embedId);
+            const index = state.embeds.findIndex((emb) => emb.id === embedId);
             if (index > 0) {
-                state.embeds.allIds.splice(index, 1);
-                state.embeds.allIds.splice(index - 1, 0, embedId);
+                const embed = state.embeds[index];
+                state.embeds[index] = state.embeds[index - 1];
+                state.embeds[index - 1] = embed;
             }
         },
         moveEmbedDown(state, embedId) {
-            const index = state.embeds.allIds.findIndex((id) => id === embedId);
-            if (index < state.embeds.allIds.length - 1) {
-                state.embeds.allIds.splice(index, 1);
-                state.embeds.allIds.splice(index + 1, 0, embedId);
+            const index = state.embeds.findIndex((emb) => emb.id === embedId);
+            if (index < state.embeds.length - 1) {
+                const embed = state.embeds[index];
+                state.embeds[index] = state.embeds[index + 1];
+                state.embeds[index + 1] = embed;
             }
         },
         deleteEmbed(state, embedId) {
-            state.embeds.allIds = state.embeds.allIds.filter((id) => id !== embedId);
-            delete state.embeds.byId[embedId];
+            state.embeds = state.embeds.filter((emb) => emb.id !== embedId);
         },
         createField(state, embedId) {
             const fieldId = Date.now();
