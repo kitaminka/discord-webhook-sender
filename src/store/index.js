@@ -36,6 +36,22 @@ export default createStore({
                     && embed.image.url.trim().length === 0
                     && embed.thumbnail.url.trim().length === 0
                     && embed.fields.length === 0;
+        },
+        validUrls(state) {
+            try {
+                if (state.webhook.avatarUrl) new URL(state.webhook.avatarUrl);
+                for (const embed of state.embeds) {
+                    if (embed.url) new URL(embed.url);
+                    if (embed.author.url) new URL(embed.author.url);
+                    if (embed.author.icon_url) new URL(embed.author.icon_url);
+                    if (embed.footer.icon_url) new URL(embed.footer.icon_url);
+                    if (embed.image.url) new URL(embed.image.url);
+                    if (embed.thumbnail.url) new URL(embed.thumbnail.url);
+                }
+                return true;
+            } catch {
+                return false;
+            }
         }
     },
     mutations: {

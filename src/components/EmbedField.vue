@@ -2,17 +2,7 @@
   <div class="field">
     <div class="header">
       <h3>{{field.name.trim() || 'Field'}}</h3>
-      <div class="field-buttons">
-        <app-button class="button" variant="secondary" @click="moveFieldUp({embedId, fieldId: field.id})">
-          <app-icon name="up"/>
-        </app-button>
-        <app-button class="button" variant="secondary" @click="moveFieldDown({embedId, fieldId: field.id})">
-          <app-icon name="down"/>
-        </app-button>
-        <app-button class="button" variant="danger" @click="deleteField({embedId, fieldId: field.id})">
-          <app-icon name="delete"/>
-        </app-button>
-      </div>
+      <field-buttons :embed-id="embedId" :field-id="field.id"/>
     </div>
     <div class="name">
       <p>Name</p>
@@ -32,10 +22,12 @@ import AppInput from '@/components/AppInput';
 import AppTextarea from '@/components/AppTextarea';
 import AppButton from '@/components/AppButton.vue';
 import AppIcon from '@/components/AppIcon.vue';
+import FieldButtons from '@/components/FieldButtons.vue';
 
 export default {
   name: 'EmbedField',
   components: {
+    FieldButtons,
     AppTextarea,
     AppInput,
     AppButton,
@@ -79,7 +71,7 @@ export default {
       }
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -100,22 +92,5 @@ export default {
   margin-top: 5px;
   width: 100%;
   height: 75px;
-}
-.field-buttons {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: auto;
-  grid-gap: 10px;
-  justify-content: right;
-  align-items: center;
-  cursor: default;
-}
-.button {
-  padding: 0;
-  display: grid;
-  justify-content: center;
-  align-items: center;
-  height: 24px;
-  width: 24px;
 }
 </style>

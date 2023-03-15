@@ -48,7 +48,7 @@ export default {
       return this.fields.length <= 0;
     }
   }
-};
+}
 </script>
 
 <style scoped>

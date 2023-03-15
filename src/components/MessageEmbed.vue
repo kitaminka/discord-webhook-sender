@@ -251,7 +251,7 @@ export default {
       return this.embed.fields.length <= 0;
     }
   }
-};
+}
 </script>
 
 <style scoped>

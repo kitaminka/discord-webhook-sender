@@ -21,7 +21,7 @@ export default {
       'embeds'
     ])
   }
-};
+}
 </script>
 
 <style scoped>

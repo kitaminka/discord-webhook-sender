@@ -36,7 +36,7 @@ export default {
       return this.embeds.length <= 0;
     }
   }
-};
+}
 </script>
 
 <style scoped>

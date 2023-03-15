@@ -13,7 +13,7 @@ export default {
       default: 'primary'
     }
   }
-};
+}
 </script>
 
 <style scoped>

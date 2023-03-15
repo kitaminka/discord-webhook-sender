@@ -1,44 +1,46 @@
 <template>
-  <div class="embed-buttons" @click.stop>
-    <app-button class="button" variant="secondary" @click="moveEmbedUp(embedId)">
+  <div class="field-buttons">
+    <app-button class="button" variant="secondary" @click="moveFieldUp({embedId, fieldId})">
       <app-icon name="up"/>
     </app-button>
-    <app-button class="button" variant="secondary" @click="moveEmbedDown(embedId)">
+    <app-button class="button" variant="secondary" @click="moveFieldDown({embedId, fieldId})">
       <app-icon name="down"/>
     </app-button>
-    <app-button class="button" variant="danger" @click="deleteEmbed(embedId)">
+    <app-button class="button" variant="danger" @click="deleteField({embedId, fieldId})">
       <app-icon name="delete"/>
     </app-button>
   </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
-
 import AppButton from '@/components/AppButton.vue';
 import AppIcon from '@/components/AppIcon.vue';
 
+import { mapMutations } from 'vuex';
+
 export default {
-  name: 'EmbedButtons',
+  name: 'FieldButtons',
   components: {
     AppButton,
     AppIcon
   },
   props: [
-    'embedId'
+    'embedId',
+    'fieldId'
   ],
   methods: {
     ...mapMutations([
-      'deleteEmbed',
-      'moveEmbedUp',
-      'moveEmbedDown'
+      'moveFieldUp',
+      'moveFieldDown',
+      'updateField',
+      'deleteField'
     ])
   }
 }
 </script>
 
 <style scoped>
-.embed-buttons {
+.field-buttons {
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: auto;
