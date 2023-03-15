@@ -9,7 +9,7 @@
 </template>
 
 <script>
-// import { mapActions, mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 import WebhookSettings from '@/components/WebhookSettings';
 import MessageSettings from '@/components/MessageSettings';
@@ -26,35 +26,35 @@ export default {
     MessageSettings,
     WebhookSettings
   },
-  // methods: {
-  //   ...mapActions([
-  //     'saveMessageToLocalStorage',
-  //     'loadMessageFromLocalStorage'
-  //   ])
-  // },
-  // computed: {
-  //   ...mapState([
-  //     'message',
-  //     'embeds'
-  //   ])
-  // },
-  // watch: {
-  //   message: {
-  //     handler() {
-  //       this.saveMessageToLocalStorage();
-  //     },
-  //     deep: true
-  //   },
-  //   embeds: {
-  //     handler() {
-  //       this.saveMessageToLocalStorage();
-  //     },
-  //     deep: true
-  //   }
-  // },
-  // beforeMount() {
-  //   this.loadMessageFromLocalStorage();
-  // }
+  computed: {
+    ...mapState([
+      'message',
+      'embeds'
+    ])
+  },
+  methods: {
+    ...mapActions([
+      'saveMessageToLocalStorage',
+      'loadMessageFromLocalStorage'
+    ])
+  },
+  watch: {
+    message: {
+      handler() {
+        this.saveMessageToLocalStorage();
+      },
+      deep: true
+    },
+    embeds: {
+      handler() {
+        this.saveMessageToLocalStorage();
+      },
+      deep: true
+    }
+  },
+  beforeMount() {
+    this.loadMessageFromLocalStorage();
+  }
 }
 </script>
 

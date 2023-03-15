@@ -19,41 +19,14 @@ export default createStore({
     getters: {
         webhookMessage: (state) => {
             return {
-                content: state.message.content || undefined,
+                content: state.message.content,
                 username: state.webhook.username || undefined,
                 avatar_url: state.webhook.avatarUrl || undefined,
-                embeds: state.embeds.allIds.map((id) => {
-                    const embed = state.embeds.byId[id];
-                    return {
-                        title: embed.title || undefined,
-                        description: embed.description || undefined,
-                        url: embed.url || undefined,
-                        color: embed.color || undefined,
-                        footer: {
-                            text: embed.footerText || undefined,
-                            icon_url: embed.footerIconUrl || undefined
-                        },
-                        image: {
-                            url: embed.imageUrl || undefined
-                        },
-                        thumbnail: {
-                            url: embed.thumbnailUrl || undefined
-                        },
-                        author: {
-                            name: embed.authorName || undefined,
-                            url: embed.authorUrl || undefined,
-                            icon_url: embed.authorIconUrl || undefined
-                        },
-                        fields: embed.fields.map((id) => {
-                            const field = state.fields[id];
-                            return {
-                                name: field.name,
-                                value: field.value
-                            }
-                        })
-                    }
-                })
+                embeds: state.embeds
             }
+        },
+        embedFieldArray: (state) => (embedId) => {
+            return state.embeds.find((emb) => emb.id === embedId).fields;
         },
         emptyEmbed: (state) => (embedId) => {
             const embed = state.embeds.find((embed) => embed.id === embedId);
@@ -116,44 +89,15 @@ export default createStore({
                 });
             }
         },
-        loadEmbeds(state, embeds) {
-            for (const embed of embeds) {
-                const embedId = Date.now();
-                state.embeds.allIds.push(embedId);
-                state.embeds.byId[embedId] = {
-                    id: embedId,
-                    title: embed.title || '',
-                    description: embed.description || '',
-                    url: embed.url || '',
-                    color: embed.color || 0,
-                    authorName: embed.author?.name || '',
-                    authorUrl: embed.author?.url || '',
-                    authorIconUrl: embed.author?.icon_url || '',
-                    footerText: embed.footer?.text || '',
-                    footerIconUrl: embed.footer?.icon_url || '',
-                    imageUrl: embed.image?.url || '',
-                    thumbnailUrl: embed.thumbnail?.url || '',
-                    fields: [],
-                    show: true
-                }
-                if (embed.fields) {
-                    for (const field of embed.fields) {
-                        const fieldId = Date.now();
-                        state.embeds.byId[embedId].fields.push(fieldId);
-                        state.fields[fieldId] = {
-                            id: fieldId,
-                            name: field.name || '',
-                            value: field.value || ''
-                        }
-                    }
-                }
-            }
+        setEmbeds(state, embeds) {
+            state.embeds = embeds;
         },
         deleteAllEmbeds(state) {
             state.embeds = [];
         },
         updateEmbed(state, embed) {
             const index = state.embeds.findIndex((emb) => emb.id === embed.id);
+
             if (index > -1) {
                 const oldEmbed = state.embeds[index];
 
@@ -202,43 +146,49 @@ export default createStore({
             const embed = state.embeds.find((emb) => emb.id === embedId);
             if (embed.fields.length < 25) {
                 embed.fields.push({
-                   name: '',
-                   value: '',
-                   inline: false
+                    id: Date.now(),
+                    name: '',
+                    value: '',
+                    inline: false
                 });
             }
         },
-        deleteEmbedFields(state, embedId) {
-            state.embeds.find((emb) => emb.id === embedId).fields = [];
-        },
-        updateField(state, field) {
-            const embed = state.embeds.find((emb) => emb.id === field.embedId);
-            const index = embed.fields.findIndex((fld) => fld.id === field.id);
-            embed.fields[index] = {
-                ...state.fields[field.id],
-                ...field
+        updateField(state, {embedId, fieldId, name, value}) {
+            const embed = state.embeds.find((emb) => emb.id === embedId);
+            const index = embed.fields.findIndex((fld) => fld.id === fieldId);
+
+            if (index > -1) {
+                if (name !== undefined) embed.fields[index].name = name;
+                if (value !== undefined) embed.fields[index].value = value;
             }
         },
         moveFieldUp(state, {embedId, fieldId}) {
-            const embed = state.embeds.byId[embedId];
-            const index = state.embeds.byId[embedId].fields.findIndex((id) => id === fieldId);
+            const embed = state.embeds.find((emb) => emb.id === embedId);
+            const index = embed.fields.findIndex((fld) => fld.id === fieldId);
+
             if (index > 0) {
-                embed.fields.splice(index, 1);
-                embed.fields.splice(index - 1, 0, fieldId);
+                const field = embed.fields[index];
+                embed.fields[index] = embed.fields[index - 1];
+                embed.fields[index - 1] = field;
             }
         },
         moveFieldDown(state, {embedId, fieldId}) {
-            const embed = state.embeds.byId[embedId];
-            const index = embed.fields.findIndex((id) => id === fieldId);
+            const embed = state.embeds.find((emb) => emb.id === embedId);
+            const index = embed.fields.findIndex((fld) => fld.id === fieldId);
+
             if (index < embed.fields.length - 1) {
-                embed.fields.splice(index, 1);
-                embed.fields.splice(index + 1, 0, fieldId);
+                const field = embed.fields[index];
+                embed.fields[index] = embed.fields[index + 1];
+                embed.fields[index + 1] = field;
             }
         },
         deleteField(state, {embedId, fieldId}) {
             const embed = state.embeds.find((emb) => emb.id === embedId);
             embed.fields = embed.fields.filter((fld) => fld.id !== fieldId);
-        }
+        },
+        deleteEmbedFields(state, embedId) {
+            state.embeds.find((emb) => emb.id === embedId).fields = [];
+        },
     },
     actions: {
         async updateWebhookUrl({ commit }, webhookUrl) {
@@ -285,8 +235,7 @@ export default createStore({
         loadMessage({ commit }, message) {
             commit('setContent', message.content);
             commit('deleteAllEmbeds');
-            commit('deleteAllFields');
-            commit('loadEmbeds', message.embeds);
+            commit('setEmbeds', message.embeds);
         },
         saveMessageToLocalStorage({ getters }) {
             localStorage.setItem('lastMessage', JSON.stringify(getters.webhookMessage));

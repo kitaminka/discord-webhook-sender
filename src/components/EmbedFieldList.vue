@@ -7,7 +7,7 @@
     </div>
     <div class="fields">
       <transition-group>
-        <embed-field class="field" v-for="field in embedFieldArray(embedId)" :embed-id="embedId" :field="field" :key="field.id"/>
+        <embed-field class="field" v-for="field in fields" :embed-id="embedId" :field="field" :key="field.id"/>
       </transition-group>
     </div>
   </div>
@@ -35,11 +35,17 @@ export default {
     ])
   },
   computed: {
+    ...mapGetters([
+      'embedFieldArray'
+    ]),
+    fields() {
+      return this.embedFieldArray(this.embedId);
+    },
     disableCreateField() {
-      return this..length >= 25;
+      return this.fields.length >= 25;
     },
     disableDeleteFields() {
-      return this.embedFieldArray(this.embedId).length <= 0;
+      return this.fields.length <= 0;
     }
   }
 };

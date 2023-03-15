@@ -42,7 +42,7 @@ export default {
       'validWebhookUrl'
     ]),
     emptyContentError() {
-      return this.message.content.length === 0 && this.embeds.allIds.length === 0;
+      return this.message.content.length === 0 && this.embeds.length === 0;
     },
     messageId: {
       get() {

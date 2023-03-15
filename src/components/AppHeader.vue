@@ -16,8 +16,5 @@ export default {
   justify-content: center;
   align-items: center;
   padding: 20px;
-  /*border-radius: 5px;*/
-  /*padding: 15px;*/
-  /*background-color: #121225;*/
 }
 </style>

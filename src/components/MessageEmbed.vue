@@ -45,7 +45,7 @@
           <p>Thumbnail URL</p>
           <app-input class="input" v-model="thumbnailUrl" placeholder="https://example.com/image.png"/>
         </div>
-        <embed-field-list class="field-list" :embed-id="embed.id"/>
+        <embed-field-list class="field-list" :embed-id="embed.id" :fields="embed.fields"/>
         <error-message :show="emptyEmbedError">Embed cannot be empty.</error-message>
       </div>
     </transition>
@@ -59,18 +59,16 @@ import AppInput from '@/components/AppInput';
 import ErrorMessage from '@/components/ErrorMessage';
 import AppTextarea from '@/components/AppTextarea';
 import ColorPicker from '@/components/ColorPicker';
-import AppButton from '@/components/AppButton.vue';
 import EmbedButtons from '@/components/EmbedButtons.vue';
-import EmbedField from '@/components/EmbedField.vue';
+import EmbedFieldList from '@/components/EmbedFieldList.vue';
 import AppIcon from '@/components/AppIcon.vue';
 
 export default {
   name: 'MessageEmbed',
   components: {
     AppIcon,
-    AppButton,
     EmbedButtons,
-    EmbedField,
+    EmbedFieldList,
     ColorPicker,
     AppTextarea,
     ErrorMessage,
