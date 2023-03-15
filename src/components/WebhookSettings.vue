@@ -50,24 +50,32 @@ export default {
       'getMessage'
     ]),
     async sendMessageButton() {
-      this.sendButtonText = 'Sending...';
-      const response = await this.sendMessage();
-      if (response.ok) {
-        this.sendButtonText = 'Sent!';
+      if (!this.validUrls) {
+        this.sendButtonText = 'Some of URLs are invalid!';
       } else {
-        this.sendButtonText = 'Failed!';
+        this.sendButtonText = 'Sending...';
+        const response = await this.sendMessage();
+        if (response.ok) {
+          this.sendButtonText = 'Sent!';
+        } else {
+          this.sendButtonText = 'Failed!';
+        }
       }
       setTimeout(() => {
         this.sendButtonText = 'Send';
       }, 2000);
     },
     async editMessageButton() {
-      this.editButtonText = 'Editing...';
-      const response = await this.editMessage();
-      if (response.ok) {
-        this.editButtonText = 'Edited!';
+      if (!this.validUrls) {
+        this.sendButtonText = 'Some of URLs are invalid!';
       } else {
-        this.editButtonText = 'Failed!';
+        this.editButtonText = 'Editing...';
+        const response = await this.editMessage();
+        if (response.ok) {
+          this.editButtonText = 'Edited!';
+        } else {
+          this.editButtonText = 'Failed!';
+        }
       }
       setTimeout(() => {
         this.editButtonText = 'Edit';
@@ -94,7 +102,8 @@ export default {
       'validWebhookUrl'
     ]),
     ...mapGetters([
-      'emptyEmbed'
+      'emptyEmbed',
+      'validUrls'
     ]),
     webhookUrlError() {
       return !this.validWebhookUrl && this.webhook.url.length !== 0;

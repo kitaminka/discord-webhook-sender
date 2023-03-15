@@ -11,7 +11,7 @@ export default createStore({
             },
             message: {
                 id: '',
-                content: 'Test message'
+                content: ''
             },
             embeds: []
         }

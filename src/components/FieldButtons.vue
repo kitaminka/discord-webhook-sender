@@ -13,10 +13,10 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 import AppButton from '@/components/AppButton.vue';
 import AppIcon from '@/components/AppIcon.vue';
-
-import { mapMutations } from 'vuex';
 
 export default {
   name: 'FieldButtons',
