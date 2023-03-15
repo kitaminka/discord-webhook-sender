@@ -20,8 +20,6 @@ import { mapMutations } from 'vuex';
 
 import AppInput from '@/components/AppInput';
 import AppTextarea from '@/components/AppTextarea';
-import AppButton from '@/components/AppButton.vue';
-import AppIcon from '@/components/AppIcon.vue';
 import FieldButtons from '@/components/FieldButtons.vue';
 
 export default {
@@ -29,9 +27,7 @@ export default {
   components: {
     FieldButtons,
     AppTextarea,
-    AppInput,
-    AppButton,
-    AppIcon
+    AppInput
   },
   props: [
     'embedId',

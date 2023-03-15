@@ -9,8 +9,8 @@
     </div>
     <transition @enter="enter" @after-enter="afterEnter" @leave="leave" @after-leave="afterLeave">
       <div class="embed" v-show="show">
-        <div class="author">
-          <p>Author</p>
+        <div class="author-name">
+          <p>Author name</p>
           <app-input class="input" v-model="authorName" placeholder="Some author"/>
         </div>
         <div class="author-url">
@@ -44,6 +44,14 @@
         <div class="thumbnail-url">
           <p>Thumbnail URL</p>
           <app-input class="input" v-model="thumbnailUrl" placeholder="https://example.com/image.png"/>
+        </div>
+        <div class="footer-text">
+          <p>Footer text</p>
+          <app-input class="input" v-model="footerText" placeholder="Some footer"/>
+        </div>
+        <div class="footer-icon-url">
+          <p>Footer Icon URL</p>
+          <app-input class="input" v-model="footerIconUrl" placeholder="https://example.com/image.png"/>
         </div>
         <embed-field-list class="field-list" :embed-id="embed.id" :fields="embed.fields"/>
         <error-message :show="emptyEmbedError">Embed cannot be empty.</error-message>
@@ -244,6 +252,32 @@ export default {
         });
       }
     },
+    footerText: {
+      get() {
+        return this.embed.footer.text;
+      },
+      set(footerText) {
+        this.updateEmbed({
+          id: this.embed.id,
+          footer: {
+            text: footerText
+          }
+        });
+      }
+    },
+    footerIconUrl: {
+      get() {
+        return this.embed.footer.icon_url;
+      },
+      set(footerIconUrl) {
+        this.updateEmbed({
+          id: this.embed.id,
+          footer: {
+            icon_url: footerIconUrl
+          }
+        });
+      }
+    },
     disableCreateField() {
       return this.embed.fields.length >= 25;
     },
@@ -287,7 +321,7 @@ export default {
   grid-column-gap: 10px;
   transition: height .3s ease-in-out;
 }
-.author {
+.author-name {
   margin-top: 15px;
 }
 .color-picker {
@@ -306,15 +340,7 @@ export default {
   height: 100px;
   width: 100%;
 }
-.author {
-  grid-column-start: 1;
-  grid-column-end: 3;
-}
-.title {
-  grid-column-start: 1;
-  grid-column-end: 3;
-}
-.description {
+.author-name, .title, .description {
   grid-column-start: 1;
   grid-column-end: 3;
 }
@@ -327,7 +353,7 @@ export default {
   .embed {
     grid-template-columns: auto;
   }
-  .author, .title, .description, .field-list {
+  .author-name, .title, .description, .field-list {
     grid-column-start: 1;
     grid-column-end: 2;
   }

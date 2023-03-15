@@ -35,6 +35,8 @@ export default createStore({
                     && embed.author.name.trim().length === 0
                     && embed.image.url.trim().length === 0
                     && embed.thumbnail.url.trim().length === 0
+                    && embed.footer.text.trim().length === 0
+                    && embed.footer.icon_url.trim().length === 0
                     && embed.fields.length === 0;
         },
         validUrls(state) {
