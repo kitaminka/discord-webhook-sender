@@ -199,23 +199,22 @@ export default createStore({
             state.embeds = state.embeds.filter((emb) => emb.id !== embedId);
         },
         createField(state, embedId) {
-            const fieldId = Date.now();
-            state.embeds.byId[embedId].fields.push(fieldId);
-            state.fields[fieldId] = {
-                id: fieldId,
-                name: '',
-                value: ''
+            const embed = state.embeds.find((emb) => emb.id === embedId);
+            if (embed.fields.length < 25) {
+                embed.fields.push({
+                   name: '',
+                   value: '',
+                   inline: false
+                });
             }
         },
         deleteEmbedFields(state, embedId) {
-            state.embeds.byId[embedId].fields = [];
-            delete state.fields[embedId];
-        },
-        deleteAllFields(state) {
-            state.fields = {};
+            state.embeds.find((emb) => emb.id === embedId).fields = [];
         },
         updateField(state, field) {
-            state.fields[field.id] = {
+            const embed = state.embeds.find((emb) => emb.id === field.embedId);
+            const index = embed.fields.findIndex((fld) => fld.id === field.id);
+            embed.fields[index] = {
                 ...state.fields[field.id],
                 ...field
             }
@@ -237,9 +236,8 @@ export default createStore({
             }
         },
         deleteField(state, {embedId, fieldId}) {
-            const embed = state.embeds.byId[embedId];
-            embed.fields = embed.fields.filter((id) => id !== fieldId);
-            delete state.fields[fieldId];
+            const embed = state.embeds.find((emb) => emb.id === embedId);
+            embed.fields = embed.fields.filter((fld) => fld.id !== fieldId);
         }
     },
     actions: {

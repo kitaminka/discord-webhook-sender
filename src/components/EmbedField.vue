@@ -2,7 +2,11 @@
   <div class="field">
     <div class="header">
       <h3>{{field.name.trim() || 'Field'}}</h3>
-      <embed-field-buttons :embedId="embedId" :fieldId="field.id"/>
+      <div class="filed-buttons">
+        <app-button class="button" variant="danger" @click="deleteField({embedId, fieldId})">
+          <app-icon name="delete"/>
+        </app-button>
+      </div>
     </div>
     <div class="name">
       <p>Name</p>
@@ -20,14 +24,14 @@ import { mapMutations } from 'vuex';
 
 import AppInput from '@/components/AppInput';
 import AppTextarea from '@/components/AppTextarea';
-import EmbedFieldButtons from '@/components/EmbedFieldButtons.vue';
+import AppButton from '@/components/AppButton.vue';
 
 export default {
   name: 'EmbedField',
   components: {
     AppTextarea,
     AppInput,
-    EmbedFieldButtons
+    AppButton
   },
   props: [
     'embedId',
@@ -45,6 +49,7 @@ export default {
       },
       set(name) {
         this.updateField({
+          embedId: this.embedId,
           id: this.field.id,
           name: name
         });
@@ -56,6 +61,7 @@ export default {
       },
       set(value) {
         this.updateField({
+          embedId: this.embedId,
           id: this.field.id,
           value: value
         });

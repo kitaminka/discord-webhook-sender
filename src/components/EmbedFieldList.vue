@@ -35,11 +35,8 @@ export default {
     ])
   },
   computed: {
-    ...mapGetters([
-      'embedFieldArray'
-    ]),
     disableCreateField() {
-      return this.embedFieldArray(this.embedId).length >= 25;
+      return this..length >= 25;
     },
     disableDeleteFields() {
       return this.embedFieldArray(this.embedId).length <= 0;

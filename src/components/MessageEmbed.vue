@@ -45,7 +45,7 @@
           <p>Thumbnail URL</p>
           <app-input class="input" v-model="thumbnailUrl" placeholder="https://example.com/image.png"/>
         </div>
-<!--        <embed-field-list class="field-list" :embed-id="embed.id"/>-->
+        <embed-field-list class="field-list" :embed-id="embed.id"/>
         <error-message :show="emptyEmbedError">Embed cannot be empty.</error-message>
       </div>
     </transition>
@@ -59,16 +59,18 @@ import AppInput from '@/components/AppInput';
 import ErrorMessage from '@/components/ErrorMessage';
 import AppTextarea from '@/components/AppTextarea';
 import ColorPicker from '@/components/ColorPicker';
-// import EmbedFieldList from '@/components/EmbedFieldList.vue';
+import AppButton from '@/components/AppButton.vue';
 import EmbedButtons from '@/components/EmbedButtons.vue';
+import EmbedField from '@/components/EmbedField.vue';
 import AppIcon from '@/components/AppIcon.vue';
 
 export default {
   name: 'MessageEmbed',
   components: {
     AppIcon,
+    AppButton,
     EmbedButtons,
-    // EmbedFieldList,
+    EmbedField,
     ColorPicker,
     AppTextarea,
     ErrorMessage,
@@ -92,7 +94,9 @@ export default {
       'moveEmbedUp',
       'moveEmbedDown',
       'deleteEmbed',
-      'updateEmbed'
+      'updateEmbed',
+      'createField',
+      'deleteEmbedFields'
     ]),
     updateColor() {
       const colorInt = parseInt(this.color.substring(1), 16);
@@ -241,6 +245,12 @@ export default {
           }
         });
       }
+    },
+    disableCreateField() {
+      return this.embed.fields.length >= 25;
+    },
+    disableDeleteFields() {
+      return this.embed.fields.length <= 0;
     }
   }
 };
