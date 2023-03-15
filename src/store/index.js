@@ -79,39 +79,32 @@ export default createStore({
         setAvatarUrl(state, avatarUrl) {
             state.webhook.avatarUrl = avatarUrl;
         },
-        createEmbed(state) {
+        createEmbed(state, embed) {
             if (state.embeds.length < 10) {
                 state.embeds.push({
                     id: Date.now(),
-                    title: '',
-                    description: '',
-                    url: '',
-                    color: 0,
+                    title: embed.title || '',
+                    description: embed.description || '',
+                    url: embed.url || '',
+                    color: embed.color || 0,
                     author: {
-                        name: '',
-                        url: '',
-                        icon_url: ''
+                        name: embed.author?.name || '',
+                        url: embed.author?.url || '',
+                        icon_url: embed.author?.icon_url || ''
                     },
                     footer: {
-                        text: '',
-                        icon_url: ''
+                        text: embed.footer?.text || '',
+                        icon_url: embed.footer?.icon_url || ''
                     },
                     image: {
-                        url: ''
+                        url: embed.image?.url || ''
                     },
                     thumbnail: {
-                        url: ''
+                        url: embed.thumbnail?.url || ''
                     },
-                    fields: [],
-                    show: true
+                    fields: embed.fields || []
                 });
             }
-        },
-        setEmbeds(state, embeds) {
-            state.embeds = embeds;
-        },
-        deleteAllEmbeds(state) {
-            state.embeds = [];
         },
         updateEmbed(state, embed) {
             const index = state.embeds.findIndex((emb) => emb.id === embed.id);
@@ -159,6 +152,9 @@ export default createStore({
         },
         deleteEmbed(state, embedId) {
             state.embeds = state.embeds.filter((emb) => emb.id !== embedId);
+        },
+        deleteAllEmbeds(state) {
+            state.embeds = [];
         },
         createField(state, embedId) {
             const embed = state.embeds.find((emb) => emb.id === embedId);
@@ -250,10 +246,15 @@ export default createStore({
             }
             return response;
         },
-        loadMessage({ commit }, message) {
+        loadMessage({ commit, dispatch }, message) {
             commit('setContent', message.content);
             commit('deleteAllEmbeds');
-            commit('setEmbeds', message.embeds);
+            dispatch('loadEmbeds', message.embeds);
+        },
+        loadEmbeds({ commit }, embeds) {
+            for (const embed of embeds) {
+                commit('createEmbed', embed);
+            }
         },
         saveMessageToLocalStorage({ getters }) {
             localStorage.setItem('lastMessage', JSON.stringify(getters.webhookMessage));
