@@ -19,3 +19,11 @@ yarn serve
 yarn build
 ```
 ___
+## Features
+- Send messages to Discord webhooks
+- Send messages with embeds
+- Saving message to local storage
+___
+## Screenshots
+![Screenshot](https://i.imgur.com/7LmM1P4.png)
+___
