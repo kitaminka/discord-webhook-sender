@@ -1,30 +1,19 @@
 <template>
   <app-header/>
-  <main class="main">
-    <webhook-settings/>
-    <message-settings/>
-    <embed-settings/>
-    <message-embed-list/>
-  </main>
+  <app-main/>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
 
-import WebhookSettings from '@/components/WebhookSettings';
-import MessageSettings from '@/components/MessageSettings';
-import EmbedSettings from '@/components/EmbedSettings';
-import MessageEmbedList from '@/components/MessageEmbedList.vue';
 import AppHeader from '@/components/AppHeader.vue';
+import AppMain from '@/components/AppMain.vue';
 
 export default {
   name: 'App',
   components: {
     AppHeader,
-    MessageEmbedList,
-    EmbedSettings,
-    MessageSettings,
-    WebhookSettings
+    AppMain
   },
   computed: {
     ...mapState([
@@ -71,12 +60,6 @@ html, body {
   background-color: #030318;
   width: 100%;
   min-height: 100%;
-}
-.main {
-  display: grid;
-  grid-gap: 15px;
-  padding: 0 20%;
-  box-sizing: border-box;
 }
 
 .primary {
