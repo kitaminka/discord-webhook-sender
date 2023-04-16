@@ -31,4 +31,10 @@ export default {
   padding: 0 20%;
   box-sizing: border-box;
 }
+
+@media only screen and (max-width: 1000px) {
+  .main {
+    padding: 0 20px;
+  }
+}
 </style>
