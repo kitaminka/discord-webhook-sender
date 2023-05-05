@@ -77,10 +77,4 @@ html, body {
   --button-background-color-hover: #b92525;
   --button-background-color-active: #8f1919;
 }
-
-@media only screen and (max-width: 1000px) {
-  .main {
-    padding: 0 20px;
-  }
-}
 </style>

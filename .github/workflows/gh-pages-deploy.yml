@@ -1,20 +1,30 @@
 name: Deploy to Github Pages
 on:
-    push:
-        branches:
-            - master
+  push:
+    branches:
+      - main
 jobs:
-    gh-pages-deploy:
-        name: Deploying to Github Pages
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v2
-            - uses: actions/setup-node@v2
-              with:
-                  node-version: '16'
-            - name: Install packages
-              run: yarn install
-            - name: Set Creds
-              run: git config user.name "kitaminka" && git config user.email "kit4minka@gmail.com"
-            - name: Deploy
-              run: yarn deploy
+  gh-pages-deploy:
+    name: Deploying to GitHub Pages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Install packages
+        run: yarn install
+      - name: Set Creds and Branch
+        run: |
+          git config user.name "kitaminka"
+          git config user.email "kit4minka@gmail.com"
+          git checkout --orphan gh-pages
+      - name: Build project
+        run: yarn build
+      - name: Commit and push
+        run: |
+          git --work-tree dist add --all
+          git --work-tree dist commit -m "Deploy to GitHub Pages"
+          git push origin HEAD:gh-pages --force
+          git checkout -f main
+          git branch -D gh-pages
