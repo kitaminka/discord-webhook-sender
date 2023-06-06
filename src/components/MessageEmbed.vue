@@ -292,11 +292,12 @@ export default {
 .message-embed {
   margin-bottom: 15px;
   border-radius: 5px;
-  padding: 15px;
+  //padding: 15px;
   background-color: #121225;
   overflow: hidden;
 }
 .header {
+  padding: 15px;
   height: 24px;
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -324,9 +325,7 @@ export default {
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 10px;
   transition: height .3s ease-in-out;
-}
-.author-name {
-  margin-top: 15px;
+  padding: 0 15px 15px 15px;
 }
 .color-picker {
   margin: 5px 0;

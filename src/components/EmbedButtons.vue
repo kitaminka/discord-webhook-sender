@@ -49,10 +49,11 @@ export default {
 }
 .button {
   padding: 0;
+  margin: -10px 0;
   display: grid;
   justify-content: center;
   align-items: center;
-  height: 24px;
-  width: 24px;
+  height: 30px;
+  width: 30px;
 }
 </style>

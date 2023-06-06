@@ -6,7 +6,9 @@
       <app-button @click="deleteEmbedFields(embedId)" :disabled="disableDeleteFields" variant="danger">Delete all fields</app-button>
     </div>
     <div class="fields">
-      <embed-field class="field" v-for="field in fields" :embed-id="embedId" :field="field" :key="field.id"/>
+      <transition-group>
+        <embed-field class="field" v-for="field in fields" :embed-id="embedId" :field="field" :key="field.id"/>
+      </transition-group>
     </div>
   </div>
 </template>
@@ -72,6 +74,13 @@ export default {
   margin-top: 5px;
   box-sizing: border-box;
   width: 100%;
+}
+
+.v-move, .v-enter-active, .v-leave-active {
+  transition: all .3s ease-in-out;
+}
+.v-enter-from, .v-leave-to {
+  opacity: 0;
 }
 
 @media only screen and (max-width: 800px) {
