@@ -21,7 +21,6 @@ export default {
 .error-message {
   color: #fc6661;
   font-size: 14px;
-  margin: 5px 0;
   max-height: 17px;
 }
 
