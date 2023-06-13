@@ -42,7 +42,7 @@ export default {
 <style scoped>
 .embed-settings {
   border-radius: 5px;
-  padding: 15px;
+  padding: 10px;
   background-color: #121225;
 }
 .header {

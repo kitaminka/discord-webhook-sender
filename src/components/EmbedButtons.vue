@@ -49,7 +49,6 @@ export default {
 }
 .button {
   padding: 0;
-  margin: -10px 0;
   display: grid;
   justify-content: center;
   align-items: center;

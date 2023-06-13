@@ -67,7 +67,7 @@ export default {
 <style scoped>
 .message-settings {
   border-radius: 5px;
-  padding: 15px;
+  padding: 10px;
   background-color: #121225;
 }
 .header {

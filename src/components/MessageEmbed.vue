@@ -292,13 +292,12 @@ export default {
 .message-embed {
   margin-bottom: 15px;
   border-radius: 5px;
-  //padding: 15px;
   background-color: #121225;
   overflow: hidden;
 }
 .header {
-  padding: 15px;
-  height: 24px;
+  padding: 10px;
+  height: 30px;
   display: grid;
   grid-template-columns: auto 1fr auto;
   justify-content: left;

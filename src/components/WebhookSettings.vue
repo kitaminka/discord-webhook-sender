@@ -156,7 +156,7 @@ export default {
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 10px;
   border-radius: 5px;
-  padding: 15px;
+  padding: 10px;
   background-color: #121225;
 }
 .header {
