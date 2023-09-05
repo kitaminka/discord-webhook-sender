@@ -6,8 +6,8 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 
-import AppHeader from '@/components/AppHeader.vue';
-import AppMain from '@/components/AppMain.vue';
+import AppHeader from '@/components/layout/AppHeader.vue';
+import AppMain from '@/components/layout/AppMain.vue';
 
 export default {
   name: 'App',
@@ -57,7 +57,7 @@ export default {
 html, body {
   font-family: 'Roboto', sans-serif;
   color: white;
-  background-color: #030318;
+  background-color: #131333;
   width: 100%;
   min-height: 100%;
 }

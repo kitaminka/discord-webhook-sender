@@ -15,7 +15,7 @@
 <script>
 import { mapMutations } from 'vuex';
 
-import AppButton from '@/components/AppButton.vue';
+import AppButton from '@/components/ui/AppButton.vue';
 import AppIcon from '@/components/AppIcon.vue';
 
 export default {

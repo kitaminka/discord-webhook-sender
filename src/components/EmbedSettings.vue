@@ -11,7 +11,7 @@
 <script>
 import { mapState, mapMutations } from 'vuex';
 
-import AppButton from '@/components/AppButton';
+import AppButton from '@/components/ui/AppButton.vue';
 
 export default {
   name: 'EmbedSettings',
@@ -43,7 +43,7 @@ export default {
 .embed-settings {
   border-radius: 5px;
   padding: 10px;
-  background-color: #121225;
+  background-color: #37376b;
 }
 .header {
   padding-bottom: 10px;

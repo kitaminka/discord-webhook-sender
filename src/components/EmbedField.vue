@@ -18,8 +18,8 @@
 <script>
 import { mapMutations } from 'vuex';
 
-import AppInput from '@/components/AppInput';
-import AppTextarea from '@/components/AppTextarea';
+import AppInput from '@/components/ui/AppInput.vue';
+import AppTextarea from '@/components/ui/AppTextarea.vue';
 import FieldButtons from '@/components/FieldButtons.vue';
 
 export default {
@@ -72,7 +72,7 @@ export default {
 
 <style scoped>
 .field {
-  background-color: #121225;
+  background-color: #37376b;
 }
 .header {
   display: grid;

@@ -16,7 +16,7 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex';
 
-import AppButton from '@/components/AppButton';
+import AppButton from '@/components/ui/AppButton.vue';
 import EmbedField from '@/components/EmbedField.vue';
 
 export default {

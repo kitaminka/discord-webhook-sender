@@ -25,9 +25,9 @@
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex';
 
-import AppButton from '@/components/AppButton';
-import AppInput from '@/components/AppInput';
-import ErrorMessage from '@/components/ErrorMessage';
+import AppButton from '@/components/ui/AppButton.vue';
+import AppInput from '@/components/ui/AppInput.vue';
+import ErrorMessage from '@/components/ui/ErrorMessage.vue';
 
 export default {
   name: 'WebhookSettings',
@@ -157,7 +157,7 @@ export default {
   grid-column-gap: 10px;
   border-radius: 5px;
   padding: 10px;
-  background-color: #121225;
+  background-color: #37376b;
 }
 .header {
   padding-bottom: 10px;

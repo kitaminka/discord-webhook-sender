@@ -1,16 +1,18 @@
 <template>
-  <input :value="modelValue" :placeholder="placeholder" @input="updateInput" class="input"/>
+  <textarea :value="modelValue" :placeholder="placeholder" @input="updateTextarea" class="textarea" :maxlength="maxlength">
+  </textarea>
 </template>
 
 <script>
 export default {
-  name: 'AppInput',
+  name: 'AppTextarea',
   props: [
     'placeholder',
+    'maxlength',
     'modelValue'
   ],
   methods: {
-    updateInput(event) {
+    updateTextarea(event) {
       this.$emit('update:modelValue', event.target.value);
     }
   }
@@ -18,18 +20,19 @@ export default {
 </script>
 
 <style scoped>
-.input {
+.textarea {
+  resize: none;
   outline: none;
   color: white;
   padding: 7px;
   font-size: 15px;
-  border: 3px solid #494962;
-  background-color: #13132a;
+  border: none;
+  background-color: #23234f;
   border-radius: 5px;
   font-family: 'Roboto', sans-serif;
   transition: background-color ease 0.2s;
 }
-.input:focus {
-  background-color: #252549;
+.textarea:focus {
+  background-color: #2a2a4d;
 }
 </style>

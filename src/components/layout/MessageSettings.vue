@@ -16,9 +16,9 @@
 <script>
 import { mapState, mapMutations } from 'vuex';
 
-import AppTextarea from '@/components/AppTextarea';
-import ErrorMessage from '@/components/ErrorMessage';
-import AppInput from '@/components/AppInput';
+import AppTextarea from '@/components/ui/AppTextarea.vue';
+import ErrorMessage from '@/components/ui/ErrorMessage.vue';
+import AppInput from '@/components/ui/AppInput.vue';
 
 export default {
   name: 'MessageSettings',
@@ -68,7 +68,7 @@ export default {
 .message-settings {
   border-radius: 5px;
   padding: 10px;
-  background-color: #121225;
+  background-color: #37376b;
 }
 .header {
   padding-bottom: 10px;

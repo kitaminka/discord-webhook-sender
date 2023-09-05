@@ -8,9 +8,9 @@
 </template>
 
 <script>
-import WebhookSettings from '@/components/WebhookSettings.vue';
-import MessageEmbedList from '@/components/MessageEmbedList.vue';
-import MessageSettings from '@/components/MessageSettings.vue';
+import WebhookSettings from '@/components/layout/WebhookSettings.vue';
+import MessageEmbedList from '@/components/layout/MessageEmbedList.vue';
+import MessageSettings from '@/components/layout/MessageSettings.vue';
 import EmbedSettings from '@/components/EmbedSettings.vue';
 
 export default {

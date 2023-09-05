@@ -63,10 +63,10 @@
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
 
-import AppInput from '@/components/AppInput';
-import ErrorMessage from '@/components/ErrorMessage';
-import AppTextarea from '@/components/AppTextarea';
-import ColorPicker from '@/components/ColorPicker';
+import AppInput from '@/components/ui/AppInput.vue';
+import ErrorMessage from '@/components/ui/ErrorMessage.vue';
+import AppTextarea from '@/components/ui/AppTextarea.vue';
+import ColorPicker from '@/components/ui/ColorPicker.vue';
 import EmbedButtons from '@/components/EmbedButtons.vue';
 import EmbedFieldList from '@/components/EmbedFieldList.vue';
 import AppIcon from '@/components/AppIcon.vue';
@@ -292,7 +292,7 @@ export default {
 .message-embed {
   margin-bottom: 15px;
   border-radius: 5px;
-  background-color: #121225;
+  background-color: #37376b;
   overflow: hidden;
 }
 .header {
