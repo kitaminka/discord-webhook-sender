@@ -24,7 +24,6 @@ jobs:
       - name: Commit and push
         run: |
           git --work-tree dist add --all
-          git add CNAME
           git --work-tree dist commit -m "Deploy to GitHub Pages"
           git push origin HEAD:gh-pages --force
           git checkout -f master
